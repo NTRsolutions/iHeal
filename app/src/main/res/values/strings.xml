@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">iHeal</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Mohamed</string>
+    <string name="nav_header_subtitle">"@"m.makram</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+    <string name="natures_remedies">Nature\'s  Remedies</string>
+    <string name="title">iHeal</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="alreadyaccount">Already have an account ?</string>
+
+    <string name="login_titlr">Log In To Your Account</string>
+    <string name="email">E-mail Address</string>
+    <string name="password">Password</string>
+    <string name="login">LOGIN</string>
+    <string name="signup">SIGN UP</string>
+    <string name="forgotpw">Forgot Password ?</string>
+    <string name="signup_name">Name</string>
+    <string name="signup_surname">Surname</string>
+    <string name="signup_username">Username</string>
+    <string name="signup_confirm_pw">Confirm Password</string>
+    <string name="paymentmethod">payment method</string>
+    <string name="CONFIRMANDPAY"><![CDATA[CONFIRM & PAY]]></string>
+    <string name="CONFIRM_ORDER">CONFIRM YOUR ORDER</string>
+
+</resources>

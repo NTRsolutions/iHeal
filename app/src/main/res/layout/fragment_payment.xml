@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="4">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="0.4">
+
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#fbfaff"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/paymentmethod"
+                            android:textColor="#4a4a4a" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:orientation="horizontal">
+
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/payment_method_recyclerview"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:scrollbars="horizontal" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:orientation="vertical"
+                    android:padding="18dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="PAYMENT DETAILS"
+                        android:textColor="@color/edittextpay"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                       >
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:orientation="horizontal"
+                                android:weightSum="4">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="2.4"
+                                    android:gravity="center|left"
+                                    android:text="CARD NUMBER"
+                                    android:textColor="@color/titlepayal"
+                                    android:textSize="14dp" />
+
+                                <EditText
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1.6"
+                                    android:drawableRight="@drawable/mastercard"
+                                    android:gravity="center|left"
+                                    android:hint="1000 2000 3000 4000"
+                                    android:textColorHint="@color/edittextpay"
+                                    android:textSize="14dp" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:orientation="horizontal"
+                                android:weightSum="4">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="2.4"
+                                    android:gravity="center|left"
+                                    android:text="EXPIRATION DATE"
+                                    android:textColor="@color/titlepayal"
+                                    android:textSize="14dp" />
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1.6"
+                                    android:orientation="horizontal"
+                                    android:weightSum="3">
+
+                                    <EditText
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:gravity="center"
+                                        android:hint="01/21"
+                                        android:textColorHint="@color/edittextpay"
+                                        android:textSize="14dp" />
+
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:gravity="center"
+                                        android:text="CVS"
+                                        android:textSize="16dp" />
+
+                                    <EditText
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:gravity="center|right"
+                                        android:hint="789"
+                                        android:paddingRight="10dp"
+                                        android:textColorHint="@color/edittextpay"
+                                        android:textSize="14dp" />
+                                </LinearLayout>
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:orientation="horizontal"
+                                android:weightSum="4">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="2.4"
+                                    android:gravity="center|left"
+                                    android:text="CARDHOLDER NAME"
+                                    android:textColor="@color/titlepayal"
+                                    android:textSize="14dp" />
+
+                                <EditText
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1.6"
+                                    android:gravity="center|right"
+                                    android:hint="MOHAMED MAKRAM"
+                                    android:paddingRight="10dp"
+                                    android:textColorHint="@color/edittextpay"
+                                    android:textSize="14dp" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:layout_marginTop="50dp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="2.2"
+                                android:gravity="center|left"
+                                android:text="TOTAL AMOUNT"
+                                android:textColor="@color/edittextpay"
+                                android:textSize="16dp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1.8"
+                                android:gravity="center|right"
+                                android:paddingRight="10dp"
+                                android:text="90.00 KD"
+                                android:textColor="@color/edittextpay"
+                                android:textSize="16dp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="3.6"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/edit"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:weightSum="4">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="0.4"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="@string/CONFIRM_ORDER"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="3.6"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/iv_confirm_order"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_keyboard_arrow_right_black_24dp" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

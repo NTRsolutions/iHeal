@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_margin="5dp">
+    <LinearLayout
+        android:id="@+id/lv_paymenet_greenlayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="8dp">
+    <LinearLayout
+        android:id="@+id/lv_payment_greeylayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:background="@drawable/round_border_greey"
+        android:paddingLeft="40dp"
+        android:paddingRight="40dp"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/iv_payment_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/visa"
+            />
+        <TextView
+            android:id="@+id/tv_payment_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="CREDIT CARD"
+            android:textColor="@color/textcolor"/>
+    </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>
