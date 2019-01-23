@@ -27,7 +27,7 @@
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
                android:gravity="center"
-               android:text="Welcome back,Dhaval"
+               android:text="Welcome back,Nehal"
                android:textSize="18sp"
                android:textColor="@color/main"/>
 
