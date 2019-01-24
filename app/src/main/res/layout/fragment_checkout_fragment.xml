@@ -90,15 +90,16 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_gravity="center|top"
+        android:gravity="center|top"
         android:orientation="vertical"
         android:weightSum="4">
-
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center|top"
-            android:layout_weight="3.5"
+            android:layout_weight="3.6"
             android:background="@color/colorPrimaryDark"
             android:gravity="center|top"
             android:orientation="vertical"
@@ -107,10 +108,10 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_gravity="center|bottom"
-                android:layout_weight="2.2"
+                android:layout_gravity="center|top"
+                android:layout_weight="2"
                 android:background="@color/colorPrimaryDark"
-                android:gravity="center|bottom"
+                android:gravity="top|center"
                 android:orientation="horizontal"
                 android:weightSum="6">
 
@@ -127,7 +128,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/ic_done_black_18dp"
-                        android:visibility="visible" />
+                        android:visibility="invisible" />
 
 
                 </LinearLayout>
@@ -145,7 +146,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/ic_done_black_18dp"
-                        android:visibility="visible" />
+                        android:visibility="invisible" />
 
 
                 </LinearLayout>
@@ -163,7 +164,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/ic_done_black_18dp"
-                        android:visibility="visible" />
+                        android:visibility="invisible" />
 
 
                 </LinearLayout>
@@ -173,10 +174,10 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_gravity="center|top"
-                android:layout_weight="1.5"
+                android:layout_gravity="center"
+                android:layout_weight="1.8"
                 android:background="@color/colorPrimaryDark"
-                android:gravity="center|top"
+                android:gravity="center"
                 android:orientation="horizontal"
                 android:weightSum="6">
 
@@ -256,10 +257,10 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_gravity="center|top"
+                android:layout_gravity="center"
                 android:layout_weight="2.2"
                 android:background="@color/colorPrimaryDark"
-                android:gravity="center|top"
+                android:gravity="center"
                 android:orientation="horizontal"
                 android:weightSum="6">
 
@@ -271,7 +272,7 @@
                     android:layout_weight="2"
                     android:gravity="center|bottom"
                     android:orientation="vertical"
-                    android:visibility="visible">
+                    android:visibility="invisible">
 
                     <RelativeLayout
                         android:layout_width="13dp"
@@ -292,7 +293,7 @@
                     android:paddingLeft="5dp"
                     android:paddingTop="2dp"
                     android:paddingRight="5dp"
-                    android:visibility="visible">
+                    android:visibility="invisible">
 
                     <RelativeLayout
                         android:layout_width="13dp"
@@ -313,7 +314,7 @@
                     android:paddingLeft="5dp"
                     android:paddingTop="2dp"
                     android:paddingRight="5dp"
-                    android:visibility="visible">
+                    android:visibility="invisible">
 
                     <RelativeLayout
                         android:layout_width="13dp"
@@ -329,7 +330,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="0.5"
+            android:layout_weight="0.4"
             android:orientation="vertical">
 
             <FrameLayout
@@ -339,6 +340,5 @@
 
         </LinearLayout>
     </LinearLayout>
-
 
 </LinearLayout>
