@@ -1,6 +1,7 @@
 package com.sismatix.iheal.Fragments;
 
 
+import android.app.Activity;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -12,6 +13,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.sismatix.iheal.Adapter.Cart_Delivery_Adapter;
@@ -32,6 +35,7 @@ public class Shipping_fragment extends Fragment {
     Cart_Delivery_Adapter cart_delivery_adapter;
     private List<Cart_Delivery_Model>cart_delivery_models = new ArrayList<Cart_Delivery_Model>();
     ImageView iv_continue_payment;
+    EditText et_shippingfirstname;
     public Shipping_fragment() {
         // Required empty public constructor
     }
@@ -45,6 +49,7 @@ public class Shipping_fragment extends Fragment {
         AllocateMEmory(v);
         CALL_CART_DELIVERY();
 
+        et_shippingfirstname=(EditText)v.findViewById(R.id.et_shippingfirstname);
         Checkout_fragment.lv_payment_selected.setVisibility(View.INVISIBLE);
         Checkout_fragment.iv_shipping_done.setVisibility(View.INVISIBLE);
         Checkout_fragment.lv_shipping_selected.setVisibility(View.VISIBLE);
@@ -81,7 +86,6 @@ public class Shipping_fragment extends Fragment {
         }
         cart_delivery_adapter.notifyDataSetChanged();
     }
-
     private void AllocateMEmory(View v) {
         recyclerview_item_delivery=(RecyclerView)v.findViewById(R.id.recyclerview_item_delivery);
         iv_continue_payment=(ImageView) v.findViewById(R.id.iv_continue_payment);

@@ -13,7 +13,7 @@
         <activity android:name=".Activity.Navigation_drawer_activity"
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden" ></activity>
+            android:windowSoftInputMode="adjustPan|stateHidden"></activity>
         <activity
             android:name=".Activity.Splash"
             android:label="@string/app_name"

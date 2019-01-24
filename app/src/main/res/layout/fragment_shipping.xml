@@ -66,6 +66,7 @@
                                 android:paddingTop="15dp">
 
                                 <EditText
+                                    android:id="@+id/et_shippingfirstname"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:layout_gravity="center"
@@ -113,6 +114,7 @@
                                 android:paddingTop="15dp">
 
                                 <EditText
+                                    android:id="@+id/et_shippingsecondname"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:layout_gravity="center"
@@ -160,6 +162,7 @@
                                 android:paddingTop="15dp">
 
                                 <EditText
+                                    android:id="@+id/et_shippingphonenumber"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:layout_gravity="center"
@@ -207,6 +210,7 @@
                                 android:paddingTop="15dp">
 
                                 <EditText
+                                    android:id="@+id/et_shippingaddress"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:layout_gravity="center"
@@ -254,6 +258,7 @@
                                 android:paddingTop="15dp">
 
                                 <EditText
+                                    android:id="@+id/et_shippingzipcode"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:layout_gravity="center"
@@ -301,6 +306,7 @@
                                 android:paddingTop="15dp">
 
                                 <EditText
+                                    android:id="@+id/et_shippingcity"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:layout_gravity="center"

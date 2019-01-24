@@ -49,7 +49,7 @@
                             android:id="@+id/payment_method_recyclerview"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:scrollbars="horizontal" />
+                            android:scrollbars="none" />
                     </LinearLayout>
 
                 </LinearLayout>
@@ -102,6 +102,10 @@
                                     android:layout_weight="1.6"
                                     android:drawableRight="@drawable/mastercard"
                                     android:gravity="center|left"
+                                    android:imeOptions="actionNext"
+                                    android:inputType="number"
+                                    android:maxLines="1"
+                                    android:singleLine="true"
                                     android:hint="1000 2000 3000 4000"
                                     android:textColorHint="@color/edittextpay"
                                     android:textSize="14dp" />
@@ -135,7 +139,11 @@
                                         android:layout_height="wrap_content"
                                         android:layout_weight="1"
                                         android:gravity="center"
-                                        android:hint="01/21"
+                                        android:hint="00/00"
+                                        android:imeOptions="actionNext"
+                                        android:inputType="date"
+                                        android:maxLines="1"
+                                        android:singleLine="true"
                                         android:textColorHint="@color/edittextpay"
                                         android:textSize="14dp" />
 
@@ -152,7 +160,11 @@
                                         android:layout_height="wrap_content"
                                         android:layout_weight="1"
                                         android:gravity="center|right"
-                                        android:hint="789"
+                                        android:hint="000"
+                                        android:imeOptions="actionNext"
+                                        android:inputType="number"
+                                        android:maxLines="1"
+                                        android:singleLine="true"
                                         android:paddingRight="10dp"
                                         android:textColorHint="@color/edittextpay"
                                         android:textSize="14dp" />
@@ -181,8 +193,12 @@
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1.6"
                                     android:gravity="center|right"
-                                    android:hint="MOHAMED MAKRAM"
+                                    android:hint="CARDHOLDER NAME"
                                     android:paddingRight="10dp"
+                                    android:imeOptions="actionNext"
+                                    android:inputType="text"
+                                    android:maxLines="1"
+                                    android:singleLine="true"
                                     android:textColorHint="@color/edittextpay"
                                     android:textSize="14dp" />
                             </LinearLayout>
@@ -192,7 +208,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:layout_marginTop="50dp"
+                            android:layout_marginTop="10dp"
                             android:orientation="horizontal">
 
                             <TextView
@@ -224,6 +240,7 @@
 
             </LinearLayout>
         </ScrollView>
+
     </LinearLayout>
 
     <LinearLayout
