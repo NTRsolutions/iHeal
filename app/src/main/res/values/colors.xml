@@ -29,10 +29,10 @@
     <color name="edittextpay">#4a4a4a</color>
     <color name="titlepayal">#c3c3c3</color>
 
-    <!--
-
-    selected color:fee5a7
-    bg color :#269e6f
-    top heder and bouttom logout bg color :#36ba86
-    -->
+    <color name="trans">#00FFFFFF</color>
+    <!-- iteam details  -->
+    <color name="slieder_bg">#f6f5f5</color>
+    <color name="addtocart">#e96060</color>
+    <color name="haircare">#797979</color>
+    
 </resources>

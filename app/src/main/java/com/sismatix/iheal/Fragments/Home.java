@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.sismatix.iheal.R;
 
@@ -13,8 +14,9 @@ import com.sismatix.iheal.R;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class Home extends Fragment {
+public class Home extends Fragment implements View.OnClickListener {
 
+    ImageView iv_iteamdeails;
 
     public Home() {
         // Required empty public constructor
@@ -25,7 +27,26 @@ public class Home extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        View v=inflater.inflate(R.layout.fragment_home, container, false);
+        iv_iteamdeails=(ImageView)v.findViewById(R.id.iv_iteamdeails);
+
+        iv_iteamdeails.setOnClickListener(this);
+        return v;
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+
+            case R.id.iv_iteamdeails:
+                android.support.v4.app.FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.rootLayout, new iteam_details());
+                fragmentTransaction.commit();
+                break;
+
+            default:
+                break;
+        }
+
+    }
 }

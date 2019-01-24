@@ -27,4 +27,9 @@
     <string name="CONFIRMANDPAY"><![CDATA[CONFIRM & PAY]]></string>
     <string name="CONFIRM_ORDER">CONFIRM YOUR ORDER</string>
 
+    <!-- iteam screen -->
+    <string name="addtocart">Add To Cart</string>
+    <string name="usecare"><![CDATA[Use & Care]]></string>
+
+      
 </resources>
