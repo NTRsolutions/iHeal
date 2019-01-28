@@ -6,70 +6,91 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".Fragments.iteam_details">
+
     <android.support.design.widget.AppBarLayout
         android:id="@+id/app_bar_scrolling"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimaryDark"
         android:fitsSystemWindows="true"
         android:theme="@style/AppTheme.AppBarOverlay">
 
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar"
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:gravity="center"
+            app:layout_collapseMode="pin"
+            app:popupTheme="@style/AppTheme.PopupOverlay">
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                app:layout_collapseMode="pin"
-                android:gravity="center"
-                app:popupTheme="@style/AppTheme.PopupOverlay" >
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:weightSum="8">
+
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    android:weightSum="6">
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:layout_weight="0.8"
-                        android:layout_gravity="center"
-                        android:textSize="16dp"
-                        android:paddingLeft="20dp"
-                        android:textColor="@color/white"
-                        android:text="ScalpClenz Shampoo "/>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:layout_gravity="center"
-                        android:layout_weight="2.6">
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/ic_shopping_cart_black_36dp"/>
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:layout_gravity="center"
-                        android:layout_weight="2.6">
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/ic_shopping_cart_black_36dp"/>
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="2.4"
+                    android:gravity="center">
 
-                    </LinearLayout>
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_keyboard_arrow_left_white_36dp" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:paddingLeft="20dp"
+                    android:text="ScalpClenz Shampoo "
+                    android:textColor="@color/white"
+                    android:textSize="16dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="2.3"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_favorite_border_white_36dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="2.3"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_shopping_cart_black_36dp" />
 
                 </LinearLayout>
 
-            </android.support.v7.widget.Toolbar>
+            </LinearLayout>
+
+        </android.support.v7.widget.Toolbar>
 
     </android.support.design.widget.AppBarLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="gone">
 
         <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"
@@ -83,49 +104,53 @@
                 android:layout_height="?attr/actionBarSize"
                 android:background="@color/colorPrimaryDark"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-                app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" >
+                app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:weightSum="4">
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="vertical"
                         android:layout_gravity="center|start"
-                        android:gravity="center|start"
                         android:layout_marginLeft="10dp"
-                        android:layout_weight="3">
+                        android:layout_weight="3"
+                        android:gravity="center|start"
+                        android:orientation="vertical">
+
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:visibility="visible"
-                            android:src="@drawable/ic_close_black_18dp"/>
+                            android:src="@drawable/ic_close_black_18dp"
+                            android:visibility="visible" />
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="vertical"
                         android:layout_gravity="center|start"
-                        android:gravity="center|start"
                         android:layout_marginLeft="15dp"
-                        android:layout_weight="1">
+                        android:layout_weight="1"
+                        android:gravity="center|start"
+                        android:orientation="vertical">
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Shopping Cart"
+                            android:textColor="@color/white"
                             android:textSize="18sp"
-                            android:textStyle="bold"
-                            android:textColor="@color/white"/>
+                            android:textStyle="bold" />
                     </LinearLayout>
                 </LinearLayout>
             </android.support.v7.widget.Toolbar>
 
         </android.support.design.widget.AppBarLayout>
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -244,10 +269,11 @@
                                 android:layout_weight="1.5">
 
                                 <TextView
+                                    android:id="@+id/tv_descriptiontitle"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="Description"
-                                    android:textColor="@color/edittextpay"/>
+                                    android:textColor="@color/edittextpay" />
                             </LinearLayout>
 
                             <LinearLayout
@@ -255,10 +281,20 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="2.5"
                                 android:gravity="right">
+
                                 <ImageView
+                                    android:id="@+id/iv_iteamadd"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:src="@drawable/ic_remove_black_24dp"/>
+                                    android:src="@drawable/ic_remove_black_24dp"
+                                    android:visibility="visible" />
+
+                                <ImageView
+                                    android:id="@+id/iv_iteamremove"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:src="@drawable/ic_remove_black_24dp"
+                                    android:visibility="gone" />
 
                             </LinearLayout>
                         </LinearLayout>
@@ -270,10 +306,11 @@
                             android:orientation="horizontal">
 
                             <TextView
+                                android:id="@+id/tv_londiscription"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textColor="#373737"
-                                android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do" />
+                                android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do"
+                                android:textColor="#373737" />
                         </LinearLayout>
                     </LinearLayout>
 
@@ -282,6 +319,7 @@
                         android:layout_height="2dp"
                         android:layout_gravity="bottom"
                         android:background="#d1cece" />
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -305,8 +343,8 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="@string/usecare"
-                                    android:textSize="16dp"
-                                    android:textColor="@color/edittextpay"/>
+                                    android:textColor="@color/edittextpay"
+                                    android:textSize="16dp" />
                             </LinearLayout>
 
                             <LinearLayout
@@ -314,10 +352,11 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="2.5"
                                 android:gravity="right">
+
                                 <ImageView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:src="@drawable/ic_add_black_24dp"/>
+                                    android:src="@drawable/ic_add_black_24dp" />
 
                             </LinearLayout>
                         </LinearLayout>
@@ -326,21 +365,23 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
-                            android:visibility="gone"
-                            android:orientation="horizontal">
+                            android:orientation="horizontal"
+                            android:visibility="gone">
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textColor="#373737"
-                                android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do" />
+                                android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do"
+                                android:textColor="#373737" />
                         </LinearLayout>
                     </LinearLayout>
+
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="2dp"
                         android:layout_gravity="bottom"
                         android:background="#d1cece" />
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -364,8 +405,8 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="Ingredients"
-                                    android:textSize="16dp"
-                                    android:textColor="@color/edittextpay"/>
+                                    android:textColor="@color/edittextpay"
+                                    android:textSize="16dp" />
                             </LinearLayout>
 
                             <LinearLayout
@@ -373,10 +414,11 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="2.5"
                                 android:gravity="right">
+
                                 <ImageView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:src="@drawable/ic_add_black_24dp"/>
+                                    android:src="@drawable/ic_add_black_24dp" />
 
                             </LinearLayout>
                         </LinearLayout>
@@ -385,16 +427,17 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
-                            android:visibility="gone"
-                            android:orientation="horizontal">
+                            android:orientation="horizontal"
+                            android:visibility="gone">
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textColor="#373737"
-                                android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do" />
+                                android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do"
+                                android:textColor="#373737" />
                         </LinearLayout>
                     </LinearLayout>
+
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="2dp"

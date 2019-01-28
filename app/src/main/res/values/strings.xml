@@ -30,6 +30,9 @@
     <!-- iteam screen -->
     <string name="addtocart">Add To Cart</string>
     <string name="usecare"><![CDATA[Use & Care]]></string>
+    <string name="ordernow">ORDER NOW</string>
 
-      
+
+
+
 </resources>
