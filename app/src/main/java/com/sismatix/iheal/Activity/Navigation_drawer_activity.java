@@ -135,6 +135,9 @@ public class Navigation_drawer_activity extends AppCompatActivity
 
         Bootom_Navigation_view();
     }
+    public DrawerLayout getmDrawerLayout() {
+        return drawer;
+    }
 
     private void Bootom_Navigation_view() {
         viewPager = findViewById(R.id.view_pager_bottom_navigation);

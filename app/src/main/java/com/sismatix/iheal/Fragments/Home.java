@@ -16,7 +16,7 @@ import com.sismatix.iheal.R;
  */
 public class Home extends Fragment implements View.OnClickListener {
 
-    ImageView iv_iteamdeails;
+    ImageView iv_iteamdeails,iv_hair_care;
 
     public Home() {
         // Required empty public constructor
@@ -29,8 +29,10 @@ public class Home extends Fragment implements View.OnClickListener {
         // Inflate the layout for this fragment
         View v=inflater.inflate(R.layout.fragment_home, container, false);
         iv_iteamdeails=(ImageView)v.findViewById(R.id.iv_iteamdeails);
+        iv_hair_care=(ImageView)v.findViewById(R.id.iv_hair_care);
 
         iv_iteamdeails.setOnClickListener(this);
+        iv_hair_care.setOnClickListener(this);
         return v;
     }
 
@@ -42,6 +44,11 @@ public class Home extends Fragment implements View.OnClickListener {
                 android.support.v4.app.FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
                 fragmentTransaction.replace(R.id.rootLayout, new iteam_details());
                 fragmentTransaction.commit();
+                break;
+            case R.id.iv_hair_care:
+                android.support.v4.app.FragmentTransaction fragmentTransaction1 = getFragmentManager().beginTransaction();
+                fragmentTransaction1.replace(R.id.rootLayout, new Hair_Cair_fregment());
+                fragmentTransaction1.commit();
                 break;
 
             default:

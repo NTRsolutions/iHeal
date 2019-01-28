@@ -29,6 +29,11 @@ dependencies {
     implementation 'com.android.volley:volley:1.1.0'
     implementation 'me.relex:circleindicator:1.2.2@aar'
     implementation 'com.xfinity:dahdit:0.9.3'
+    implementation 'com.flaviofaria:kenburnsview:1.0.7'
+    implementation 'com.android.support:palette-v7:28.0.0'
+
+
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+
 }

@@ -16,6 +16,7 @@
     <color name="view">#c8c8c8</color>
     <color name="delete">#f45d64</color>
     <color name="edit">#3f7a5c</color>
+    <color name="black_trans80">#14000000</color>
 
     //shipping page color
     <color name="light_grey">#c3c3c3</color>
