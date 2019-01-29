@@ -6,6 +6,7 @@
     android:orientation="vertical"
     android:background="@color/white"
     android:layout_marginTop="?attr/actionBarSize"
+    android:layout_marginBottom="?attr/actionBarSize"
     tools:context="com.sismatix.iheal.Fragments.Home">
 
    <LinearLayout

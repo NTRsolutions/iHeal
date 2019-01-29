@@ -12,6 +12,8 @@ import android.widget.TextView;
 
 import com.sismatix.iheal.R;
 
+import static com.sismatix.iheal.Activity.Navigation_drawer_activity.bottom_navigation;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -30,7 +32,7 @@ public class Account extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v =  inflater.inflate(R.layout.fragment_account, container, false);
-
+        bottom_navigation.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
         lv_email_singup = (LinearLayout)v.findViewById(R.id.lv_email_singup);
         tv_login = (TextView)v.findViewById(R.id.tv_login);
 

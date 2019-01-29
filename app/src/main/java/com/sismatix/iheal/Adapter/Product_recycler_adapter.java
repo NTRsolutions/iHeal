@@ -1,6 +1,8 @@
 package com.sismatix.iheal.Adapter;
 
 import android.content.Context;
+import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,6 +14,7 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.sismatix.iheal.Fragments.iteam_details;
 import com.sismatix.iheal.Model.Cart_Model;
 import com.sismatix.iheal.Model.Product_Grid_Model;
 import com.sismatix.iheal.R;
@@ -41,6 +44,16 @@ public class Product_recycler_adapter extends RecyclerView.Adapter<Product_recyc
     public void onBindViewHolder(final Product_recycler_adapter.MyViewHolder holder, final int position) {
         final Product_Grid_Model product_model = models.get(position);
 
+        holder.lv_product_click.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AppCompatActivity activity = (AppCompatActivity) view.getContext();
+                Fragment myFragment = new iteam_details();
+                activity.getSupportFragmentManager().beginTransaction().replace(R.id.rootLayout, myFragment).addToBackStack(null).commit();
+
+            }
+        });
+
     }
 
     @Override
@@ -52,7 +65,7 @@ public class Product_recycler_adapter extends RecyclerView.Adapter<Product_recyc
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public ImageView iv_product_image;
         TextView tv_product_name, tv_product_price;
-        LinearLayout lv_img_click;
+        LinearLayout lv_img_click,lv_product_click;
         ProgressBar progress_grid;
 
         public MyViewHolder(View view) {
@@ -62,6 +75,7 @@ public class Product_recycler_adapter extends RecyclerView.Adapter<Product_recyc
 
 
             iv_product_image = (ImageView) view.findViewById(R.id.iv_product_image);
+            lv_product_click = (LinearLayout) view.findViewById(R.id.lv_product_click);
 
 
         }

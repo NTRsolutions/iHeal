@@ -26,6 +26,8 @@ import com.sismatix.iheal.R;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.sismatix.iheal.Activity.Navigation_drawer_activity.bottom_navigation;
+
 /**
  * A simple {@link Fragment} subclass.
  */

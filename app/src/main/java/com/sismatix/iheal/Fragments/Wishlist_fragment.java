@@ -18,6 +18,8 @@ import com.sismatix.iheal.R;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.sismatix.iheal.Activity.Navigation_drawer_activity.bottom_navigation;
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -37,6 +39,7 @@ public class Wishlist_fragment extends Fragment {
         // Inflate the layout for this fragment
 
          v=inflater.inflate(R.layout.fragment_wishlist_fragment, container, false);
+        bottom_navigation.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
 
          AllocateMemory(v);
 

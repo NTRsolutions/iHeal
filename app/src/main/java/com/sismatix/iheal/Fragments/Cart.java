@@ -34,6 +34,8 @@ import com.sismatix.iheal.R;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.sismatix.iheal.Activity.Navigation_drawer_activity.bottom_navigation;
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -53,6 +55,7 @@ public class Cart extends Fragment  {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view=inflater.inflate(R.layout.fragment_cart, container, false);
+        bottom_navigation.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
         AllocateMemory(view);
 
         prepare_Cart();

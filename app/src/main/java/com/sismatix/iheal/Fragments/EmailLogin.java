@@ -10,6 +10,8 @@ import android.widget.EditText;
 
 import com.sismatix.iheal.R;
 
+import static com.sismatix.iheal.Activity.Navigation_drawer_activity.bottom_navigation;
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -27,6 +29,7 @@ public class EmailLogin extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v=inflater.inflate(R.layout.fragment_email_login, container, false);
+        bottom_navigation.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
         return v;
 
 

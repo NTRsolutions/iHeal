@@ -1,14 +1,18 @@
 package com.sismatix.iheal.Fragments;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.sismatix.iheal.R;
+
+import static com.sismatix.iheal.Activity.Navigation_drawer_activity.bottom_navigation;
 
 
 /**
@@ -28,12 +32,22 @@ public class Home extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v=inflater.inflate(R.layout.fragment_home, container, false);
+        bottom_navigation.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
         iv_iteamdeails=(ImageView)v.findViewById(R.id.iv_iteamdeails);
         iv_hair_care=(ImageView)v.findViewById(R.id.iv_hair_care);
-
         iv_iteamdeails.setOnClickListener(this);
         iv_hair_care.setOnClickListener(this);
         return v;
+    }
+
+    private void loadFragment(Fragment fragment) {
+        Log.e("clickone", "");
+        android.support.v4.app.FragmentManager manager = getFragmentManager();
+        android.support.v4.app.FragmentTransaction transaction = manager.beginTransaction();
+        transaction.replace(R.id.rootLayout, fragment);
+        transaction.addToBackStack(null);
+
+        transaction.commit();
     }
 
     @Override
@@ -41,14 +55,10 @@ public class Home extends Fragment implements View.OnClickListener {
         switch (v.getId()) {
 
             case R.id.iv_iteamdeails:
-                android.support.v4.app.FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.rootLayout, new iteam_details());
-                fragmentTransaction.commit();
+                loadFragment(new TransParant_Hair_care_freg());
                 break;
             case R.id.iv_hair_care:
-                android.support.v4.app.FragmentTransaction fragmentTransaction1 = getFragmentManager().beginTransaction();
-                fragmentTransaction1.replace(R.id.rootLayout, new Hair_Cair_fregment());
-                fragmentTransaction1.commit();
+                loadFragment(new TransParant_Hair_care_freg());
                 break;
 
             default:

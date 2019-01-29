@@ -9,6 +9,7 @@
     app:cardElevation="2dp">
 
     <LinearLayout
+        android:id="@+id/lv_product_click"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"

@@ -22,6 +22,8 @@ import com.sismatix.iheal.Adapter.Nature_TabPager_Adapter;
 import com.sismatix.iheal.Adapter.TabPageAdapter;
 import com.sismatix.iheal.R;
 
+import static com.sismatix.iheal.Activity.Navigation_drawer_activity.bottom_navigation;
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -43,6 +45,7 @@ public class Nature_Category_freg extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view= inflater.inflate(R.layout.fragment_nature__category_freg, container, false);
+        bottom_navigation.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
         setHasOptionsMenu(true);
 
         viewpager_nature = (ViewPager) view.findViewById(R.id.viewpager_nature);

@@ -5,7 +5,8 @@
     android:background="@color/nature_bg"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:layout_margin="10dp">
+    android:layout_margin="10dp"
+    android:id="@+id/lv_nature_click">
     <TextView
         android:id="@+id/tv_category_name"
         android:layout_gravity="center"

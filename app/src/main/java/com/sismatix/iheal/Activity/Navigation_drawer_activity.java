@@ -46,7 +46,7 @@ public class Navigation_drawer_activity extends AppCompatActivity
 
     //bottom navigation
     private ViewPager viewPager;
-    private BottomNavigationView bottom_navigation;
+    public static BottomNavigationView bottom_navigation;
     private List<View> viewList;
 
     /*int navDefaultTextColor = Color.parseColor("#ffe5a8");

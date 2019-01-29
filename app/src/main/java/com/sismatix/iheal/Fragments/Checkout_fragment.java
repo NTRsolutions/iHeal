@@ -15,6 +15,8 @@ import android.widget.Toast;
 
 import com.sismatix.iheal.R;
 
+import static com.sismatix.iheal.Activity.Navigation_drawer_activity.bottom_navigation;
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -35,7 +37,7 @@ public class Checkout_fragment extends Fragment implements View.OnClickListener 
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         v=inflater.inflate(R.layout.fragment_checkout_fragment, container, false);
-
+        bottom_navigation.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
         AllocateMemory(v);
 
         lv_shipping.setOnClickListener(this);

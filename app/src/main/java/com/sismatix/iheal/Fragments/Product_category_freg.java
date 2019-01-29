@@ -20,6 +20,8 @@ import com.sismatix.iheal.R;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.sismatix.iheal.Activity.Navigation_drawer_activity.bottom_navigation;
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -41,6 +43,7 @@ public class Product_category_freg extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_product_category_freg, container, false);
+
         recycler_product_category = (RecyclerView) view.findViewById(R.id.recycler_product_category);
 
         product_category_adapter = new Product_Category_adapter(getActivity(), product_model);

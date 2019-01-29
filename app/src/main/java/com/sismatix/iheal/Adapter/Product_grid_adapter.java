@@ -110,7 +110,7 @@ import java.util.ArrayList;
         }
         class MyViewHolder {
             public ImageView imageview;
-            LinearLayout lv_img_click;
+            LinearLayout lv_img_click,lv_product_click;
             ProgressBar progress_grid;
         }
     }
