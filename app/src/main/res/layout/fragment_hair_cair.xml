@@ -31,8 +31,7 @@
             app:expandedTitleMarginStart="48dp"
             app:expandedTitleMarginTop="80dp"
             app:expandedTitleGravity="center"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
-            >
+            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
 
             <ImageView
                 android:id="@+id/header"

@@ -50,6 +50,9 @@
         <item name="android:textColorPrimaryDisableOnly">@color/toggle_btn</item>
         <item name="colorAccent">@color/toggle_btn</item>
     </style>
-
-
+    //Edittext underline color
+    <style name="MyEditTextStyle2" parent="Widget.AppCompat.EditText">
+        <item name="colorControlActivated">@color/colorPrimary</item>
+        <item name="colorControlNormal">@color/colorPrimary</item>
+    </style>
 </resources>

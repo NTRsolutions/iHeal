@@ -61,6 +61,7 @@
                     app:hintTextAppearance="@style/TextAppearance.App.TextInputLayout">
 
                     <EditText
+                        android:theme="@style/MyEditTextStyle2"
                         android:id="@+id/login_input_email"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -79,6 +80,7 @@
                     app:hintTextAppearance="@style/TextAppearance.App.TextInputLayout">
 
                     <EditText
+                        android:theme="@style/MyEditTextStyle2"
                         android:id="@+id/login_input_password"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

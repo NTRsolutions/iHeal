@@ -31,7 +31,6 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:orientation="horizontal"
-
                     android:weightSum="6">
 
                     <LinearLayout
@@ -46,7 +45,7 @@
                             android:id="@+id/iv_drawer_close"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/close"
+                            android:src="@drawable/ic_close_black_36dp"
                             android:tint="@color/white" />
                     </LinearLayout>
 
@@ -91,7 +90,7 @@
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/ic_home"
+                            android:src="@drawable/ic_home_black_36dp"
                             android:tint="@color/white" />
                     </LinearLayout>
 
@@ -129,7 +128,7 @@
                     android:id="@+id/iv_profile_image"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/account_top"
+                    android:src="@drawable/account_navi"
                     app:civ_border_color="#fff"
                     app:civ_border_width="2dp" />
 
@@ -176,11 +175,32 @@
                 android:layout_marginRight="5dp"
                 android:orientation="vertical">
 
-                <ImageView
+                <FrameLayout
+                    android:id="@+id/item_counter"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_add_shopping_cart_black_36dp"
-                    android:tint="@color/white" />
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:src="@drawable/ic_shopping_cart_black_36dp"
+                        android:tint="@color/white"
+                        android:scaleType="fitXY" />
+
+                    <TextView
+                        android:id="@+id/item_count"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="top|right"
+                        android:background="@drawable/round_text_cart_item"
+                        android:gravity="center"
+                        android:text="0"
+                        android:textColor="@color/white" />
+                </FrameLayout>
+
             </LinearLayout>
 
 

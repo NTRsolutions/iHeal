@@ -1,12 +1,15 @@
 package com.sismatix.iheal.Fragments;
 
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
@@ -21,6 +24,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -50,12 +55,13 @@ public class Hair_Cair_fregment extends Fragment {
         // Required empty public constructor
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_hair_cair, container, false);
         //option manu
+
         setHasOptionsMenu(true);
 
         viewPager = (ViewPager) view.findViewById(R.id.viewpager);
@@ -90,8 +96,6 @@ public class Hair_Cair_fregment extends Fragment {
          final TabPageAdapter adapter = new TabPageAdapter(getFragmentManager(), tabLayout.getTabCount());
          viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-
-
 
 
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
