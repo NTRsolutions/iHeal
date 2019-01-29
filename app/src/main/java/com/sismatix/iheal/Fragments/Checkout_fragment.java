@@ -45,7 +45,7 @@ public class Checkout_fragment extends Fragment implements View.OnClickListener 
         lv_payment_selected.setVisibility(View.INVISIBLE);
         lv_confirmation_selected.setVisibility(View.INVISIBLE);
         lv_shipping_selected.setVisibility(View.VISIBLE);
-        Toast.makeText(getActivity(), "shipping", Toast.LENGTH_SHORT).show();
+
         loadFragment(new Shipping_fragment());
 
 

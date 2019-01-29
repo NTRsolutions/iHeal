@@ -5,6 +5,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,13 +17,17 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
 
+import com.sismatix.iheal.Adapter.Cart_List_Adapter;
 import com.sismatix.iheal.Adapter.Product_grid_adapter;
+import com.sismatix.iheal.Adapter.Product_recycler_adapter;
+import com.sismatix.iheal.Model.Cart_Model;
 import com.sismatix.iheal.Model.Product_Grid_Model;
 import com.sismatix.iheal.R;
 
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -27,6 +36,11 @@ public class Tablayout_hair_fregment extends Fragment {
 
     public static ArrayList<Product_Grid_Model> grid_model = new ArrayList<Product_Grid_Model>();
     GridView gridview;
+    RecyclerView recycler_product;
+    private List<Product_Grid_Model> product_model = new ArrayList<Product_Grid_Model>();
+    private Product_recycler_adapter product_adapter;
+
+
     View v;
 
     public Tablayout_hair_fregment() {
@@ -40,42 +54,25 @@ public class Tablayout_hair_fregment extends Fragment {
         // Inflate the layout for this fragment
         v= inflater.inflate(R.layout.fragment_tablayout_hair, container, false);
 
-        gridview=(GridView)v.findViewById(R.id.gridview);
+        //gridview=(GridView)v.findViewById(R.id.gridview);
+        recycler_product=(RecyclerView) v.findViewById(R.id.recycler_product);
 
-        CALL_GRID_API();
 
-        gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                AppCompatActivity activity = (AppCompatActivity) view.getContext();
-               /* Intent ii = new Intent(Package_image_gridview.this, Package_slider.class);
-                ii.putExtra("position",position);
-                ii.putExtra("Package_id", Package_id);
-                activity.startActivity(ii);
-                activity.overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);*/
-
-            }
-        });
+        product_adapter = new Product_recycler_adapter(getActivity(), product_model);
+        recycler_product.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+        recycler_product.setItemAnimator(new DefaultItemAnimator());
+        recycler_product.setAdapter(product_adapter);
+        CALL_PRODUCT_API();
         return v;
     }
+    private void CALL_PRODUCT_API() {
 
-    private void CALL_GRID_API() {
-
-
-        for (int i = 0; i <10; i++) {
-            try{
-                Product_Grid_Model gmodel = new Product_Grid_Model(
-                       "","","");
-                grid_model.add(gmodel);
-
-            }catch (Exception e) {
-            }finally {
-            }
+        for (int i = 0; i < 15; i++) {
+            product_model.add(new Product_Grid_Model("", "",""));
         }
-
-        Product_grid_adapter adapter = new Product_grid_adapter(getActivity(), grid_model);
-        gridview.setAdapter(adapter);
-
+        product_adapter.notifyDataSetChanged();
     }
+
+
 
 }

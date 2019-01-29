@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="10dp"
-    app:cardBackgroundColor="@color/view"
+    app:cardBackgroundColor="@color/product_bg"
     app:cardCornerRadius="1dp"
     app:cardElevation="2dp">
 
@@ -27,6 +27,7 @@
             android:orientation="vertical">
 
             <ImageView
+                android:id="@+id/iv_product_image"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/product" />
@@ -48,9 +49,11 @@
                 android:gravity="center"
                 android:text="ScalpClans Shampoo"
                 android:textColor="@color/black"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                android:id="@+id/tv_product_name"/>
 
             <TextView
+                android:id="@+id/tv_product_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"

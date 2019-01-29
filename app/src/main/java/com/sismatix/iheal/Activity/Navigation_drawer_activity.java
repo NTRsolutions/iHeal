@@ -30,6 +30,7 @@ import com.sismatix.iheal.Fragments.Account;
 import com.sismatix.iheal.Fragments.Cart;
 import com.sismatix.iheal.Fragments.Favourite;
 import com.sismatix.iheal.Fragments.Home;
+import com.sismatix.iheal.Fragments.Nature_Category_freg;
 import com.sismatix.iheal.Fragments.Search;
 import com.sismatix.iheal.R;
 
@@ -359,6 +360,10 @@ public class Navigation_drawer_activity extends AppCompatActivity
 
         if (id == R.id.nav_product_categories) {
             // Handle the camera action
+
+            android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.rootLayout, new Nature_Category_freg());
+            fragmentTransaction.commit();
         } else if (id == R.id.nav_health_topic) {
 
         } else if (id == R.id.nav_offers) {

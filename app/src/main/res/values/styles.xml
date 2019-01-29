@@ -55,4 +55,5 @@
         <item name="colorControlActivated">@color/colorPrimary</item>
         <item name="colorControlNormal">@color/colorPrimary</item>
     </style>
+
 </resources>

@@ -35,6 +35,11 @@
     <color name="slieder_bg">#f6f5f5</color>
     <color name="addtocart">#e96060</color>
     <color name="haircare">#797979</color>
+    //product_row
+    <color name="product_bg">#efefef</color>
 
-    
+    //nature row_row
+    <color name="nature_bg">#40b889</color>
+
+
 </resources>

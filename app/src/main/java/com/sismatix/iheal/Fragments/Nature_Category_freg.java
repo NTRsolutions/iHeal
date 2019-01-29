@@ -1,19 +1,11 @@
 package com.sismatix.iheal.Fragments;
 
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
-import android.support.v4.widget.NestedScrollView;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.graphics.Palette;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -25,56 +17,50 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.flaviofaria.kenburnsview.KenBurnsView;
 import com.sismatix.iheal.Activity.Navigation_drawer_activity;
+import com.sismatix.iheal.Adapter.Nature_TabPager_Adapter;
 import com.sismatix.iheal.Adapter.TabPageAdapter;
 import com.sismatix.iheal.R;
-
-import java.util.Set;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class Hair_Cair_fregment extends Fragment {
-    int mutedColor = R.attr.colorPrimary;
-
-    private CollapsingToolbarLayout collapsingToolbar;
-
-    private ViewPager viewPager;
-
-    private TabLayout tabLayout;
-    LinearLayout fragment_container;
+public class Nature_Category_freg extends Fragment {
     View view;
+    private CollapsingToolbarLayout collapsing_toolbar_nature;
 
-    public Hair_Cair_fregment() {
+    private ViewPager viewpager_nature;
+
+    private TabLayout tablayout_nature;
+    LinearLayout fragment_container;
+    public Nature_Category_freg() {
         // Required empty public constructor
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_hair_cair, container, false);
-        //option manu
+        view= inflater.inflate(R.layout.fragment_nature__category_freg, container, false);
         setHasOptionsMenu(true);
 
-        viewPager = (ViewPager) view.findViewById(R.id.viewpager);
-        tabLayout = (TabLayout) view.findViewById(R.id.tablayout);
-       // fragment_container = (LinearLayout) view.findViewById(R.id.fragment_container);
-        collapsingToolbar = (CollapsingToolbarLayout) view
-                .findViewById(R.id.collapsing_toolbar);
-        ImageView header = (ImageView) view.findViewById(R.id.header);
+        viewpager_nature = (ViewPager) view.findViewById(R.id.viewpager_nature);
+        tablayout_nature = (TabLayout) view.findViewById(R.id.tablayout_nature);
+        // fragment_container = (LinearLayout) view.findViewById(R.id.fragment_container);
+        collapsing_toolbar_nature = (CollapsingToolbarLayout) view
+                .findViewById(R.id.collapsing_toolbar_nature);
+        ImageView iv_nature = (ImageView) view.findViewById(R.id.iv_nature);
 
-        final Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+        final Toolbar toolbar_nature = (Toolbar) view.findViewById(R.id.toolbar_nature);
 
-        ((Navigation_drawer_activity) getActivity()).setSupportActionBar(toolbar);
+        ((Navigation_drawer_activity) getActivity()).setSupportActionBar(toolbar_nature);
         ((Navigation_drawer_activity) getActivity()).getSupportActionBar()
                 .setDisplayHomeAsUpEnabled(true);
 
-        collapsingToolbar.setTitle("Hair Care");
+        collapsing_toolbar_nature.setTitle("Nature's Categories");
 
         SetTablayout();
-
         return view;
     }
 
@@ -84,21 +70,18 @@ public class Hair_Cair_fregment extends Fragment {
         //   setupViewPager(viewPager);
         // tabLayout.setupWithViewPager(viewPager);
 
-        tabLayout.addTab(tabLayout.newTab().setText("VIEW-ALL"));
-        tabLayout.addTab(tabLayout.newTab().setText("ANTI-SULFAT"));
-         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
-         final TabPageAdapter adapter = new TabPageAdapter(getFragmentManager(), tabLayout.getTabCount());
-         viewPager.setAdapter(adapter);
-        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+        tablayout_nature.addTab(tablayout_nature.newTab().setText("VIEW-ALL"));
+        tablayout_nature.addTab(tablayout_nature.newTab().setText("ANTI-SULFAT"));
+        tablayout_nature.setTabGravity(TabLayout.GRAVITY_FILL);
+        final Nature_TabPager_Adapter adapter = new Nature_TabPager_Adapter(getFragmentManager(), tablayout_nature.getTabCount());
+        viewpager_nature.setAdapter(adapter);
+        viewpager_nature.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tablayout_nature));
 
-
-
-
-        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+        tablayout_nature.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
 
-                   viewPager.setCurrentItem(tab.getPosition());
+                viewpager_nature.setCurrentItem(tab.getPosition());
                 switch (tab.getPosition()) {
                     case 0:
                         //  header.setImageResource(R.drawable.header_1);
@@ -117,14 +100,6 @@ public class Hair_Cair_fregment extends Fragment {
             public void onTabReselected(TabLayout.Tab tab) {
             }
         });
-    }
-
-    private void replaceFragment(Fragment fragment) {
-        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-        android.support.v4.app.FragmentTransaction transaction = fragmentManager.beginTransaction();
-       // transaction.replace(R.id.fragment_container, fragment);
-
-        transaction.commit();
     }
 
     // cart menu
@@ -148,6 +123,4 @@ public class Hair_Cair_fregment extends Fragment {
                 return super.onOptionsItemSelected(item);
         }
     }
-
-
 }

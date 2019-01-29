@@ -52,6 +52,8 @@ public class Shipping_fragment extends Fragment {
         et_shippingfirstname=(EditText)v.findViewById(R.id.et_shippingfirstname);
         Checkout_fragment.lv_payment_selected.setVisibility(View.INVISIBLE);
         Checkout_fragment.iv_shipping_done.setVisibility(View.INVISIBLE);
+        Checkout_fragment.iv_payment_done.setVisibility(View.INVISIBLE);
+        Checkout_fragment.iv_confirmation_done.setVisibility(View.INVISIBLE);
         Checkout_fragment.lv_shipping_selected.setVisibility(View.VISIBLE);
         Checkout_fragment.lv_payment_selected.setVisibility(View.INVISIBLE);
         Checkout_fragment.lv_confirmation_selected.setVisibility(View.INVISIBLE);

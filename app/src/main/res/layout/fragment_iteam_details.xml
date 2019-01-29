@@ -61,6 +61,7 @@
                     android:gravity="center">
 
                     <ImageView
+                        android:id="@+id/iv_wishlist"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/ic_favorite_border_white_36dp" />
@@ -74,6 +75,7 @@
                     android:gravity="center">
 
                     <ImageView
+                        android:id="@+id/iv_itemdetail_cart"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/ic_shopping_cart_black_36dp" />

@@ -13,19 +13,19 @@
 
 
     <!-- TODO: Update blank fragment layout -->
-   <!-- <GridView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/gridview"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/white"
-        android:columnWidth="140dp"
-        android:gravity="center"
-        android:horizontalSpacing="10dp"
-        android:numColumns="auto_fit"
-        android:verticalSpacing="10dp"></GridView>-->
+    <!-- <GridView xmlns:android="http://schemas.android.com/apk/res/android"
+         android:id="@+id/gridview"
+         android:layout_width="match_parent"
+         android:layout_height="match_parent"
+         android:background="@color/white"
+         android:columnWidth="140dp"
+         android:gravity="center"
+         android:horizontalSpacing="10dp"
+         android:numColumns="auto_fit"
+         android:verticalSpacing="10dp"></GridView>-->
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/recycler_product"></android.support.v7.widget.RecyclerView>
+        android:id="@+id/recycler_product_category"></android.support.v7.widget.RecyclerView>
 
 </RelativeLayout>
