@@ -60,7 +60,6 @@ public class Home extends Fragment implements View.OnClickListener {
             lv_withoutlogin.setVisibility(View.GONE);
             btn_contact.setVisibility(View.VISIBLE);
         }
-
         return v;
     }
 
@@ -91,7 +90,7 @@ public class Home extends Fragment implements View.OnClickListener {
                 }
                 break;
             case R.id.lv_creatnewaccount:
-                    loadFragment(new Account());
+                loadFragment(new Account());
                 break;
             case R.id.lv_loginaccount:
                 loadFragment(new EmailLogin());

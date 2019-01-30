@@ -24,6 +24,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 
@@ -47,6 +48,7 @@ public class Cart extends Fragment  {
     private Cart_List_Adapter cart_adapter;
     Toolbar toolbar;
     ImageView iv_place_order;
+    LinearLayout lv_place_order;
 
     private static final String URL = "https://api.androidhive.info/json/menu.json";
 
@@ -60,7 +62,7 @@ public class Cart extends Fragment  {
 
         prepare_Cart();
         init_Swipe_recyclerview();//swiper recyclerview
-        iv_place_order.setOnClickListener(new View.OnClickListener() {
+        lv_place_order.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                loadFragment(new Checkout_fragment());
@@ -150,6 +152,7 @@ public class Cart extends Fragment  {
         cart_recyclerview = v.findViewById(R.id.cart_recyclerview);
         toolbar=(Toolbar)v.findViewById(R.id.toolbar_cart);
         iv_place_order=(ImageView) v.findViewById(R.id.iv_place_order);
+        lv_place_order=(LinearLayout) v.findViewById(R.id.lv_place_order);
 
         cart_adapter = new Cart_List_Adapter(getActivity(), cartList);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());

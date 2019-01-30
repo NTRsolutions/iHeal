@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.sismatix.iheal.R;
 
@@ -15,7 +16,7 @@ import static com.sismatix.iheal.Activity.Navigation_drawer_activity.bottom_navi
  * A simple {@link Fragment} subclass.
  */
 public class Fianl_Order_Checkout_freg extends Fragment {
-
+    LinearLayout lv_track_order;
 
     public Fianl_Order_Checkout_freg() {
         // Required empty public constructor
@@ -28,6 +29,8 @@ public class Fianl_Order_Checkout_freg extends Fragment {
         // Inflate the layout for this fragment
         View v=inflater.inflate(R.layout.fragment_fianl_order_checkout, container, false);
         bottom_navigation.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+
+        lv_track_order=(LinearLayout)v.findViewById(R.id.lv_track_order);
         return v;
     }
 

@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.sismatix.iheal.Adapter.Cart_Delivery_Adapter;
 import com.sismatix.iheal.Adapter.Payment_Method_Adapter;
@@ -32,6 +33,7 @@ public class Payment_fragment extends Fragment {
     Payment_Method_Adapter payment_method_adapter;
     private List<Payment_Method_Model> payment_method_models = new ArrayList<Payment_Method_Model>();
     ImageView iv_confirm_order;
+    LinearLayout lv_confirm_order;
 
     View v;
     public Payment_fragment() {
@@ -61,7 +63,7 @@ public class Payment_fragment extends Fragment {
             Checkout_fragment.tv_payment.setTextColor(getActivity().getColor(R.color.white));
             Checkout_fragment.tv_shipping.setTextColor(getActivity().getColor(R.color.colorPrimary));
         }
-        iv_confirm_order.setOnClickListener(new View.OnClickListener() {
+        lv_confirm_order.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 loadFragment(new Confirmation_fragment());
@@ -88,6 +90,7 @@ public class Payment_fragment extends Fragment {
     private void AllocateMEmory(View v) {
         payment_method_recyclerview=(RecyclerView)v.findViewById(R.id.payment_method_recyclerview);
         iv_confirm_order=(ImageView) v.findViewById(R.id.iv_confirm_order);
+        lv_confirm_order=(LinearLayout) v.findViewById(R.id.lv_confirm_order);
 
         payment_method_adapter = new Payment_Method_Adapter(getActivity(), payment_method_models);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, true);

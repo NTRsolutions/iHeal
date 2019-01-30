@@ -41,5 +41,8 @@
     //nature row_row
     <color name="nature_bg">#40b889</color>
 
+    <color name="transcparent">#00ffffff</color>
+
+
 
 </resources>

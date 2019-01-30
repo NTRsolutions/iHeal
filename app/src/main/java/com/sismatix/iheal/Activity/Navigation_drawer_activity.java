@@ -1,6 +1,8 @@
 package com.sismatix.iheal.Activity;
 
 import android.animation.ArgbEvaluator;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.internal.NavigationMenuView;
@@ -33,6 +35,7 @@ import com.sismatix.iheal.Fragments.Home;
 import com.sismatix.iheal.Fragments.Nature_Category_freg;
 import com.sismatix.iheal.Fragments.Search;
 import com.sismatix.iheal.R;
+import com.sismatix.iheal.View.CountDrawable;
 
 
 public class Navigation_drawer_activity extends AppCompatActivity
@@ -333,7 +336,25 @@ public class Navigation_drawer_activity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.navigation_drawer_activity, menu);
+        getMenuInflater().inflate(R.menu.menu_search, menu);
+     /*   MenuItem item = menu.findItem(R.id.cart);
+
+        LayerDrawable icon = (LayerDrawable) item.getIcon();
+
+        CountDrawable badge;
+
+        // Reuse drawable if possible
+        Drawable reuse = icon.findDrawableByLayerId(R.id.ic_group_count);
+        if (reuse != null && reuse instanceof CountDrawable) {
+            badge = (CountDrawable) reuse;
+        } else {
+            badge = new CountDrawable(Navigation_drawer_activity.this);
+        }
+
+        badge.setCount("1");
+        icon.mutate();
+        icon.setDrawableByLayerId(R.id.ic_group_count, badge);
+*/
         return true;
     }
 
@@ -345,9 +366,6 @@ public class Navigation_drawer_activity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
 
         return super.onOptionsItemSelected(item);
     }

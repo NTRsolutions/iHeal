@@ -9,9 +9,13 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 import android.widget.Toolbar;
 
 import com.sismatix.iheal.Activity.Navigation_drawer_activity;
@@ -78,13 +82,29 @@ public class TransParant_Hair_care_freg extends Fragment {
         appbar.setBackgroundColor(getResources().getColor(R.color.trans));
         toolbar_hair_care.setBackgroundColor(getResources().getColor(R.color.trans));
 
-
-
-
-
-
-
         return v;
+    }
+    // cart menu
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+
+        inflater.inflate(R.menu.cart, menu);
+        MenuItem item = menu.findItem(R.id.search);
+        item.setVisible(false);
+
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.cart:
+                Toast.makeText(getActivity(), "cart Icon Click", Toast.LENGTH_SHORT).show();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
 

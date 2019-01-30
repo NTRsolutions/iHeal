@@ -218,7 +218,7 @@
                                 android:gravity="center|left"
                                 android:text="TOTAL AMOUNT"
                                 android:textColor="@color/edittextpay"
-                                android:textSize="16dp"
+                                android:textSize="12sp"
                                 android:textStyle="bold" />
 
                             <TextView
@@ -229,7 +229,7 @@
                                 android:paddingRight="10dp"
                                 android:text="90.00 KD"
                                 android:textColor="@color/edittextpay"
-                                android:textSize="16dp"
+                                android:textSize="16sp"
                                 android:textStyle="bold" />
                         </LinearLayout>
 
@@ -255,7 +255,8 @@
             android:background="@color/edit"
             android:gravity="center"
             android:orientation="horizontal"
-            android:weightSum="4">
+            android:weightSum="4"
+            android:id="@+id/lv_confirm_order">
 
             <LinearLayout
                 android:layout_width="match_parent"

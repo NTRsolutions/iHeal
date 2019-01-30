@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.sismatix.iheal.Adapter.Cart_List_Adapter;
 import com.sismatix.iheal.Adapter.Confirmation_cart_Adapter;
@@ -32,6 +33,8 @@ public class Confirmation_fragment extends Fragment {
     RecyclerView recyclerview_confirmation;
     private List<Cart_Model> cartList = new ArrayList<Cart_Model>();
     private Confirmation_cart_Adapter confirmation_cart_adapter;
+
+    LinearLayout lv_confirm_pay;
     View v;
     public Confirmation_fragment() {
         // Required empty public constructor
@@ -61,7 +64,7 @@ public class Confirmation_fragment extends Fragment {
             Checkout_fragment.tv_shipping.setTextColor(getActivity().getColor(R.color.colorPrimary));
         }
 
-        iv_confirm_pay.setOnClickListener(new View.OnClickListener() {
+        lv_confirm_pay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 loadFragment(new Fianl_Order_Checkout_freg());
@@ -89,6 +92,7 @@ public class Confirmation_fragment extends Fragment {
     private void Allocatememory(View v) {
         recyclerview_confirmation=(RecyclerView)v.findViewById(R.id.recyclerview_confirmation);
         iv_confirm_pay=(ImageView) v.findViewById(R.id.iv_confirm_pay);
+        lv_confirm_pay=(LinearLayout) v.findViewById(R.id.lv_confirm_pay);
 
         confirmation_cart_adapter = new Confirmation_cart_Adapter(getActivity(), cartList);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());

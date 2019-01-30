@@ -45,7 +45,6 @@ public class Payment_Method_Adapter extends RecyclerView.Adapter<Payment_Method_
             @Override
             public void onClick(View view) {
 
-                Toast.makeText(context, "lv_click", Toast.LENGTH_SHORT).show();
                 final int sdk = android.os.Build.VERSION.SDK_INT;
                 if (sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
                     holder.lv_paymenet_greenlayout.setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.round_boder_green));

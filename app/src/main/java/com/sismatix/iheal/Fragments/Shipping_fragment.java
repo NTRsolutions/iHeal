@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.sismatix.iheal.Adapter.Cart_Delivery_Adapter;
 import com.sismatix.iheal.Adapter.Cart_List_Adapter;
@@ -38,6 +39,7 @@ public class Shipping_fragment extends Fragment {
     private List<Cart_Delivery_Model>cart_delivery_models = new ArrayList<Cart_Delivery_Model>();
     ImageView iv_continue_payment;
     EditText et_shippingfirstname;
+    LinearLayout lv_continue_payment;
     public Shipping_fragment() {
         // Required empty public constructor
     }
@@ -65,7 +67,7 @@ public class Shipping_fragment extends Fragment {
            Checkout_fragment.tv_shipping.setTextColor(getActivity().getColor(R.color.white));
         }
 
-        iv_continue_payment.setOnClickListener(new View.OnClickListener() {
+        lv_continue_payment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 loadFragment(new Payment_fragment());
@@ -94,6 +96,7 @@ public class Shipping_fragment extends Fragment {
     private void AllocateMEmory(View v) {
         recyclerview_item_delivery=(RecyclerView)v.findViewById(R.id.recyclerview_item_delivery);
         iv_continue_payment=(ImageView) v.findViewById(R.id.iv_continue_payment);
+        lv_continue_payment=(LinearLayout) v.findViewById(R.id.lv_continue_payment);
 
         cart_delivery_adapter = new Cart_Delivery_Adapter(getActivity(), cart_delivery_models);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, true);

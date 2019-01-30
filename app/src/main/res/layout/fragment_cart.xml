@@ -95,7 +95,8 @@
             android:background="@color/edit"
             android:gravity="center"
             android:orientation="horizontal"
-            android:weightSum="4">
+            android:weightSum="4"
+            android:id="@+id/lv_place_order">
 
             <LinearLayout
                 android:layout_width="match_parent"

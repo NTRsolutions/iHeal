@@ -46,7 +46,7 @@ public class Nature_Category_freg extends Fragment {
         // Inflate the layout for this fragment
         view= inflater.inflate(R.layout.fragment_nature__category_freg, container, false);
         bottom_navigation.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
-        setHasOptionsMenu(true);
+       setHasOptionsMenu(true);
 
         viewpager_nature = (ViewPager) view.findViewById(R.id.viewpager_nature);
         tablayout_nature = (TabLayout) view.findViewById(R.id.tablayout_nature);
@@ -105,11 +105,11 @@ public class Nature_Category_freg extends Fragment {
         });
     }
 
-    // cart menu
+   // cart menu
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.cart, menu);
-        MenuItem item = menu.findItem(R.id.action_settings);
+        MenuItem item = menu.findItem(R.id.search);
         item.setVisible(false);
 
         super.onCreateOptionsMenu(menu, inflater);

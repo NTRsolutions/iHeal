@@ -395,6 +395,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/lv_continue_payment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"

@@ -159,8 +159,10 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="2.5"
+                        android:layout_weight="2.2"
                         android:text="TOTAL AMOUNT"
+                        android:layout_gravity="center|start"
+                        android:gravity="center|start"
                         android:textColor="@color/edittextpay"
                         android:textSize="12sp"
                         android:textStyle="bold" />
@@ -170,11 +172,11 @@
                         android:layout_height="match_parent"
                         android:layout_gravity="center"
                         android:layout_marginRight="5dp"
-                        android:layout_weight="1.5"
+                        android:layout_weight="1.8"
                         android:gravity="center|end"
                         android:text="90.00 KD"
                         android:textColor="@color/edittextpay"
-                        android:textSize="18sp"
+                        android:textSize="16sp"
                         android:textStyle="bold" />
                 </LinearLayout>
 
@@ -189,7 +191,8 @@
         android:background="@color/edit"
         android:gravity="center"
         android:orientation="horizontal"
-        android:layout_weight="3.6">
+        android:layout_weight="3.6"
+        android:id="@+id/lv_confirm_pay">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
