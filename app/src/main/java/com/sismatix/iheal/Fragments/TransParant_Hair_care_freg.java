@@ -23,6 +23,7 @@ import static com.sismatix.iheal.Activity.Navigation_drawer_activity.bottom_navi
  * A simple {@link Fragment} subclass.
  */
 public class TransParant_Hair_care_freg extends Fragment {
+
     View v;
 
     android.support.v7.widget.Toolbar toolbar_hair_care;
@@ -31,7 +32,6 @@ public class TransParant_Hair_care_freg extends Fragment {
     public TransParant_Hair_care_freg() {
         // Required empty public constructor
     }
-
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override

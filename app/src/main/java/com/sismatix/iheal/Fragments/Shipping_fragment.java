@@ -42,7 +42,6 @@ public class Shipping_fragment extends Fragment {
         // Required empty public constructor
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -76,6 +75,8 @@ public class Shipping_fragment extends Fragment {
 
         return v;
     }
+
+
     private void loadFragment(Fragment fragment) {
         Log.e("clickone", "");
         android.support.v4.app.FragmentManager manager = getFragmentManager();
@@ -99,7 +100,7 @@ public class Shipping_fragment extends Fragment {
         layoutManager.setReverseLayout(false);
         recyclerview_item_delivery.setLayoutManager(layoutManager);
         recyclerview_item_delivery.setAdapter(cart_delivery_adapter);
-
+        recyclerview_item_delivery.setHasFixedSize(true);
 
     }
 

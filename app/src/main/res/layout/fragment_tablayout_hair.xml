@@ -11,7 +11,6 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".Fragments.Tablayout_hair_fregment">
 
-
     <!-- TODO: Update blank fragment layout -->
    <!-- <GridView xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/gridview"
