@@ -16,8 +16,7 @@
         android:title="cart"
         android:iconTint="@color/white"
         android:iconTintMode="@color/white"
-        app:showAsAction="always"
-        />
+        app:showAsAction="always" />
 
     <!--<item
         android:id="@+id/share"
