@@ -48,7 +48,6 @@ public class Account extends Fragment {
 
             }
         });
-
         tv_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -58,10 +57,8 @@ public class Account extends Fragment {
                         .replace(R.id.rootLayout, nextFrag, "findThisFragment")
                         .addToBackStack(null)
                         .commit();
-
             }
         });
-
         return v;
 
     }

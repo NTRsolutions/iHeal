@@ -14,6 +14,7 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.text.SpannableString;
 import android.text.style.TextAppearanceSpan;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -25,15 +26,19 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import java.util.List;
 
 import com.sismatix.iheal.Fragments.Account;
 import com.sismatix.iheal.Fragments.Cart;
+import com.sismatix.iheal.Fragments.EmailLogin;
 import com.sismatix.iheal.Fragments.Favourite;
 import com.sismatix.iheal.Fragments.Home;
 import com.sismatix.iheal.Fragments.Nature_Category_freg;
 import com.sismatix.iheal.Fragments.Search;
+import com.sismatix.iheal.Preference.Login_preference;
 import com.sismatix.iheal.R;
 import com.sismatix.iheal.View.CountDrawable;
 
@@ -46,6 +51,8 @@ public class Navigation_drawer_activity extends AppCompatActivity
     Toolbar toolbar;
     MenuItem title_account_tools, title_shop_tools;
     SpannableString shop, account;
+    LinearLayout lv_withlogin_header,login_navigation;
+    String loginflag;
 
     //bottom navigation
     private ViewPager viewPager;
@@ -59,9 +66,17 @@ public class Navigation_drawer_activity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navigation_drawer);
-
+        loginflag=Login_preference.getLogin_flag(Navigation_drawer_activity.this);
         AllocateMemory();
 
+        login_navigation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getSupportFragmentManager().beginTransaction().replace(R.id.rootLayout, new EmailLogin()
+                        ).addToBackStack("Login").commit();
+                drawer.closeDrawer(GravityCompat.START);
+            }
+        });
         setSupportActionBar(toolbar);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -69,44 +84,7 @@ public class Navigation_drawer_activity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        /*int color = 0;
-        ColorStateList navMenuTextList = new ColorStateList(
-                new int[][]{
-                        new int[]{android.R.attr.state_checked},
-                        new int[]{android.R.attr.state_enabled},
-                        new int[]{android.R.attr.state_pressed},
-                        new int[]{android.R.attr.state_focused},
-                        new int[]{android.R.attr.state_pressed}
-                },
-                new int[] {
-                        color,
-                        navDefaultTextColor,
-                        navDefaultTextColor,
-                        navDefaultTextColor,
-                        navDefaultTextColor
-                }
-        );
 
-        //Defining ColorStateList for menu item Icon
-        ColorStateList navMenuIconList = new ColorStateList(
-                new int[][]{
-                        new int[]{android.R.attr.state_checked},
-                        new int[]{android.R.attr.state_enabled},
-                        new int[]{android.R.attr.state_pressed},
-                        new int[]{android.R.attr.state_focused},
-                        new int[]{android.R.attr.state_pressed}
-                },
-                new int[] {
-                        color,
-                        navDefaultIconColor,
-                        navDefaultIconColor,
-                        navDefaultIconColor,
-                        navDefaultIconColor
-                }
-        );
-
-        navigationView.setItemTextColor(navMenuTextList);
-        navigationView.setItemIconTintList(navMenuIconList);*/
 
         Menu menu = navigationView.getMenu();
 
@@ -139,6 +117,7 @@ public class Navigation_drawer_activity extends AppCompatActivity
 
         Bootom_Navigation_view();
     }
+
     public DrawerLayout getmDrawerLayout() {
         return drawer;
     }
@@ -322,6 +301,19 @@ public class Navigation_drawer_activity extends AppCompatActivity
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         navigationView = (NavigationView) findViewById(R.id.nav_view);
+        View header=navigationView.getHeaderView(0);
+        login_navigation = (LinearLayout) findViewById(R.id.login_navigation);
+        lv_withlogin_header=(LinearLayout)header.findViewById(R.id.lv_withlogin_header);
+
+        if(loginflag.equalsIgnoreCase("1") || loginflag == "1"){
+            lv_withlogin_header.setVisibility(View.GONE);
+            login_navigation.setVisibility(View.VISIBLE);
+        }else{
+            lv_withlogin_header.setVisibility(View.VISIBLE);
+            login_navigation.setVisibility(View.GONE);
+        }
+
+
     }
 
     @Override
