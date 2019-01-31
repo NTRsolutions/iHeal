@@ -27,9 +27,9 @@ import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import java.util.List;
+
 
 import com.sismatix.iheal.Fragments.Account;
 import com.sismatix.iheal.Fragments.Cart;
@@ -53,11 +53,13 @@ public class Navigation_drawer_activity extends AppCompatActivity
     SpannableString shop, account;
     LinearLayout lv_withlogin_header,login_navigation;
     String loginflag;
+    LinearLayout lv_title;
 
     //bottom navigation
     private ViewPager viewPager;
     public static BottomNavigationView bottom_navigation;
     private List<View> viewList;
+    MenuItem prevMenuItem;
 
     /*int navDefaultTextColor = Color.parseColor("#ffe5a8");
     int navDefaultIconColor = Color.parseColor("#ffe5a8");*/
@@ -69,14 +71,6 @@ public class Navigation_drawer_activity extends AppCompatActivity
         loginflag=Login_preference.getLogin_flag(Navigation_drawer_activity.this);
         AllocateMemory();
 
-        login_navigation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getSupportFragmentManager().beginTransaction().replace(R.id.rootLayout, new EmailLogin()
-                        ).addToBackStack("Login").commit();
-                drawer.closeDrawer(GravityCompat.START);
-            }
-        });
         setSupportActionBar(toolbar);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -84,7 +78,14 @@ public class Navigation_drawer_activity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-
+        login_navigation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getSupportFragmentManager().beginTransaction().replace(R.id.rootLayout, new EmailLogin()
+                ).addToBackStack("Login").commit();
+                drawer.closeDrawer(GravityCompat.START);
+            }
+        });
 
         Menu menu = navigationView.getMenu();
 
@@ -117,62 +118,66 @@ public class Navigation_drawer_activity extends AppCompatActivity
 
         Bootom_Navigation_view();
     }
-
     public DrawerLayout getmDrawerLayout() {
         return drawer;
     }
 
     private void Bootom_Navigation_view() {
         viewPager = findViewById(R.id.view_pager_bottom_navigation);
-       /* View view1 = getLayoutInflater().inflate(R.layout.item_view_pager_1, null);
-        View view2 = getLayoutInflater().inflate(R.layout.item_view_pager_2, null);
-        View view3 = getLayoutInflater().inflate(R.layout.item_view_pager_3, null);
-        View view4 = getLayoutInflater().inflate(R.layout.item_view_pager_4, null);
-*/
-       /* viewList = new ArrayList<>();
-        viewList.add(view1);
-        viewList.add(view2);
-        viewList.add(view3);
-        viewList.add(view4);
-
-
-        viewPager.setAdapter(pagerAdapter);
-        viewPager.addOnPageChangeListener(pageChangeListener);*/
-
         bottom_navigation = findViewById(R.id.bottom_navigation);
+
         bottom_navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         Menu menu = bottom_navigation.getMenu();
         selectFragment(menu.getItem(0));
 
 
-    }
+       /* viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int i, float v, int i1) {
 
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                if (prevMenuItem != null) {
+                    prevMenuItem.setChecked(false);
+                }
+                else
+                {
+                    bottom_navigation.getMenu().getItem(0).setChecked(false);
+                }
+                Log.d("page", "onPageSelected: "+position);
+                bottom_navigation.getMenu().getItem(position).setChecked(true);
+                prevMenuItem = bottom_navigation.getMenu().getItem(position);
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int i) {
+
+            }
+
+
+        });*/
+
+        //setupViewPager(viewPager);
+    }
+   /* private void setupViewPager(ViewPager viewPager) {
+        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
+        viewPagerAdapter.addFragment(new Home());
+        viewPagerAdapter.addFragment(new Search());
+        viewPagerAdapter.addFragment(new Favourite());
+        viewPagerAdapter.addFragment(new Account());
+        viewPagerAdapter.addFragment(new Cart());
+        viewPager.setAdapter(viewPagerAdapter);
+    }*/
     ////////bottom navigation selected listner
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
             selectFragment(item);
-
-
-           /* switch (item.getItemId()) {
-                case R.id.bottom_nav_home:
-                    viewPager.setCurrentItem(0);
-                    return true;
-                case R.id.bottom_nav_search:
-                    viewPager.setCurrentItem(1);
-                    return true;
-                case R.id.bottom_nav_favourite:
-                    viewPager.setCurrentItem(2);
-                    return true;
-                case R.id.bottom_nav_cart:
-                    viewPager.setCurrentItem(3);
-                    return true;
-                case R.id.bottom_nav_account:
-                    viewPager.setCurrentItem(4);
-                    return true;
-            }*/
             return false;
         }
     };
@@ -221,72 +226,6 @@ public class Navigation_drawer_activity extends AppCompatActivity
         }
     }
 
-    private PagerAdapter pagerAdapter = new PagerAdapter() {
-        @Override
-        public int getCount() {
-            return viewList.size();
-        }
-
-        @Override
-        public boolean isViewFromObject(View view, Object object) {
-            return view == object;
-        }
-
-        @Override
-        public void destroyItem(ViewGroup container, int position, Object object) {
-            container.removeView(viewList.get(position));
-        }
-
-        @Override
-        public Object instantiateItem(ViewGroup container, int position) {
-            container.addView(viewList.get(position));
-            return viewList.get(position);
-        }
-    };
-    private ViewPager.OnPageChangeListener pageChangeListener = new ViewPager.OnPageChangeListener() {
-        @Override
-        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-            ArgbEvaluator evaluator = new ArgbEvaluator();
-          /*  int evaluate = getResources().getColor(R.color.app_blue);
-            if (position == 0) {
-                evaluate = (Integer) evaluator.evaluate(positionOffset, getResources().getColor(R.color.app_blue), getResources().getColor(R.color.app_green));
-            } else if (position == 1) {
-                evaluate = (Integer) evaluator.evaluate(positionOffset, getResources().getColor(R.color.app_green), getResources().getColor(R.color.app_yellow));
-            } else if (position == 2) {
-                evaluate = (Integer) evaluator.evaluate(positionOffset, getResources().getColor(R.color.app_yellow), getResources().getColor(R.color.app_red));
-            } else {
-                evaluate = getResources().getColor(R.color.app_red);
-            }*/
-            // ((View) viewPager.getParent()).setBackgroundColor(evaluate);
-        }
-
-        @Override
-        public void onPageSelected(int position) {
-            switch (position) {
-                case 0:
-                    bottom_navigation.setSelectedItemId(R.id.bottom_nav_home);
-                    break;
-                case 1:
-                    bottom_navigation.setSelectedItemId(R.id.bottom_nav_search);
-                    break;
-                case 2:
-                    bottom_navigation.setSelectedItemId(R.id.bottom_nav_favourite);
-                    break;
-                case 3:
-                    bottom_navigation.setSelectedItemId(R.id.bottom_nav_cart);
-                    break;
-                case 4:
-                    bottom_navigation.setSelectedItemId(R.id.bottom_nav_account);
-                    break;
-            }
-        }
-
-        @Override
-        public void onPageScrollStateChanged(int state) {
-
-        }
-    };
-
     ///remove scrollbar navigationdrawer
     private void disableNavigationViewScrollbars(NavigationView navigationView) {
         if (navigationView != null) {
@@ -329,24 +268,7 @@ public class Navigation_drawer_activity extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_search, menu);
-     /*   MenuItem item = menu.findItem(R.id.cart);
 
-        LayerDrawable icon = (LayerDrawable) item.getIcon();
-
-        CountDrawable badge;
-
-        // Reuse drawable if possible
-        Drawable reuse = icon.findDrawableByLayerId(R.id.ic_group_count);
-        if (reuse != null && reuse instanceof CountDrawable) {
-            badge = (CountDrawable) reuse;
-        } else {
-            badge = new CountDrawable(Navigation_drawer_activity.this);
-        }
-
-        badge.setCount("1");
-        icon.mutate();
-        icon.setDrawableByLayerId(R.id.ic_group_count, badge);
-*/
         return true;
     }
 
@@ -397,4 +319,6 @@ public class Navigation_drawer_activity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+
 }
