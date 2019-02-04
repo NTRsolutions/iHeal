@@ -87,7 +87,7 @@
 
                     <EditText
                         android:theme="@style/MyEditTextStyle2"
-                        android:id="@+id/signup_input_email"
+                        android:id="@+id/login_input_email"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/email"
@@ -108,7 +108,7 @@
 
                     <EditText
                         android:theme="@style/MyEditTextStyle2"
-                        android:id="@+id/signup_input_password"
+                        android:id="@+id/login_input_password"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/password"
@@ -120,7 +120,6 @@
                 </android.support.design.widget.TextInputLayout>
 
                 <Button
-                    android:id="@+id/btn_signup"
                     android:layout_width="160dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -143,7 +142,6 @@
                         android:text="@string/alreadyaccount"
                         android:textSize="14sp" />
                     <TextView
-                        android:id="@+id/tv_login"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"

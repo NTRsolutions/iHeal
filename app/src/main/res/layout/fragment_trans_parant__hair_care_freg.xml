@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/haircare_bg"
     android:fitsSystemWindows="true"
     android:orientation="vertical"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@drawable/haircare_bg"
     tools:context=".Fragments.TransParant_Hair_care_freg">
+
     <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar_transparent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:elevation="0dp"
         android:theme="@style/AppTheme.AppBarOverlay"
-        android:id="@+id/appbar_transparent">
+        app:elevation="0dp">
 
         <!-- <android.support.v7.widget.Toolbar
              android:id="@+id/toolbar"
@@ -25,10 +26,10 @@
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar_hair_care"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            />
+            android:layout_height="?attr/actionBarSize" />
 
     </android.support.design.widget.AppBarLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -80,9 +81,9 @@
             android:orientation="vertical">
 
             <Button
+                android:id="@+id/btn_haircare_ex_prod"
                 android:layout_width="320dp"
                 android:layout_height="60dp"
-                android:id="@+id/btn_haircare_ex_prod"
                 android:layout_marginBottom="30dp"
                 android:background="@drawable/rounded_button"
                 android:text="Explore Products  >"
@@ -93,8 +94,6 @@
 
 
     </LinearLayout>
-
-
 
 
 </LinearLayout>

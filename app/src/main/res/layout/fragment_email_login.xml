@@ -63,7 +63,7 @@
 
                     <EditText
                         android:theme="@style/MyEditTextStyle2"
-                        android:id="@+id/login_input_email"
+                        android:id="@+id/login_email"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/email"
@@ -82,7 +82,7 @@
 
                     <EditText
                         android:theme="@style/MyEditTextStyle2"
-                        android:id="@+id/login_input_password"
+                        android:id="@+id/login_password"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/password"
@@ -94,6 +94,7 @@
                 </android.support.design.widget.TextInputLayout>
 
                 <Button
+                    android:id="@+id/btn_login"
                     android:layout_width="160dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"

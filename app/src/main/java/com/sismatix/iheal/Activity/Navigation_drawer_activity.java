@@ -296,6 +296,7 @@ public class Navigation_drawer_activity extends AppCompatActivity
             android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.rootLayout, new Nature_Category_freg());
             fragmentTransaction.commit();
+
         } else if (id == R.id.nav_health_topic) {
 
         } else if (id == R.id.nav_offers) {

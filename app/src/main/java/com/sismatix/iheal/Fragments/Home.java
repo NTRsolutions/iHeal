@@ -21,12 +21,14 @@ import static com.sismatix.iheal.Activity.Navigation_drawer_activity.bottom_navi
 /**
  * A simple {@link Fragment} subclass.
  */
+
 public class Home extends Fragment implements View.OnClickListener {
 
-    ImageView iv_iteamdeails,iv_hair_care;
+    ImageView iv_iteamdeails,iv_hair_care,iv_nine;
     LinearLayout lv_withoutlogin,lv_withlogin,lv_creatnewaccount,lv_loginaccount;
     Button btn_contact;
     String loginflag;
+
     public Home() {
         // Required empty public constructor
     }
