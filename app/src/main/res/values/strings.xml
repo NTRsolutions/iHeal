@@ -2,24 +2,60 @@
     <string name="app_name">iHeal</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Mohamed</string>
+    <string name="nav_header_title">Mohamed"@"m.makram</string>
     <string name="nav_header_subtitle">"@"m.makram</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
     <string name="natures_remedies">Nature\'s  Remedies</string>
     <string name="title">iHeal</string>
+    <!--Home screen-->
+    <string name="Welcome">Welcome back,Nehal</string>
+    <string name="howcanhelp">How can i help you today ?</string>
+    <string name="contactspecialist">CONTACT A SPECIALIST</string>
+    <string name="welcomeback">Welcome back,</string>
+    <!--account screen-->
+    <string name="signupfb">SIGN UP WITH FACEBOOK</string>
+    <string name="or">OR</string>
+    <string name="signupeithemail">SIGN UP WITH EMAIL</string>
+    <string name="login">LOGIN</string>
+    <string name="signup">SIGN UP</string>
+    <!--signup & Login screen -->
+    <string name="fullname">Full Name</string>
+    <string name="email">E-mail Address</string>
+    <string name="password">Pssword</string>
+    <string name="login_titlr">LOG IN TO YOUR ACCOUNT</string>
+    <string name="forgotpw">Forgot Password ?</string>
+    <string name="forgot">Forgot Password</string>
+    <string name="submit">Submit</string>
+
+    <!--shipping &payment &conform screen-->
+    <string name="firstname">FIRST NAME</string>
+    <string name="secondname">SECOND NAME</string>
+    <string name="phonenumber">PHONE NUMBER</string>
+    <string name="address">ADDRESS</string>
+    <string name="zip">ZIP CODE</string>
+    <string name="city">CITY</string>
+    <string name="savefuture">SAVE FOR FUTURE PURCHASE</string>
+    <string name="continuepayment">CONTINUE TO PAYMENT</string>
+    <string name="shippingto">SHIPPING TOT</string>
+    <string name="edit">EDIT</string>
+    <string name="yourorder">YOUR ORDER</string>
+    <string name="totalamount">TOTAL AMOUNT</string>
+    <string name="yourorderbeen">your order has been</string>
+    <string name="successfully">SUCCESSFULLY PLACED</string>
+    <string name="trackyourorder">TRACK YOUR ORDER</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="alreadyaccount">Already have an account ?</string>
     <string name="home_create">CREATE NEW ACCOUNT</string>
+    <string name="shoppingcart">Shopping Cart</string>
+    <string name="placeorder">PLACE THIS ORDER</string>
+    <string name="checkout">Checkout</string>
+    <string name="shipping">SHIPPING</string>
+    <string name="payment">PAYMENT</string>
+    <string name="confirmation">CONFIRMATION</string>
 
-    <string name="login_titlr">Log In To Your Account</string>
-    <string name="email">E-mail Address</string>
-    <string name="password">Password</string>
-    <string name="login">LOGIN</string>
-    <string name="signup">SIGN UP</string>
-    <string name="forgotpw">Forgot Password ?</string>
     <string name="signup_name">Name</string>
     <string name="signup_surname">Surname</string>
     <string name="signup_username">Username</string>
@@ -27,6 +63,7 @@
     <string name="paymentmethod">payment method</string>
     <string name="CONFIRMANDPAY"><![CDATA[CONFIRM & PAY]]></string>
     <string name="CONFIRM_ORDER">CONFIRM YOUR ORDER</string>
+    <string name="exploreproducts">Explore Products</string>
 
     <!-- iteam screen -->
     <string name="addtocart">Add To Cart</string>

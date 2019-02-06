@@ -42,6 +42,7 @@ public class Product_Category_adapter extends RecyclerView.Adapter<Product_Categ
     @Override
     public void onBindViewHolder(final Product_Category_adapter.MyViewHolder holder, final int position) {
         final Product_Category_model product_model = models.get(position);
+        holder.tv_category_name.setText(product_model.getCategory_name());
         holder.lv_nature_click.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

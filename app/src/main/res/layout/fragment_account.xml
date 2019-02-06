@@ -64,7 +64,7 @@
                         android:layout_height="wrap_content"
                         android:textSize="16dp"
                         android:padding="14dp"
-                        android:text="SIGN UP WITH FACEBOOK"
+                        android:text="@string/signupfb"
                         android:textColor="#FFFFFF" />
 
                 </LinearLayout>
@@ -88,7 +88,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="OR"
+                    android:text="@string/or"
                     android:gravity="center"
                     android:layout_weight="5.3"
                     android:textColor="#868686"
@@ -120,7 +120,7 @@
                         android:layout_gravity="center"
                         android:gravity="center"
                         android:background="@color/main"
-                        android:text="SIGN UP WITH EMAIL"
+                        android:text="@string/signupeithemail"
                         android:textColor="#FFFFFF" />
 
                 </LinearLayout>
@@ -144,7 +144,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginLeft="10dp"
-                    android:text="LOGIN"
+                    android:text="@string/login"
                     android:textColor="@color/colorPrimary"
                     android:textSize="14sp" />
             </LinearLayout>

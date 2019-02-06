@@ -52,11 +52,9 @@ public class Hair_Cair_fregment extends Fragment {
     private TabLayout tabLayout;
     LinearLayout fragment_container;
 
-    //
     public static LayerDrawable icon;
     public String count = "1";
     public static CountDrawable badge;
-
 
     View view;
 
@@ -121,18 +119,14 @@ public class Hair_Cair_fregment extends Fragment {
                         break;
                 }
             }
-
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
             }
-
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
             }
         });
     }
-
-
     // cart menu
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -142,11 +136,9 @@ public class Hair_Cair_fregment extends Fragment {
         item_search.setVisible(false);
 
 //        icon = (LayerDrawable) item.getIcon();
-
         icon = (LayerDrawable) item.getIcon();
 
         CountDrawable badge;
-
         // Reuse drawable if possible
         Drawable reuse = icon.findDrawableByLayerId(R.id.ic_group_count);
         if (reuse != null && reuse instanceof CountDrawable) {
@@ -154,17 +146,12 @@ public class Hair_Cair_fregment extends Fragment {
         } else {
             badge = new CountDrawable(getActivity());
         }
-
         badge.setCount(count);
         icon.mutate();
         icon.setDrawableByLayerId(R.id.ic_group_count, badge);
 
-
-
-
         super.onCreateOptionsMenu(menu, inflater);
     }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection

@@ -120,7 +120,7 @@
                 android:gravity="center"
                 android:paddingTop="15dp"
                 android:paddingBottom="3dp"
-                android:text="your order has been "
+                android:text="@string/yourorderbeen"
                 android:textSize="12sp" />
 
             <TextView
@@ -128,7 +128,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:text="SUCCESSFULLY PLACED"
+                android:text="@string/successfully"
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="14sp"
                 android:textStyle="bold" />
@@ -161,7 +161,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:gravity="center"
-                    android:text="TRACK YOUR ORDER"
+                    android:text="@string/trackyourorder"
                     android:textColor="@color/white"
                     android:textSize="16sp" />
 

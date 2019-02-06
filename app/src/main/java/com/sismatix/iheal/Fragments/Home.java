@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.sismatix.iheal.Preference.Login_preference;
 import com.sismatix.iheal.R;
@@ -28,18 +29,17 @@ public class Home extends Fragment implements View.OnClickListener {
     LinearLayout lv_withoutlogin,lv_withlogin,lv_creatnewaccount,lv_loginaccount;
     Button btn_contact;
     String loginflag;
+    TextView tv_hometitlename;
 
     public Home() {
         // Required empty public constructor
     }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v=inflater.inflate(R.layout.fragment_home, container, false);
         bottom_navigation.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
-        Login_preference.setLogin_flag(getActivity(),"1");
         loginflag=Login_preference.getLogin_flag(getActivity());
         iv_iteamdeails=(ImageView)v.findViewById(R.id.iv_iteamdeails);
         iv_hair_care=(ImageView)v.findViewById(R.id.iv_hair_care);
@@ -48,6 +48,8 @@ public class Home extends Fragment implements View.OnClickListener {
         lv_creatnewaccount=(LinearLayout) v.findViewById(R.id.lv_creatnewaccount);
         lv_loginaccount=(LinearLayout) v.findViewById(R.id.lv_loginaccount);
         btn_contact=(Button) v.findViewById(R.id.btn_contact);
+        tv_hometitlename=(TextView) v.findViewById(R.id.tv_hometitlename);
+
         iv_iteamdeails.setOnClickListener(this);
         iv_hair_care.setOnClickListener(this);
         lv_creatnewaccount.setOnClickListener(this);
@@ -58,6 +60,8 @@ public class Home extends Fragment implements View.OnClickListener {
             lv_withoutlogin.setVisibility(View.VISIBLE);
             btn_contact.setVisibility(View.GONE);
         }else{
+            String fullname=Login_preference.getfullname(getActivity());
+            tv_hometitlename.setText(getString(R.string.welcomeback)+fullname);
             lv_withlogin.setVisibility(View.VISIBLE);
             lv_withoutlogin.setVisibility(View.GONE);
             btn_contact.setVisibility(View.VISIBLE);

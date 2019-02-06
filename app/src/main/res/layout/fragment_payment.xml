@@ -71,8 +71,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                       >
+                        android:orientation="vertical">
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -102,11 +101,11 @@
                                     android:layout_weight="1.6"
                                     android:drawableRight="@drawable/mastercard"
                                     android:gravity="center|left"
+                                    android:hint="1000 2000 3000 4000"
                                     android:imeOptions="actionNext"
                                     android:inputType="number"
                                     android:maxLines="1"
                                     android:singleLine="true"
-                                    android:hint="1000 2000 3000 4000"
                                     android:textColorHint="@color/edittextpay"
                                     android:textSize="14dp" />
                             </LinearLayout>
@@ -164,8 +163,8 @@
                                         android:imeOptions="actionNext"
                                         android:inputType="number"
                                         android:maxLines="1"
-                                        android:singleLine="true"
                                         android:paddingRight="10dp"
+                                        android:singleLine="true"
                                         android:textColorHint="@color/edittextpay"
                                         android:textSize="14dp" />
                                 </LinearLayout>
@@ -194,10 +193,10 @@
                                     android:layout_weight="1.6"
                                     android:gravity="center|right"
                                     android:hint="CARDHOLDER NAME"
-                                    android:paddingRight="10dp"
                                     android:imeOptions="actionNext"
                                     android:inputType="text"
                                     android:maxLines="1"
+                                    android:paddingRight="10dp"
                                     android:singleLine="true"
                                     android:textColorHint="@color/edittextpay"
                                     android:textSize="14dp" />
@@ -207,8 +206,8 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center"
                             android:layout_marginTop="10dp"
+                            android:gravity="center"
                             android:orientation="horizontal">
 
                             <TextView
@@ -250,13 +249,13 @@
         android:orientation="vertical">
 
         <LinearLayout
+            android:id="@+id/lv_confirm_order"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/edit"
             android:gravity="center"
             android:orientation="horizontal"
-            android:weightSum="4"
-            android:id="@+id/lv_confirm_order">
+            android:weightSum="4">
 
             <LinearLayout
                 android:layout_width="match_parent"
