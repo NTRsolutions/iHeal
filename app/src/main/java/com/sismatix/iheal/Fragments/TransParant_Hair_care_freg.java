@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
@@ -41,6 +42,10 @@ public class TransParant_Hair_care_freg extends Fragment {
     android.support.v7.widget.Toolbar toolbar_hair_care;
     AppBarLayout appbar;
     Button btn_haircare_ex_prod;
+    String cat_id;
+    String products;
+    TextView tv_hair,tv_item_count;
+
     public TransParant_Hair_care_freg() {
         // Required empty public constructor
     }
@@ -54,14 +59,37 @@ public class TransParant_Hair_care_freg extends Fragment {
         toolbar_hair_care = (android.support.v7.widget.Toolbar) v.findViewById(R.id.toolbar_hair_care);
         btn_haircare_ex_prod=(Button)v.findViewById(R.id.btn_haircare_ex_prod);
         appbar = (AppBarLayout) v.findViewById(R.id.appbar_transparent);
+        tv_hair = (TextView)v.findViewById(R.id.tv_hair);
+        tv_item_count = (TextView)v.findViewById(R.id.tv_item_count);
+
         setHasOptionsMenu(true);
-       // Addcategoryproduct();
+
+        Bundle bundle = this.getArguments();
+
+        cat_id =bundle.getString("cat_id");
+
+        Log.e("category_id",""+cat_id);
+
+        Addcategoryproduct(cat_id);
+
         btn_haircare_ex_prod.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AppCompatActivity activity = (AppCompatActivity) v.getContext();
+            /*    AppCompatActivity activity = (AppCompatActivity) v.getContext();
                 Fragment myFragment = new Hair_Cair_fregment();
                 activity.getSupportFragmentManager().beginTransaction().replace(R.id.rootLayout, myFragment).addToBackStack(null).commit();
+*/
+
+
+                Bundle b=new Bundle();
+                b.putString("products_array",products);
+                AppCompatActivity activity = (AppCompatActivity) v.getContext();
+                Fragment myFragment = new Hair_Cair_fregment();
+                myFragment.setArguments(b);
+                activity.getSupportFragmentManager().beginTransaction().replace(R.id.rootLayout, myFragment).addToBackStack(null).commit();
+
+
+
             }
         });
 
@@ -93,9 +121,9 @@ public class TransParant_Hair_care_freg extends Fragment {
     private void Addcategoryproduct(String category_id) {
         //making api call
         ApiInterface api = ApiClient.getClient().create(ApiInterface.class);
-        Call<ResponseBody> login = api.addcategoryprod(category_id);
+        Call<ResponseBody> addcategory = api.addcategoryprod(category_id);
 
-        login.enqueue(new Callback<ResponseBody>() {
+        addcategory.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 Log.e("response", "" + response.body().toString());
@@ -105,21 +133,27 @@ public class TransParant_Hair_care_freg extends Fragment {
                     jsonObject = new JSONObject(response.body().string());
                     String status = jsonObject.getString("status");
                     Log.e("status",""+status);
-                    String meassg=jsonObject.getString("message");
-                    Log.e("message",""+meassg);
+
+                    String title = jsonObject.getString("title");
+                    String count = jsonObject.getString("count");
+                    String categoryimage = jsonObject.getString("categoryimage");
+
+                    products = jsonObject.getString("products");
+                    Log.e("prods",""+products);
+
+                    Log.e("title",""+title);
+                    Log.e("count",""+count);
+                    Log.e("categoryimage",""+categoryimage);
+
                     if (status.equalsIgnoreCase("success")){
-                        Toast.makeText(getContext(),""+meassg, Toast.LENGTH_SHORT).show();
-                        Login_preference.setLogin_flag(getActivity(),"0");
-                        Login_preference.setcustomer_id(getActivity(),jsonObject.getString("customer_id"));
-                        Login_preference.setemail(getActivity(),jsonObject.getString("email"));
-                        Login_preference.setfullname(getActivity(),jsonObject.getString("fullname"));
-                        Home nextFrag= new Home();
-                        getActivity().getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.rootLayout, nextFrag, "home")
-                                .addToBackStack(null)
-                                .commit();
+                       // Toast.makeText(getContext(),""+meassg, Toast.LENGTH_SHORT).show();
+
+                        tv_hair.setText(title);
+                        tv_item_count.setText(count+" "+getString(R.string.item));
+
+
                     }else if (status.equalsIgnoreCase("error")){
-                        Toast.makeText(getContext(), ""+meassg, Toast.LENGTH_SHORT).show();
+                       // Toast.makeText(getContext(), ""+meassg, Toast.LENGTH_SHORT).show();
                     }
 
                 }catch (Exception e){

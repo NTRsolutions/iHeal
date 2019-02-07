@@ -40,6 +40,7 @@ public class EmailLogin extends Fragment {
     public EmailLogin() {
         // Required empty public constructor
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -98,6 +99,9 @@ public class EmailLogin extends Fragment {
     }
     private void loginUser(String username, String password) {
 
+        Log.e("username ",""+username);
+        Log.e("password ",""+password);
+
         //making api call
         ApiInterface api = ApiClient.getClient().create(ApiInterface.class);
         Call<ResponseBody> login = api.login(username,password);
@@ -108,6 +112,7 @@ public class EmailLogin extends Fragment {
                 Log.e("response", "" + response.body().toString());
 
                 JSONObject jsonObject = null;
+
                 try {
                     jsonObject = new JSONObject(response.body().string());
                     String status = jsonObject.getString("status");

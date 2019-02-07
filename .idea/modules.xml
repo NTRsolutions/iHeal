@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/IhealGithubNew.iml" filepath="$PROJECT_DIR$/IhealGithubNew.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/iHealGithub.iml" filepath="$PROJECT_DIR$/iHealGithub.iml" />
       <module fileurl="file://$PROJECT_DIR$/iHeal_git.iml" filepath="$PROJECT_DIR$/iHeal_git.iml" />

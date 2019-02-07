@@ -57,7 +57,7 @@ public class Hair_Cair_fregment extends Fragment {
     public static CountDrawable badge;
 
     View view;
-
+    public static String product_array;
     public Hair_Cair_fregment() {
         // Required empty public constructor
     }
@@ -70,6 +70,11 @@ public class Hair_Cair_fregment extends Fragment {
         bottom_navigation.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
         //option manu
         setHasOptionsMenu(true);
+        Bundle bundle = this.getArguments();
+
+        product_array =bundle.getString("products_array");
+
+        Log.e("products_arrayyyy",""+product_array);
 
         viewPager = (ViewPager) view.findViewById(R.id.viewpager);
         tabLayout = (TabLayout) view.findViewById(R.id.tablayout);
@@ -103,7 +108,6 @@ public class Hair_Cair_fregment extends Fragment {
         final TabPageAdapter adapter = new TabPageAdapter(getFragmentManager(), tabLayout.getTabCount());
         viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-
 
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override

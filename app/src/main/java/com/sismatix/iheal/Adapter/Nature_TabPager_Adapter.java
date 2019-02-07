@@ -23,6 +23,7 @@ public class Nature_TabPager_Adapter extends FragmentStatePagerAdapter {
         switch (position) {
             case 0:
                 Product_category_freg tab1 = new Product_category_freg();
+
                 return tab1;
             case 1:
                 Product_category_freg tab2 = new Product_category_freg();

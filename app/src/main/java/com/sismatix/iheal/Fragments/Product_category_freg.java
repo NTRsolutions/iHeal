@@ -50,7 +50,6 @@ public class Product_category_freg extends Fragment {
         // Required empty public constructor
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -81,9 +80,10 @@ public class Product_category_freg extends Fragment {
                 try {
                     jsonObject = new JSONObject(response.body().string());
                     String status = jsonObject.getString("status");
-                    Log.e("status",""+status);
+                    Log.e("status_prod_cat",""+status);
                     if (status.equalsIgnoreCase("success")){
                     String category=jsonObject.getString("category");
+                    Log.e("catttt_prod_cat",""+category);
                     JSONArray jsonArray=jsonObject.getJSONArray("category");
                         for (int i = 0; i < jsonArray.length(); i++) {
 
@@ -96,7 +96,6 @@ public class Product_category_freg extends Fragment {
                                 Log.e("Exception", "" + e);
                             } finally {
                                 product_category_adapter.notifyItemChanged(i);
-
                             }
 
                         }

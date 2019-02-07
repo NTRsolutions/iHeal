@@ -1,6 +1,7 @@
 package com.sismatix.iheal.Adapter;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
@@ -25,7 +26,6 @@ public class Product_Category_adapter extends RecyclerView.Adapter<Product_Categ
     private Context context;
     private List<Product_Category_model> models;
 
-
     public Product_Category_adapter(Context context, List<Product_Category_model> models) {
         this.context = context;
         this.models = models;
@@ -46,8 +46,12 @@ public class Product_Category_adapter extends RecyclerView.Adapter<Product_Categ
         holder.lv_nature_click.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Bundle b=new Bundle();
+                b.putString("cat_id",product_model.getValue());
+                Log.e("categotyidd",""+product_model.getValue());
                 AppCompatActivity activity = (AppCompatActivity) view.getContext();
                 Fragment myFragment = new TransParant_Hair_care_freg();
+                myFragment.setArguments(b);
                 activity.getSupportFragmentManager().beginTransaction().replace(R.id.rootLayout, myFragment).addToBackStack(null).commit();
 
             }
@@ -71,10 +75,6 @@ public class Product_Category_adapter extends RecyclerView.Adapter<Product_Categ
             super(view);
             tv_category_name = (TextView) view.findViewById(R.id.tv_category_name);
             lv_nature_click = (LinearLayout) view.findViewById(R.id.lv_nature_click);
-
-
-
-
 
         }
     }

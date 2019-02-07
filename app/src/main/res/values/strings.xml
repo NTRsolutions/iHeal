@@ -70,5 +70,7 @@
     <string name="usecare"><![CDATA[Use & Care]]></string>
     <string name="ordernow">ORDER NOW</string>
 
+    <string name="item">items</string>
+
 
 </resources>
