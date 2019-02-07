@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:layout_marginBottom="?attr/actionBarSize"
     android:orientation="vertical"
-    tools:context=".Fragments.iteam_details">
+    tools:context=".Fragments.Iteam_details">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/app_bar_scrolling"
@@ -207,9 +207,11 @@
                         android:padding="20dp">
 
                         <TextView
+                            android:id="@+id/tv_main_title"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="HAIR CARE"
+                            android:textSize="12sp"
                             android:textColor="@color/haircare" />
 
                         <LinearLayout
@@ -225,9 +227,12 @@
                                 android:layout_weight="1.5">
 
                                 <TextView
+                                    android:id="@+id/tv_product_namee"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="ScalpClenz Shampoo  300 ml " />
+                                    android:textSize="16sp"
+                                    android:text="ScalpClenz Shampoo  300 ml "
+                                    android:textColor="@color/black"/>
                             </LinearLayout>
 
                             <LinearLayout
@@ -237,6 +242,7 @@
                                 android:gravity="right">
 
                                 <TextView
+                                    android:id="@+id/tv_product_pricee"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="24.00 KD" />
@@ -286,17 +292,17 @@
                                 android:gravity="right">
 
                                 <ImageView
-                                    android:id="@+id/iv_iteamadd"
+                                    android:id="@+id/iv_item_desc"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:src="@drawable/ic_remove_black_24dp"
                                     android:visibility="visible" />
 
                                 <ImageView
-                                    android:id="@+id/iv_iteamremove"
+                                    android:id="@+id/iv_show_more"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:src="@drawable/ic_remove_black_24dp"
+                                    android:src="@drawable/ic_add_black_24dp"
                                     android:visibility="gone" />
 
                             </LinearLayout>
@@ -309,11 +315,19 @@
                             android:orientation="horizontal">
 
                             <TextView
-                                android:id="@+id/tv_londiscription"
+                                android:id="@+id/tv_short_descriptionn"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do"
                                 android:textColor="#373737" />
+
+                            <TextView
+                                android:id="@+id/tv_long_descriptionn"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="#373737"
+                                android:visibility="gone"/>
+
                         </LinearLayout>
                     </LinearLayout>
 

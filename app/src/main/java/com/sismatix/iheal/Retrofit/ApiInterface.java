@@ -35,4 +35,8 @@ public interface ApiInterface {
     @FormUrlEncoded
     Call<ResponseBody>addcategoryprod(@Field("category_id") String category_id);
 
+    @POST("AppProductView.php")
+    @FormUrlEncoded
+    Call<ResponseBody>appprodview(@Field("product_id") String product_id);
+
 }

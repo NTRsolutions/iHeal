@@ -18,8 +18,6 @@ import com.sismatix.iheal.R;
 
 import java.util.List;
 
-
-
     public class Wishlist_Adapter extends RecyclerView.Adapter<Wishlist_Adapter.MyViewHolder> {
         private Context context;
         private List<Wishlist_Model> model;

@@ -1,6 +1,7 @@
 package com.sismatix.iheal.Adapter;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
@@ -11,12 +12,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.sismatix.iheal.Fragments.iteam_details;
-import com.sismatix.iheal.Model.Cart_Model;
+import com.sismatix.iheal.Fragments.Iteam_details;
 import com.sismatix.iheal.Model.Product_Grid_Model;
 import com.sismatix.iheal.R;
 
@@ -26,7 +25,7 @@ import java.util.List;
 public class Product_recycler_adapter extends RecyclerView.Adapter<Product_recycler_adapter.MyViewHolder> {
     private Context context;
     private List<Product_Grid_Model> models;
-
+    String iddd;
 
     public Product_recycler_adapter(Context context, List<Product_Grid_Model> models) {
         this.context = context;
@@ -48,10 +47,15 @@ public class Product_recycler_adapter extends RecyclerView.Adapter<Product_recyc
         holder.lv_product_click.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                iddd = product_model.getProduct_id();
+                Log.e("iddddddddddd",""+iddd);
+                Bundle b=new Bundle();
+                b.putString("prod_id",iddd);
+                Log.e("productidd",""+iddd);
                 AppCompatActivity activity = (AppCompatActivity) view.getContext();
-                Fragment myFragment = new iteam_details();
+                Fragment myFragment = new Iteam_details();
+                myFragment.setArguments(b);
                 activity.getSupportFragmentManager().beginTransaction().replace(R.id.rootLayout, myFragment).addToBackStack(null).commit();
-
             }
         });
 
