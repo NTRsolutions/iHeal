@@ -43,9 +43,6 @@ public class Cart_List_Adapter extends RecyclerView.Adapter<Cart_List_Adapter.My
         final Cart_Model cart_model = cartList.get(position);
 
 
-        //increse and decrese quantity
-
-
         display(minteger,holder,product_total);
 
         holder.iv_cart_quantity_increase.setOnClickListener(new View.OnClickListener() {
@@ -58,6 +55,7 @@ public class Cart_List_Adapter extends RecyclerView.Adapter<Cart_List_Adapter.My
 
             }
         });
+
         holder.iv_cart_quantity_decrease.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -100,9 +98,7 @@ public class Cart_List_Adapter extends RecyclerView.Adapter<Cart_List_Adapter.My
 
     public void removeItem(int position) {
         cartList.remove(position);
-        // notify the item removed by position
-        // to perform recycler view delete animations
-        // NOTE: don't call notifyDataSetChanged()
+
         notifyItemRemoved(position);
     }
 
@@ -127,7 +123,6 @@ public class Cart_List_Adapter extends RecyclerView.Adapter<Cart_List_Adapter.My
             iv_cart_product_image = (ImageView) view.findViewById(R.id.iv_cart_product_image);
             iv_cart_quantity_decrease = (ImageView) view.findViewById(R.id.iv_cart_quantity_decrease);
             iv_cart_quantity_increase = (ImageView) view.findViewById(R.id.iv_cart_quantity_increase);
-
 
             viewForeground = (RelativeLayout) view.findViewById(R.id.view_foreground);
 
