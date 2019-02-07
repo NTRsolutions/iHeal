@@ -60,7 +60,7 @@
                     android:layout_height="wrap_content"
                     android:textColorHint="@color/main"
                     app:hintTextAppearance="@style/TextAppearance.App.TextInputLayout">
-
+                    <!--android:theme="@style/Theme.AppCompat"-->
                     <EditText
                         android:theme="@style/MyEditTextStyle2"
                         android:id="@+id/login_email"

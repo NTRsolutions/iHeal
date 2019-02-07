@@ -1,5 +1,7 @@
 package com.sismatix.iheal.Retrofit;
 
+import com.sismatix.iheal.Preference.LoginModel;
+
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
@@ -16,8 +18,8 @@ public interface ApiInterface {
 
     @POST("AppLogin.php")
     @FormUrlEncoded
-    Call<ResponseBody>login(@Field("email") String username,
-                             @Field("password") String password);
+    Call<LoginModel> login(@Field("email") String username,
+                           @Field("password") String password);
 
     @POST("logout.php")
     @FormUrlEncoded

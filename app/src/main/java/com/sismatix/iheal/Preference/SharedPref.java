@@ -9,7 +9,7 @@ import com.sismatix.iheal.Fragments.Home;
 public class SharedPref {
 
     //Storage File
-    public static final String SHARED_PREF_NAME = "larntech";
+    public static final String SHARED_PREF_NAME = "dws";
 
     //Username
     public static final String USER_NAME = "username";
