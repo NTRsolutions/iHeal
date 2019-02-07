@@ -44,8 +44,7 @@ public class Cart_List_Adapter extends RecyclerView.Adapter<Cart_List_Adapter.My
 
 
         //increse and decrese quantity
-        Log.e("minteger_5", "" + minteger);
-        Log.e("minteger_5", "" + product_total);
+
 
         display(minteger,holder,product_total);
 
@@ -70,9 +69,6 @@ public class Cart_List_Adapter extends RecyclerView.Adapter<Cart_List_Adapter.My
                             minteger=1;
                           // product_total = product_total - current_price;
                         }else {
-
-                        Log.e("minteger_67", "" + minteger);
-                        Log.e("minteger_68", "" + product_total);
                         product_total = product_total - current_price;
                             Log.e("minteger_69", "" + product_total);
                         display(minteger, holder, product_total);

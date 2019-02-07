@@ -351,7 +351,6 @@ public class Navigation_drawer_activity extends AppCompatActivity
         }
     };
 
-    ///remove scrollbar navigationdrawer
     private void disableNavigationViewScrollbars(NavigationView navigationView) {
         if (navigationView != null) {
             NavigationMenuView navigationMenuView = (NavigationMenuView) navigationView.getChildAt(0);
@@ -424,9 +423,7 @@ public class Navigation_drawer_activity extends AppCompatActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
+
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
