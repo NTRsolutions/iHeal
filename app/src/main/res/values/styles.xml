@@ -57,4 +57,11 @@
         <item name="colorControlNormal">@color/colorPrimary</item>
     </style>
 
+
+
+    //change the bydefault icon back
+    <style name="Theme.MyFancyTheme" parent="android:Theme.Holo">
+        <item name="android:homeAsUpIndicator">@drawable/ic_keyboard_arrow_left_white_36dp</item>
+    </style>
+
 </resources>

@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,12 +32,13 @@ import static com.sismatix.iheal.Activity.Navigation_drawer_activity.bottom_navi
 /**
  * A simple {@link Fragment} subclass.
  */
-public class Signup extends Fragment {
+public class Signup extends Fragment implements View.OnClickListener {
 
     TextInputLayout signup_input_layout_fullname, signup_input_layout_email, signup_input_layout_password;
     EditText signup_fullname, signup_email, signup_password;
     Button btn_signup;
     TextView tv_login;
+    ImageView iv_back_signup;
 
     public Signup() {
         // Required empty public constructor
@@ -57,24 +59,22 @@ public class Signup extends Fragment {
         tv_login = (TextView) v.findViewById(R.id.tv_login);
 
         btn_signup = (Button)v.findViewById(R.id.btn_signup);
+        iv_back_signup = (ImageView) v.findViewById(R.id.iv_back_signup);
 
-        tv_login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                EmailLogin nextFrag= new EmailLogin();
-                getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.rootLayout, nextFrag, "login")
-                        .addToBackStack(null)
-                        .commit();
-            }
-        });
-        btn_signup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                validateSignupData();
-            }
-        });
+        tv_login.setOnClickListener(this);
+        btn_signup.setOnClickListener(this);
+        iv_back_signup.setOnClickListener(this);
         return v;
+    }
+
+    public  void loadFragment(Fragment fragment) {
+        Log.e("clickone", "");
+        android.support.v4.app.FragmentManager manager =getFragmentManager();
+        android.support.v4.app.FragmentTransaction transaction = manager.beginTransaction();
+        transaction.replace(R.id.rootLayout, fragment);
+        transaction.addToBackStack(null);
+
+        transaction.commit();
     }
     private void validateSignupData() {
 
@@ -146,4 +146,18 @@ public class Signup extends Fragment {
         return m.matches();
     }
 
+    @Override
+    public void onClick(View view) {
+        if(view==iv_back_signup){
+            loadFragment(new Account());
+        }else if(view==btn_signup){
+            validateSignupData();
+        }else if(view==tv_login){
+            EmailLogin nextFrag= new EmailLogin();
+            getActivity().getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.rootLayout, nextFrag, "login")
+                    .addToBackStack(null)
+                    .commit();
+        }
+    }
 }

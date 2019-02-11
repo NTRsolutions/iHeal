@@ -72,6 +72,8 @@ public class Hair_Cair_fregment extends Fragment {
         setHasOptionsMenu(true);
         Bundle bundle = this.getArguments();
 
+
+
         product_array =bundle.getString("products_array");
 
         Log.e("products_arrayyyy",""+product_array);
@@ -88,6 +90,9 @@ public class Hair_Cair_fregment extends Fragment {
         ((Navigation_drawer_activity) getActivity()).setSupportActionBar(toolbar);
         ((Navigation_drawer_activity) getActivity()).getSupportActionBar()
                 .setDisplayHomeAsUpEnabled(true);
+        ((Navigation_drawer_activity) getActivity()).getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_keyboard_arrow_left_white_36dp);
+
+
 
         collapsingToolbar.setTitle("Hair Care");
 
@@ -105,7 +110,7 @@ public class Hair_Cair_fregment extends Fragment {
         tabLayout.addTab(tabLayout.newTab().setText("VIEW-ALL"));
         tabLayout.addTab(tabLayout.newTab().setText("ANTI-SULFAT"));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
-        final TabPageAdapter adapter = new TabPageAdapter(getFragmentManager(), tabLayout.getTabCount());
+        final TabPageAdapter adapter = new TabPageAdapter(getChildFragmentManager(), tabLayout.getTabCount());
         viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
@@ -163,10 +168,15 @@ public class Hair_Cair_fregment extends Fragment {
             case R.id.cart:
                 Toast.makeText(getActivity(), "cart Icon Click", Toast.LENGTH_SHORT).show();
                 return true;
+
+            case android.R.id.home:
+                // this takes the user 'back', as if they pressed the left-facing triangle icon on the main android toolbar.
+                // if this doesn't work as desired, another possibility is to call `finish()` here.
+                getActivity().onBackPressed();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
-
 
 }

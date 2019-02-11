@@ -1,10 +1,13 @@
 package com.sismatix.iheal.Fragments;
 
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +15,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.sismatix.iheal.Preference.Login_preference;
 import com.sismatix.iheal.R;
@@ -30,7 +34,18 @@ public class Home extends Fragment implements View.OnClickListener {
     Button btn_contact;
     String loginflag;
     TextView tv_hometitlename;
+    private boolean doubleBackToExitPressedOnce;
+    private final Runnable mRunnable = new Runnable() {
+        @Override
+        public void run() {
+            doubleBackToExitPressedOnce = false;
+        }
+    };
+    private Handler mHandler = new Handler();
 
+    View v;
+    //public static Context context=null;
+   // public  static Activity activity;
     public Home() {
         // Required empty public constructor
     }
@@ -38,7 +53,9 @@ public class Home extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v=inflater.inflate(R.layout.fragment_home, container, false);
+       v=inflater.inflate(R.layout.fragment_home, container, false);
+
+
         bottom_navigation.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
         loginflag=Login_preference.getLogin_flag(getActivity());
         iv_iteamdeails=(ImageView)v.findViewById(R.id.iv_iteamdeails);
@@ -66,12 +83,51 @@ public class Home extends Fragment implements View.OnClickListener {
             lv_withoutlogin.setVisibility(View.GONE);
             btn_contact.setVisibility(View.VISIBLE);
         }
+
+
+        BACK_EVENT();
         return v;
     }
 
-    private void loadFragment(Fragment fragment) {
+    private void BACK_EVENT() {
+        v.setFocusableInTouchMode(true);
+         v.requestFocus();
+        v.setOnKeyListener(new View.OnKeyListener() {
+
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+
+                if (event.getAction() == KeyEvent.ACTION_UP
+                        && keyCode == KeyEvent.KEYCODE_BACK) {
+
+                    if (doubleBackToExitPressedOnce) {
+                        // super.onBackPressed();
+
+                        if (mHandler != null) {
+                            mHandler.removeCallbacks(mRunnable);
+                        }
+
+                        getActivity().finish();
+
+                        return true;
+                    }
+
+                    doubleBackToExitPressedOnce = true;
+                    Toast.makeText(getActivity(),
+                            "Please click BACK again to exit",
+                            Toast.LENGTH_SHORT).show();
+
+                    mHandler.postDelayed(mRunnable, 2000);
+
+                }
+                return true;
+            }
+        });
+    }
+
+    public  void loadFragment(Fragment fragment) {
         Log.e("clickone", "");
-        android.support.v4.app.FragmentManager manager = getFragmentManager();
+        android.support.v4.app.FragmentManager manager =getFragmentManager();
         android.support.v4.app.FragmentTransaction transaction = manager.beginTransaction();
         transaction.replace(R.id.rootLayout, fragment);
         transaction.addToBackStack(null);

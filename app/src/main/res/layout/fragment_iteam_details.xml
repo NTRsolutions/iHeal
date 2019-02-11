@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:layout_marginBottom="?attr/actionBarSize"
     android:orientation="vertical"
-    tools:context=".Fragments.Item_details">
+>
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/app_bar_scrolling"
@@ -17,7 +17,7 @@
         android:theme="@style/AppTheme.AppBarOverlay">
 
         <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
+            android:id="@+id/toolbar_item_detail"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:gravity="center"
@@ -27,10 +27,9 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:weightSum="8">
+                android:orientation="horizontal">
 
-                <LinearLayout
+               <!-- <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -38,25 +37,22 @@
                     android:gravity="center">
 
                     <ImageView
-                        android:id="@+id/iv_back"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/ic_keyboard_arrow_left_white_36dp" />
-
-                </LinearLayout>
+                </LinearLayout>-->
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_weight="1"
                     android:gravity="center"
                     android:paddingLeft="20dp"
                     android:text="ScalpClenz Shampoo "
                     android:textColor="@color/white"
                     android:textSize="16dp" />
 
-                <LinearLayout
+              <!--  <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -68,9 +64,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/ic_favorite_border_white_36dp" />
-                </LinearLayout>
+                </LinearLayout>-->
 
-                <LinearLayout
+               <!-- <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -83,7 +79,7 @@
                         android:layout_height="wrap_content"
                         android:src="@drawable/ic_shopping_cart_black_36dp" />
 
-                </LinearLayout>
+                </LinearLayout>-->
 
             </LinearLayout>
 
@@ -91,70 +87,7 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:visibility="gone">
 
-        <android.support.design.widget.AppBarLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:theme="@style/AppTheme.AppBarOverlay">
-
-            <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/toolbar_cart"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="@color/colorPrimaryDark"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-                app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:weightSum="4">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center|start"
-                        android:layout_marginLeft="10dp"
-                        android:layout_weight="3"
-                        android:gravity="center|start"
-                        android:orientation="vertical">
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/ic_close_black_18dp"
-                            android:visibility="visible" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center|start"
-                        android:layout_marginLeft="15dp"
-                        android:layout_weight="1"
-                        android:gravity="center|start"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Shopping Cart"
-                            android:textColor="@color/white"
-                            android:textSize="18sp"
-                            android:textStyle="bold" />
-                    </LinearLayout>
-                </LinearLayout>
-            </android.support.v7.widget.Toolbar>
-
-        </android.support.design.widget.AppBarLayout>
-    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -185,13 +118,12 @@
                         android:layout_height="wrap_content"
                         android:background="@color/slieder_bg"
                         android:orientation="vertical">
-
                         <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">
 
                             <ProgressBar
-                                android:id="@+id/progressBar"
+                                android:id="@+id/progressBar_item"
                                 android:layout_width="50dp"
                                 android:layout_height="50dp"
                                 android:layout_centerHorizontal="true"
@@ -199,7 +131,6 @@
                                 android:layout_marginTop="80dp"
                                 android:indeterminateDrawable="@drawable/pbcc"
                                 android:visibility="visible" />
-
                             <android.support.v4.view.ViewPager
                                 android:id="@+id/pager"
                                 android:layout_width="match_parent"
@@ -207,9 +138,9 @@
 
                             <me.relex.circleindicator.CircleIndicator
                                 android:id="@+id/indicator"
+                                android:layout_below="@+id/pager"
                                 android:layout_width="match_parent"
                                 android:layout_height="48dp"
-                                android:layout_below="@id/pager"
                                 android:layout_gravity="bottom"
                                 app:ci_drawable="@drawable/circle_selected"
                                 app:ci_drawable_unselected="@drawable/circle_unselected" />
@@ -231,8 +162,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="HAIR CARE"
-                            android:textColor="@color/haircare"
-                            android:textSize="12sp" />
+                            android:textSize="12sp"
+                            android:textColor="@color/haircare" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -250,9 +181,9 @@
                                     android:id="@+id/tv_product_namee"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:textSize="16sp"
                                     android:text="ScalpClenz Shampoo  300 ml "
-                                    android:textColor="@color/black"
-                                    android:textSize="16sp" />
+                                    android:textColor="@color/black"/>
                             </LinearLayout>
 
                             <LinearLayout
@@ -315,14 +246,14 @@
                                     android:id="@+id/iv_item_desc"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:src="@drawable/ic_add_black_24dp"
+                                    android:src="@drawable/ic_remove_black_24dp"
                                     android:visibility="visible" />
 
                                 <ImageView
                                     android:id="@+id/iv_show_more"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:src="@drawable/ic_remove_black_24dp"
+                                    android:src="@drawable/ic_add_black_24dp"
                                     android:visibility="gone" />
 
                             </LinearLayout>
@@ -346,7 +277,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textColor="#373737"
-                                android:visibility="gone" />
+                                android:visibility="gone"/>
 
                         </LinearLayout>
                     </LinearLayout>
@@ -497,7 +428,6 @@
             android:weightSum="4">
 
             <LinearLayout
-
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"

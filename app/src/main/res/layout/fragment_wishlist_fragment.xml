@@ -20,7 +20,7 @@
 
             <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/toolbar_cart"
+                android:id="@+id/toolbar_mywishlist"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:background="@color/colorPrimaryDark"
@@ -31,8 +31,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:weightSum="6">
-                    <LinearLayout
+                   >
+                   <!-- <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="vertical"
@@ -44,7 +44,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:src="@drawable/ic_keyboard_arrow_left_white_36dp"/>
-                    </LinearLayout>
+                    </LinearLayout>-->
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -71,7 +71,7 @@
                             android:textSize="16sp"
                             android:textColor="@color/white"/>
                     </LinearLayout>
-                    <LinearLayout
+                  <!--  <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="vertical"
@@ -83,7 +83,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:src="@drawable/ic_shopping_cart_black_36dp"/>
-                    </LinearLayout>
+                    </LinearLayout>-->
                 </LinearLayout>
             </android.support.v7.widget.Toolbar>
 

@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.sismatix.iheal.R;
@@ -28,11 +29,12 @@ import static com.sismatix.iheal.Activity.Navigation_drawer_activity.bottom_navi
 /**
  * A simple {@link Fragment} subclass.
  */
-public class Forgotpassword_fragment extends Fragment {
+public class Forgotpassword_fragment extends Fragment implements View.OnClickListener {
 
     EditText forgot_email;
     Button btn_submit;
     TextInputLayout forgot_input_layout_email;
+    ImageView iv_forget_password;
     public Forgotpassword_fragment() {
         // Required empty public constructor
     }
@@ -42,24 +44,33 @@ public class Forgotpassword_fragment extends Fragment {
         // Inflate the layout for this fragment
         View v=inflater.inflate(R.layout.fragment_forgotpassword_fragment, container, false);
         bottom_navigation.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+
+
+        AllocateMemory(v);
+
+
+        btn_submit.setOnClickListener(this);
+        iv_forget_password.setOnClickListener(this);
+
+        return v;
+    }
+
+    private void AllocateMemory(View v) {
+        iv_forget_password=(ImageView) v.findViewById(R.id.iv_forget_password);
         forgot_email=(EditText)v.findViewById(R.id.forgot_email);
         btn_submit=(Button) v.findViewById(R.id.btn_submit);
         forgot_input_layout_email = (TextInputLayout) v.findViewById(R.id.forgot_input_layout_email);
-        btn_submit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String forgot= forgot_email.getText().toString();
-                if (forgot_email.getText().length() == 0) {
-                    forgot_input_layout_email.setError("Please enter your Email id");
-                }
-                else if (isValidEmailAddress(forgot_email.getText().toString()) == false) {
-                    forgot_input_layout_email.setError("Please enter valid email.");
-                }else{
-                    forgotpassword(forgot);
-                }
-            }
-        });
-        return v;
+
+    }
+
+    public  void loadFragment(Fragment fragment) {
+        Log.e("clickone", "");
+        android.support.v4.app.FragmentManager manager =getFragmentManager();
+        android.support.v4.app.FragmentTransaction transaction = manager.beginTransaction();
+        transaction.replace(R.id.rootLayout, fragment);
+        transaction.addToBackStack(null);
+
+        transaction.commit();
     }
     public boolean isValidEmailAddress(String email) {
         String ePattern = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$";
@@ -109,5 +120,20 @@ public class Forgotpassword_fragment extends Fragment {
     }
 
 
-
+    @Override
+    public void onClick(View view) {
+        if(view==iv_forget_password){
+            loadFragment(new EmailLogin());
+        }else if(view==btn_submit){
+            String forgot= forgot_email.getText().toString();
+            if (forgot_email.getText().length() == 0) {
+                forgot_input_layout_email.setError("Please enter your Email id");
+            }
+            else if (isValidEmailAddress(forgot_email.getText().toString()) == false) {
+                forgot_input_layout_email.setError("Please enter valid email.");
+            }else{
+                forgotpassword(forgot);
+            }
+        }
+    }
 }

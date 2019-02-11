@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.ProgressBar;
 
 import com.sismatix.iheal.Adapter.Cart_List_Adapter;
 import com.sismatix.iheal.Adapter.Product_grid_adapter;
@@ -43,7 +44,7 @@ public class Tablayout_hair_fregment extends Fragment {
     RecyclerView recycler_product;
     private List<Product_Grid_Model> product_model = new ArrayList<Product_Grid_Model>();
     private Product_recycler_adapter product_adapter;
-
+    ProgressBar progressBar;
     String product;
 
     View v;
@@ -64,7 +65,7 @@ public class Tablayout_hair_fregment extends Fragment {
 
         //gridview=(GridView)v.findViewById(R.id.gridview);
         recycler_product=(RecyclerView) v.findViewById(R.id.recycler_product);
-
+        progressBar=(ProgressBar)v.findViewById(R.id.progressBar);
         product_adapter = new Product_recycler_adapter(getActivity(), product_model);
         recycler_product.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         recycler_product.setItemAnimator(new DefaultItemAnimator());
@@ -73,6 +74,8 @@ public class Tablayout_hair_fregment extends Fragment {
         return v;
     }
     private void CALL_PRODUCT_API() {
+        progressBar.setVisibility(View.VISIBLE);
+        product_model.clear();
         JSONObject jsonObject = null;
         try {
            // JSONArray jsonArray=jsonObject.getJSONArray(product_array);
@@ -83,6 +86,7 @@ public class Tablayout_hair_fregment extends Fragment {
             for (int i = 0; i < jsonArray.length(); i++) {
 
                 try {
+                    progressBar.setVisibility(View.GONE);
 
                     JSONObject vac_object = jsonArray.getJSONObject(i);
                     Log.e("prod_name",""+vac_object.getString("product_name"));

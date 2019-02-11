@@ -15,6 +15,7 @@
             android:name=".Activity.Navigation_drawer_activity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
+
             android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".Activity.Splash"

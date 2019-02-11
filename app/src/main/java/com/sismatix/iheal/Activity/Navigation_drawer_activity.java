@@ -1,9 +1,11 @@
 package com.sismatix.iheal.Activity;
 
 import android.animation.ArgbEvaluator;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.internal.NavigationMenuView;
 import android.support.design.widget.BottomNavigationView;
@@ -57,7 +59,7 @@ import retrofit2.Response;
 public class Navigation_drawer_activity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    DrawerLayout drawer;
+  public static DrawerLayout drawer;
     NavigationView navigationView;
     Toolbar toolbar;
     MenuItem title_account_tools, title_shop_tools;
@@ -70,7 +72,7 @@ public class Navigation_drawer_activity extends AppCompatActivity
     private ViewPager viewPager;
     public static BottomNavigationView bottom_navigation;
     private List<View> viewList;
-
+    boolean doubleBackToExitPressedOnce = false;
     /*int navDefaultTextColor = Color.parseColor("#ffe5a8");
     int navDefaultIconColor = Color.parseColor("#ffe5a8");*/
 
@@ -264,30 +266,30 @@ public class Navigation_drawer_activity extends AppCompatActivity
         switch (item.getItemId()) {
             case R.id.bottom_nav_home:
                 // Action to perform when Home Menu item is selected.
-                pushFragment(new Home());
+                pushFragment(new Home(),"Home_fragment");
                 viewPager.setCurrentItem(0);
                 break;
             case R.id.bottom_nav_search:
-                pushFragment(new Search());
+                pushFragment(new Search(),"Search_fragment");
                 viewPager.setCurrentItem(1);
                 break;
             case R.id.bottom_nav_favourite:
-                pushFragment(new Favourite());
+                pushFragment(new Favourite(),"Favourite_fragment");
                 viewPager.setCurrentItem(2);
                 break;
             case R.id.bottom_nav_cart:
-                pushFragment(new Cart());
+                pushFragment(new Cart(),null);
                 viewPager.setCurrentItem(3);
                 break;
             case R.id.bottom_nav_account:
-                pushFragment(new Account());
+                pushFragment(new Account(),"Account_fragment");
                 viewPager.setCurrentItem(4);
                 break;
 
         }
     }
 
-    private void pushFragment(Fragment fragment) {
+    private void pushFragment(Fragment fragment,String add_to_backstack) {
         if (fragment == null)
             return;
 
@@ -296,6 +298,7 @@ public class Navigation_drawer_activity extends AppCompatActivity
             FragmentTransaction ft = fragmentManager.beginTransaction();
             if (ft != null) {
                 ft.replace(R.id.rootLayout, fragment);
+                ft.addToBackStack(add_to_backstack);
                 ft.commit();
             }
         }
@@ -399,7 +402,7 @@ public class Navigation_drawer_activity extends AppCompatActivity
         actionbar.setHomeAsUpIndicator(R.drawable.ic_dehaze_white_36dp);
 
     }
-
+/*
     @Override
     public void onBackPressed() {
         if (drawer.isDrawerOpen(GravityCompat.START)) {
@@ -407,7 +410,7 @@ public class Navigation_drawer_activity extends AppCompatActivity
         } else {
             super.onBackPressed();
         }
-    }
+    }*/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -480,4 +483,53 @@ public class Navigation_drawer_activity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+    ///////////
+    @Override
+    public void onBackPressed() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        int count = fragmentManager.getBackStackEntryCount();
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        }
+
+         if (count == 1) {
+            Intent intent = new Intent(Navigation_drawer_activity.this, Navigation_drawer_activity.class);
+            startActivity(intent);
+             super.onBackPressed();
+             super.finish();
+        } else if (count == 0) {
+            if (doubleBackToExitPressedOnce) {
+                super.onBackPressed();
+                super.finish();
+                return;
+            }
+            this.doubleBackToExitPressedOnce = true;
+            Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    doubleBackToExitPressedOnce = false;
+                }
+            }, 2000);
+        } else {
+            String title = fragmentManager.getBackStackEntryAt(count - 2).getName();
+            super.onBackPressed();
+            Log.e("onBackPressetitle", "" + title);
+           // tv_title.setText(title);
+        }
+        //doExitApp();
+    }
+    private long exitTime = 0;
+    public void doExitApp() {
+        if ((System.currentTimeMillis() - exitTime) > 2000) {
+            Toast.makeText(Navigation_drawer_activity.this,
+                    "Please click BACK again to exit",
+                    Toast.LENGTH_SHORT).show();
+            exitTime = System.currentTimeMillis();
+        } else {
+            finish();
+        }
+    }
+
 }
