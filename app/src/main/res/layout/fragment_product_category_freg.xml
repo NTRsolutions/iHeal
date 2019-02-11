@@ -24,6 +24,6 @@
         android:layout_centerHorizontal="true"
         android:layout_gravity="center"
         android:indeterminateDrawable="@drawable/pbcc"
-        android:visibility="visible" />
+        android:visibility="gone" />
 
 </RelativeLayout>

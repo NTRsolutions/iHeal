@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.sismatix.iheal.Adapter.Product_Category_adapter;
@@ -45,6 +46,7 @@ public class Product_category_freg extends Fragment {
     RecyclerView recycler_product_category;
     private List<Product_Category_model> product_model = new ArrayList<Product_Category_model>();
     private Product_Category_adapter product_category_adapter;
+    ProgressBar progressBar;
 
     public Product_category_freg() {
         // Required empty public constructor
@@ -56,6 +58,7 @@ public class Product_category_freg extends Fragment {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_product_category_freg, container, false);
 
+        progressBar = view.findViewById(R.id.progressBar);
         recycler_product_category = (RecyclerView) view.findViewById(R.id.recycler_product_category);
         CALL_PRODUCT_CATEGORY_API();
         product_category_adapter = new Product_Category_adapter(getActivity(), product_model);
@@ -67,7 +70,9 @@ public class Product_category_freg extends Fragment {
 
         return view;
     }
+
     private void CALL_PRODUCT_CATEGORY_API() {
+        progressBar.setVisibility(View.VISIBLE);
         ApiInterface api = ApiClient.getClient().create(ApiInterface.class);
         Call<ResponseBody> categorylist = api.categorylist("all");
 
@@ -75,22 +80,23 @@ public class Product_category_freg extends Fragment {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 Log.e("response", "" + response.body().toString());
-
+                progressBar.setVisibility(View.GONE);
                 JSONObject jsonObject = null;
                 try {
                     jsonObject = new JSONObject(response.body().string());
                     String status = jsonObject.getString("status");
-                    Log.e("status_prod_cat",""+status);
-                    if (status.equalsIgnoreCase("success")){
-                    String category=jsonObject.getString("category");
-                    Log.e("catttt_prod_cat",""+category);
-                    JSONArray jsonArray=jsonObject.getJSONArray("category");
+                    Log.e("status_prod_cat", "" + status);
+                    if (status.equalsIgnoreCase("success")) {
+
+                        String category = jsonObject.getString("category");
+                        Log.e("catttt_prod_cat", "" + category);
+                        JSONArray jsonArray = jsonObject.getJSONArray("category");
                         for (int i = 0; i < jsonArray.length(); i++) {
 
                             try {
                                 JSONObject vac_object = jsonArray.getJSONObject(i);
-                                Log.e("Name",""+vac_object.getString("name"));
-                                product_model.add(new Product_Category_model(vac_object.getString("name"),vac_object.getString("value")));
+                                Log.e("Name", "" + vac_object.getString("name"));
+                                product_model.add(new Product_Category_model(vac_object.getString("name"), vac_object.getString("value")));
 
                             } catch (Exception e) {
                                 Log.e("Exception", "" + e);
@@ -100,13 +106,14 @@ public class Product_category_freg extends Fragment {
 
                         }
 
-                    }else if (status.equalsIgnoreCase("error")){
+                    } else if (status.equalsIgnoreCase("error")) {
                     }
 
-                }catch (Exception e){
-                    Log.e("",""+e);
+                } catch (Exception e) {
+                    Log.e("", "" + e);
                 }
             }
+
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 Toast.makeText(getContext(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
