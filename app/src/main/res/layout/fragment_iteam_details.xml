@@ -42,6 +42,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/ic_keyboard_arrow_left_white_36dp" />
+
                 </LinearLayout>
 
                 <TextView
@@ -185,18 +186,36 @@
                         android:background="@color/slieder_bg"
                         android:orientation="vertical">
 
-                        <android.support.v4.view.ViewPager
-                            android:id="@+id/pager"
+                        <RelativeLayout
                             android:layout_width="match_parent"
-                            android:layout_height="180dp" />
+                            android:layout_height="wrap_content">
 
-                        <me.relex.circleindicator.CircleIndicator
-                            android:id="@+id/indicator"
-                            android:layout_width="match_parent"
-                            android:layout_height="48dp"
-                            android:layout_gravity="bottom"
-                            app:ci_drawable="@drawable/circle_selected"
-                            app:ci_drawable_unselected="@drawable/circle_unselected" />
+                            <ProgressBar
+                                android:id="@+id/progressBar"
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                android:layout_centerHorizontal="true"
+                                android:layout_gravity="center"
+                                android:layout_marginTop="80dp"
+                                android:indeterminateDrawable="@drawable/pbcc"
+                                android:visibility="visible" />
+
+                            <android.support.v4.view.ViewPager
+                                android:id="@+id/pager"
+                                android:layout_width="match_parent"
+                                android:layout_height="180dp" />
+
+                            <me.relex.circleindicator.CircleIndicator
+                                android:id="@+id/indicator"
+                                android:layout_width="match_parent"
+                                android:layout_height="48dp"
+                                android:layout_below="@id/pager"
+                                android:layout_gravity="bottom"
+                                app:ci_drawable="@drawable/circle_selected"
+                                app:ci_drawable_unselected="@drawable/circle_unselected" />
+
+                        </RelativeLayout>
+
 
                     </LinearLayout>
 
@@ -212,8 +231,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="HAIR CARE"
-                            android:textSize="12sp"
-                            android:textColor="@color/haircare" />
+                            android:textColor="@color/haircare"
+                            android:textSize="12sp" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -231,9 +250,9 @@
                                     android:id="@+id/tv_product_namee"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:textSize="16sp"
                                     android:text="ScalpClenz Shampoo  300 ml "
-                                    android:textColor="@color/black"/>
+                                    android:textColor="@color/black"
+                                    android:textSize="16sp" />
                             </LinearLayout>
 
                             <LinearLayout
@@ -296,14 +315,14 @@
                                     android:id="@+id/iv_item_desc"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:src="@drawable/ic_remove_black_24dp"
+                                    android:src="@drawable/ic_add_black_24dp"
                                     android:visibility="visible" />
 
                                 <ImageView
                                     android:id="@+id/iv_show_more"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:src="@drawable/ic_add_black_24dp"
+                                    android:src="@drawable/ic_remove_black_24dp"
                                     android:visibility="gone" />
 
                             </LinearLayout>
@@ -327,7 +346,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textColor="#373737"
-                                android:visibility="gone"/>
+                                android:visibility="gone" />
 
                         </LinearLayout>
                     </LinearLayout>

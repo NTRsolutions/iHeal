@@ -25,27 +25,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 
 import com.sismatix.iheal.Adapter.Cart_List_Adapter;
 import com.sismatix.iheal.Model.Cart_Model;
-import com.sismatix.iheal.Preference.Login_preference;
 import com.sismatix.iheal.R;
-import com.sismatix.iheal.Retrofit.ApiClient;
-import com.sismatix.iheal.Retrofit.ApiInterface;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 import static com.sismatix.iheal.Activity.Navigation_drawer_activity.bottom_navigation;
 
@@ -60,9 +48,9 @@ public class Cart extends Fragment  {
     private Cart_List_Adapter cart_adapter;
     Toolbar toolbar;
     ImageView iv_place_order;
-    TextView tv_maintotal;
     LinearLayout lv_place_order;
 
+    private static final String URL = "https://api.androidhive.info/json/menu.json";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -73,13 +61,6 @@ public class Cart extends Fragment  {
         AllocateMemory(view);
 
         prepare_Cart();
-        cart_adapter = new Cart_List_Adapter(getActivity(), cartList);
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
-        cart_recyclerview.setLayoutManager(mLayoutManager);
-        cart_recyclerview.setItemAnimator(new DefaultItemAnimator());
-        cart_recyclerview.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
-        cart_recyclerview.setAdapter(cart_adapter);
-
         init_Swipe_recyclerview();//swiper recyclerview
         lv_place_order.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,8 +68,12 @@ public class Cart extends Fragment  {
                loadFragment(new Checkout_fragment());
             }
         });
+
+
         return view;
     }
+
+
     private void loadFragment(Fragment fragment) {
         Log.e("clickone", "");
         android.support.v4.app.FragmentManager manager = getFragmentManager();
@@ -118,6 +103,10 @@ public class Cart extends Fragment  {
 
                 }   else {
                     removeView();
+                    /*edit_position = position;
+                    alertDialog.setTitle("Edit Country");
+                    et_country.setText(countries.get(position));
+                    alertDialog.show();*/
                 }
             }
 
@@ -164,59 +153,57 @@ public class Cart extends Fragment  {
         toolbar=(Toolbar)v.findViewById(R.id.toolbar_cart);
         iv_place_order=(ImageView) v.findViewById(R.id.iv_place_order);
         lv_place_order=(LinearLayout) v.findViewById(R.id.lv_place_order);
-        tv_maintotal=(TextView) v.findViewById(R.id.tv_maintotal);
+
+        cart_adapter = new Cart_List_Adapter(getActivity(), cartList);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
+        cart_recyclerview.setLayoutManager(mLayoutManager);
+        cart_recyclerview.setItemAnimator(new DefaultItemAnimator());
+        cart_recyclerview.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
+        cart_recyclerview.setAdapter(cart_adapter);
         }
+
     /**
      * method make volley network call and parses json
      */
     private void prepare_Cart() {
-        String email= Login_preference.getemail(getActivity());
-        ApiInterface api = ApiClient.getClient().create(ApiInterface.class);
-        Call<ResponseBody> cartlistt = api.Cartlist(email);
 
-        cartlistt.enqueue(new Callback<ResponseBody>() {
+        for (int i=0;i<4;i++) {
+            cartList.add(new Cart_Model("", "",
+                    "", ""));
+        }
+        cart_adapter.notifyDataSetChanged();
+
+      /*  final StringRequest request = new StringRequest(StringRequest.Method.POST, URL, new Response.Listener<String>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                Log.e("responseeeeee", "" + response.body().toString());
+            public void onResponse(String response) {
+                Log.e("res_getlocationwish", "" + response);
 
-                JSONObject jsonObject = null;
-                try {
-                    jsonObject = new JSONObject(response.body().string());
-                    String status = jsonObject.getString("status");
-                    Log.e("status",""+status);
-                    if (status.equalsIgnoreCase("success")){
-                        String grand_total=jsonObject.getString("grand_total");
-                        tv_maintotal.setText(grand_total);
-                        JSONArray jsonArray=jsonObject.getJSONArray("products");
-                        for (int i = 0; i < jsonArray.length(); i++) {
-                            try {
-                                JSONObject vac_object = jsonArray.getJSONObject(i);
-                                Log.e("Name",""+vac_object.getString("product_name"));
-                                cartList.add(new Cart_Model(""+vac_object.getString("product_name"), ""+vac_object.getString("product_price"),
-                                        ""+vac_object.getString("product_image"), ""+vac_object.getString("product_sku")));
-
-                            }catch (Exception e) {
-                                Log.e("Exception", "" + e);
-                            }
-                            finally {
-                                cart_adapter.notifyItemChanged(i);
-
-                            }
-                        }
-                    }else if (status.equalsIgnoreCase("error")){
-
+                    if (response == null) {
+                        Toast.makeText(getActivity(), "Couldn't fetch the menu! Pleas try again.", Toast.LENGTH_LONG).show();
+                        return;
                     }
 
-                }catch (Exception e){
-                    Log.e("",""+e);
+                for (int i=0;i<10;i++) {
+                    cartList.add(new Cart_Model("", "",
+                            "", ""));
                 }
+                cart_adapter.notifyDataSetChanged();
+
             }
+        }, new Response.ErrorListener() {
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Toast.makeText(getContext(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+            public void onErrorResponse(VolleyError error) {
+                Log.e("", "" + error);
             }
         });
 
+        request.setRetryPolicy(new DefaultRetryPolicy(
+                30000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
+        requestQueue.add(request);*/
     }
 
 

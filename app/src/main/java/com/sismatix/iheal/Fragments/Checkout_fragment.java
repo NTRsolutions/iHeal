@@ -71,7 +71,6 @@ public class Checkout_fragment extends Fragment implements View.OnClickListener 
 
     }
 
-
     private void loadFragment(Fragment fragment) {
         Log.e("clickone", "");
         android.support.v4.app.FragmentManager manager = getFragmentManager();

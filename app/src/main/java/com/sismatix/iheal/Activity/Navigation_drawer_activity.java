@@ -125,6 +125,19 @@ public class Navigation_drawer_activity extends AppCompatActivity
             }
         });
 
+
+        getSupportFragmentManager().addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
+            @Override
+            public void onBackStackChanged() {
+                if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+                    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                } else {
+                    getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+                }
+            }
+        });
+
+
 /*
         lv_logout.setOnClickListener(new View.OnClickListener() {
             @Override

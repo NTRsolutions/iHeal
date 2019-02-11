@@ -22,9 +22,20 @@
         android:horizontalSpacing="10dp"
         android:numColumns="auto_fit"
         android:verticalSpacing="10dp"></GridView>-->
+
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/recycler_product"></android.support.v7.widget.RecyclerView>
+        android:id="@+id/recycler_product"/>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="100dp"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:indeterminateDrawable="@drawable/pbcc"
+        android:visibility="gone" />
 
 </RelativeLayout>

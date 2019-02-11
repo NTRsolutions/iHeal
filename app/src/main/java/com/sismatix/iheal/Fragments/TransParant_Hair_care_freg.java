@@ -67,7 +67,7 @@ public class TransParant_Hair_care_freg extends Fragment {
 
         cat_id =bundle.getString("cat_id");
 
-        Log.e("category_id",""+cat_id);
+        Log.e("category_id_thcf",""+cat_id);
 
         Addcategoryproduct(cat_id);
 
@@ -79,9 +79,9 @@ public class TransParant_Hair_care_freg extends Fragment {
                 activity.getSupportFragmentManager().beginTransaction().replace(R.id.rootLayout, myFragment).addToBackStack(null).commit();
 */
 
-
                 Bundle b=new Bundle();
                 b.putString("products_array",products);
+                b.putString("cat_id",cat_id);
                 AppCompatActivity activity = (AppCompatActivity) v.getContext();
                 Fragment myFragment = new Hair_Cair_fregment();
                 myFragment.setArguments(b);
