@@ -73,7 +73,7 @@ public class Nature_Category_freg extends Fragment {
 
         ((Navigation_drawer_activity) getActivity()).getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_keyboard_arrow_left_white_36dp);
 
-        collapsing_toolbar_nature.setTitle("Nature's Categories");
+        collapsing_toolbar_nature.setTitle("Product's Categories");
 
         SetTablayout();
         return view;
