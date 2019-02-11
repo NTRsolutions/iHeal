@@ -102,7 +102,7 @@ public class EmailLogin extends Fragment {
         Log.e("username ",""+username);
         Log.e("password ",""+password);
 
-        //making api call
+        //makin g api call
         ApiInterface api = ApiClient.getClient().create(ApiInterface.class);
         Call<ResponseBody> login = api.login(username,password);
 

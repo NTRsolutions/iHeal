@@ -31,7 +31,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static com.sismatix.iheal.Activity.Navigation_drawer_activity.bottom_navigation;
-
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -92,11 +91,9 @@ public class TransParant_Hair_care_freg extends Fragment {
 
             }
         });
-
         if (toolbar_hair_care != null) {
             ((Navigation_drawer_activity) getActivity()).setSupportActionBar(toolbar_hair_care);
         }
-
         if (toolbar_hair_care != null) {
             ((Navigation_drawer_activity) getActivity()).getSupportActionBar()
                     .setDisplayHomeAsUpEnabled(true);
@@ -110,14 +107,11 @@ public class TransParant_Hair_care_freg extends Fragment {
                         .openDrawer(GravityCompat.START);
             }
         });
-
         bottom_navigation.setBackgroundColor(getResources().getColor(R.color.trans));
         appbar.setBackgroundColor(getResources().getColor(R.color.trans));
         toolbar_hair_care.setBackgroundColor(getResources().getColor(R.color.trans));
-
         return v;
     }
-
     private void Addcategoryproduct(String category_id) {
         //making api call
         ApiInterface api = ApiClient.getClient().create(ApiInterface.class);

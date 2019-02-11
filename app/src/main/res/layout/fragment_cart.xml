@@ -130,6 +130,7 @@
                     android:background="@drawable/dotted"/>
 -->
                 <TextView
+                    android:id="@+id/tv_maintotal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"

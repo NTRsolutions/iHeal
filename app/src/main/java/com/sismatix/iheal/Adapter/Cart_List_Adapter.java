@@ -13,6 +13,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 
+import com.bumptech.glide.Glide;
 import com.sismatix.iheal.Model.Cart_Model;
 import com.sismatix.iheal.R;
 
@@ -29,19 +30,19 @@ public class Cart_List_Adapter extends RecyclerView.Adapter<Cart_List_Adapter.My
         this.context = context;
         this.cartList = cartList;
     }
-
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.cart_list_item_row, parent, false);
-
         return new MyViewHolder(itemView);
     }
-
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
         final Cart_Model cart_model = cartList.get(position);
-
+        holder.tv_cart_product_title.setText(cart_model.getProduct_name());
+        Glide.with(context).load(cart_model.getProduct_image()).into(holder.iv_cart_product_image);
+        holder.tv_product_price_total.setText(cart_model.getProduct_price());
+        holder.tv_cart_product_description.setText(cart_model.getProduct_description());
 
         display(minteger,holder,product_total);
 
@@ -87,7 +88,7 @@ public class Cart_List_Adapter extends RecyclerView.Adapter<Cart_List_Adapter.My
         Log.e("total_price_83", "" + total_price);
         holder.tv_cart_quantity_total.setText("" + number);
 
-        holder.tv_product_price_total.setText("" + total_price);
+        //holder.tv_product_price_total.setText("" + total_price);
     }
 
 
@@ -107,7 +108,6 @@ public class Cart_List_Adapter extends RecyclerView.Adapter<Cart_List_Adapter.My
         // notify item added by position
         notifyItemInserted(position);
     }
-
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView tv_cart_product_title, tv_cart_product_description, tv_product_price_total, tv_cart_quantity_total;
         public ImageView iv_cart_product_image, iv_cart_quantity_decrease, iv_cart_quantity_increase;
@@ -119,7 +119,6 @@ public class Cart_List_Adapter extends RecyclerView.Adapter<Cart_List_Adapter.My
             tv_cart_product_title = (TextView) view.findViewById(R.id.tv_cart_product_title);
             tv_product_price_total = (TextView) view.findViewById(R.id.tv_product_price_total);
             tv_cart_quantity_total = (TextView) view.findViewById(R.id.tv_cart_quantity_total);
-
             iv_cart_product_image = (ImageView) view.findViewById(R.id.iv_cart_product_image);
             iv_cart_quantity_decrease = (ImageView) view.findViewById(R.id.iv_cart_quantity_decrease);
             iv_cart_quantity_increase = (ImageView) view.findViewById(R.id.iv_cart_quantity_increase);

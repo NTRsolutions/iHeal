@@ -105,7 +105,7 @@ public class Hair_Cair_fregment extends Fragment {
         tabLayout.addTab(tabLayout.newTab().setText("VIEW-ALL"));
         tabLayout.addTab(tabLayout.newTab().setText("ANTI-SULFAT"));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
-        final TabPageAdapter adapter = new TabPageAdapter(getFragmentManager(), tabLayout.getTabCount());
+        final TabPageAdapter adapter = new TabPageAdapter(getChildFragmentManager(), tabLayout.getTabCount());
         viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 

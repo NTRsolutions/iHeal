@@ -76,7 +76,7 @@ public class Nature_Category_freg extends Fragment {
         tablayout_nature.addTab(tablayout_nature.newTab().setText("VIEW-ALL"));
         tablayout_nature.addTab(tablayout_nature.newTab().setText("ANTI-SULFAT"));
         tablayout_nature.setTabGravity(TabLayout.GRAVITY_FILL);
-        final Nature_TabPager_Adapter adapter = new Nature_TabPager_Adapter(getFragmentManager(), tablayout_nature.getTabCount());
+        final Nature_TabPager_Adapter adapter = new Nature_TabPager_Adapter(getChildFragmentManager(), tablayout_nature.getTabCount());
         viewpager_nature.setAdapter(adapter);
         viewpager_nature.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tablayout_nature));
 

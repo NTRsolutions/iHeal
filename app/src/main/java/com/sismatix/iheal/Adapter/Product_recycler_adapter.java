@@ -15,7 +15,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.sismatix.iheal.Fragments.Iteam_details;
+import com.sismatix.iheal.Fragments.Item_details;
 import com.sismatix.iheal.Model.Product_Grid_Model;
 import com.sismatix.iheal.R;
 
@@ -53,7 +53,7 @@ public class Product_recycler_adapter extends RecyclerView.Adapter<Product_recyc
                 b.putString("prod_id",iddd);
                 Log.e("productidd",""+iddd);
                 AppCompatActivity activity = (AppCompatActivity) view.getContext();
-                Fragment myFragment = new Iteam_details();
+                Fragment myFragment = new Item_details();
                 myFragment.setArguments(b);
                 activity.getSupportFragmentManager().beginTransaction().replace(R.id.rootLayout, myFragment).addToBackStack(null).commit();
             }

@@ -59,5 +59,17 @@ public class Login_preference {
         mPrefs = PreferenceManager.getDefaultSharedPreferences(context);
         return mPrefs.getString("fullname", "");
     }
+    public static void setiteamqty(Context context, String value)
+    {
+        mPrefs = PreferenceManager.getDefaultSharedPreferences(context);
+        prefsEditor = mPrefs.edit();
+        prefsEditor.putString("items_qty", value);
+        prefsEditor.commit();
+    }
+    public static String getiteamqty(Context context)
+    {
+        mPrefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return mPrefs.getString("items_qty", "");
+    }
 
 }

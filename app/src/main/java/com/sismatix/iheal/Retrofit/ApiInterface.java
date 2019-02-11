@@ -39,4 +39,13 @@ public interface ApiInterface {
     @FormUrlEncoded
     Call<ResponseBody>appprodview(@Field("product_id") String product_id);
 
+    @POST("AppAddToCart.php")
+    @FormUrlEncoded
+    Call<ResponseBody>addtocart(@Field("product_id") String product_id,
+                                  @Field("customer_id") String password);
+
+    @POST("AppCartList.php")
+    @FormUrlEncoded
+    Call<ResponseBody>Cartlist(@Field("email") String email);
+
 }

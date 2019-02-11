@@ -73,6 +73,7 @@ public class Tablayout_hair_fregment extends Fragment {
         return v;
     }
     private void CALL_PRODUCT_API() {
+        product_model.clear();
         JSONObject jsonObject = null;
         try {
            // JSONArray jsonArray=jsonObject.getJSONArray(product_array);
