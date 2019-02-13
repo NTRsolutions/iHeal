@@ -16,7 +16,15 @@
         android:icon="@drawable/ic_favorite_border_white_36dp"
         android:title="wish"
         app:showAsAction="always"
-        tools:ignore="AppCompatResource" />
+        tools:ignore="AppCompatResource"
+        android:visible="true"/>
+    <item
+        android:id="@+id/fill_wish"
+        android:icon="@drawable/ic_favorite_white_36dp"
+        android:title="wish_remov"
+        app:showAsAction="always"
+        tools:ignore="AppCompatResource"
+        android:visible="false"/>
     <item
         android:id="@+id/cartt"
         android:icon="@drawable/ic_menu_cart"

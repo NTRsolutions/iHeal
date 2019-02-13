@@ -17,6 +17,9 @@ import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.graphics.Palette;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -27,14 +30,23 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.flaviofaria.kenburnsview.KenBurnsView;
 import com.sismatix.iheal.Activity.Navigation_drawer_activity;
+import com.sismatix.iheal.Adapter.Product_recycler_adapter;
 import com.sismatix.iheal.Adapter.TabPageAdapter;
+import com.sismatix.iheal.Model.Product_Grid_Model;
+import com.sismatix.iheal.Preference.Login_preference;
 import com.sismatix.iheal.R;
 import com.sismatix.iheal.View.CountDrawable;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import static com.sismatix.iheal.Activity.Navigation_drawer_activity.bottom_navigation;
@@ -58,6 +70,11 @@ public class Hair_Cair_fregment extends Fragment {
 
     View view;
     public static String product_array;
+    RecyclerView recycler_product;
+    private List<Product_Grid_Model> product_model = new ArrayList<Product_Grid_Model>();
+    private Product_recycler_adapter product_adapter;
+    ProgressBar progressBar;
+
     public Hair_Cair_fregment() {
         // Required empty public constructor
     }
@@ -96,9 +113,51 @@ public class Hair_Cair_fregment extends Fragment {
 
         collapsingToolbar.setTitle("Hair Care");
 
-        SetTablayout();
+        recycler_product=(RecyclerView) view.findViewById(R.id.recycler_product);
+        progressBar=(ProgressBar)view.findViewById(R.id.progressBar);
+        product_adapter = new Product_recycler_adapter(getActivity(), product_model);
+        recycler_product.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+        recycler_product.setItemAnimator(new DefaultItemAnimator());
+        recycler_product.setAdapter(product_adapter);
+        CALL_PRODUCT_API();
+
+       // SetTablayout();
 
         return view;
+    }
+
+    private void CALL_PRODUCT_API() {
+        progressBar.setVisibility(View.VISIBLE);
+        product_model.clear();
+        JSONObject jsonObject = null;
+        try {
+            // JSONArray jsonArray=jsonObject.getJSONArray(product_array);
+
+            JSONArray jsonArray=new JSONArray(product_array);
+
+            Log.e("arrprod",""+jsonArray);
+            for (int i = 0; i < jsonArray.length(); i++) {
+
+                try {
+                    progressBar.setVisibility(View.GONE);
+
+                    JSONObject vac_object = jsonArray.getJSONObject(i);
+                    Log.e("prod_name",""+vac_object.getString("product_name"));
+                    product_model.add(new Product_Grid_Model(vac_object.getString("product_image"),
+                            vac_object.getString("product_price"),vac_object.getString("product_name"),
+                            vac_object.getString("type"),vac_object.getString("product_id"),"product_specialprice"));
+
+                } catch (Exception e) {
+                    Log.e("Exception", "" + e);
+                } finally {
+                    product_adapter.notifyItemChanged(i);
+                }
+
+            }
+
+        }catch (Exception e){
+        }
+
     }
 
     //tablayout
@@ -155,6 +214,8 @@ public class Hair_Cair_fregment extends Fragment {
         } else {
             badge = new CountDrawable(getActivity());
         }
+        count=Login_preference.getCart_item_count(getActivity());
+        Log.e("count_142",""+count);
         badge.setCount(count);
         icon.mutate();
         icon.setDrawableByLayerId(R.id.ic_group_count, badge);

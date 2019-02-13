@@ -41,8 +41,6 @@ import static com.sismatix.iheal.Activity.Navigation_drawer_activity.bottom_navi
  */
 public class Product_category_freg extends Fragment {
     View view;
-    public static ArrayList<Product_Grid_Model> grid_model = new ArrayList<Product_Grid_Model>();
-    GridView gridview;
     RecyclerView recycler_product_category;
     private List<Product_Category_model> product_model = new ArrayList<Product_Category_model>();
     private Product_Category_adapter product_category_adapter;

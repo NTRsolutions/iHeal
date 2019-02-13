@@ -16,6 +16,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -31,6 +33,7 @@ import com.sismatix.iheal.R;
 import com.sismatix.iheal.Retrofit.ApiClient;
 import com.sismatix.iheal.Retrofit.ApiInterface;
 import com.sismatix.iheal.View.CountDrawable;
+import com.sismatix.iheal.View.MyBounceInterpolator;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -60,12 +63,14 @@ public class Item_details extends Fragment implements View.OnClickListener, View
     TextView tv_product_name, tv_product_price, tv_short_description, tv_long_descriptionn, tv_main_title;
     ImageView iv_item_desc, iv_show_more;
 
-    String proddd_id;
+    String proddd_id, loginflag;
     public static LayerDrawable icon;
     public String count = "1";
     public static CountDrawable badge;
     Toolbar toolbar;
     ProgressBar progressBar_item;
+    MenuItem fillwish, wish;
+    Call<ResponseBody> addtocart = null;
 
     private List<sliderimage_model> sliderimage_models = new ArrayList<sliderimage_model>();
 
@@ -77,6 +82,7 @@ public class Item_details extends Fragment implements View.OnClickListener, View
         bottom_navigation.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
         setHasOptionsMenu(true);
         AllocateMemory(v);
+        loginflag = Login_preference.getLogin_flag(getActivity());
 
 
         //set back icon by defult
@@ -122,7 +128,7 @@ public class Item_details extends Fragment implements View.OnClickListener, View
         tv_short_description = (TextView) v.findViewById(R.id.tv_short_descriptionn);
         tv_long_descriptionn = (TextView) v.findViewById(R.id.tv_long_descriptionn);
 
-          tv_main_title = (TextView)v.findViewById(R.id.tv_main_title);
+        tv_main_title = (TextView) v.findViewById(R.id.tv_main_title);
 
         iv_item_desc = (ImageView) v.findViewById(R.id.iv_item_desc);
         iv_show_more = (ImageView) v.findViewById(R.id.iv_show_more);
@@ -133,7 +139,7 @@ public class Item_details extends Fragment implements View.OnClickListener, View
         progressBar_item.setVisibility(View.VISIBLE);
         ApiInterface api = ApiClient.getClient().create(ApiInterface.class);
         Call<ResponseBody> addcategory = api.appprodview(proddd_id);
-
+        sliderimage_models.clear();
         addcategory.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -246,6 +252,8 @@ public class Item_details extends Fragment implements View.OnClickListener, View
         inflater.inflate(R.menu.cart_wishlist, menu);
         MenuItem item = menu.findItem(R.id.cartt);
         MenuItem item_search = menu.findItem(R.id.search);
+        fillwish = menu.findItem(R.id.fill_wish);
+        wish = menu.findItem(R.id.wish);
         item_search.setVisible(false);
 
 //        icon = (LayerDrawable) item.getIcon();
@@ -259,14 +267,18 @@ public class Item_details extends Fragment implements View.OnClickListener, View
         } else {
             badge = new CountDrawable(getActivity());
         }
+        count = Login_preference.getCart_item_count(getActivity());
+        Log.e("count_142", "" + count);
         badge.setCount(count);
         icon.mutate();
         icon.setDrawableByLayerId(R.id.ic_group_count, badge);
 
         super.onCreateOptionsMenu(menu, inflater);
     }
+
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(final MenuItem item) {
+
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.cartt:
@@ -274,7 +286,32 @@ public class Item_details extends Fragment implements View.OnClickListener, View
                 return true;
 
             case R.id.wish:
-                loadFragment(new Wishlist_fragment());
+
+                //add from wishlist
+                if (loginflag.equalsIgnoreCase("1") || loginflag == "1") {
+                    // Remove_FROM_WISHLIST_API();
+                    String action = "add";
+                    ADD_TO_WISHLIST_API(action);
+
+
+                } else {
+
+                    loadFragment(new EmailLogin());
+                }
+
+                //loadFragment(new Wishlist_fragment());
+                return true;
+            case R.id.fill_wish:
+                //remove from wishlist
+                if (loginflag.equalsIgnoreCase("1") || loginflag == "1") {
+
+                    String action = "remove";
+                    Remove_FROM_WISHLIST_API(proddd_id, Login_preference.getcustomer_id(getActivity()), action);
+
+                } else {
+                    loadFragment(new EmailLogin());
+                }
+
                 return true;
 
             case android.R.id.home:
@@ -286,38 +323,140 @@ public class Item_details extends Fragment implements View.OnClickListener, View
                 return super.onOptionsItemSelected(item);
         }
     }
-    private void AddTocart() {
+
+    private void Remove_FROM_WISHLIST_API(String product_id, String customer_id, String action) {
+
+        Log.e("remove_proddd_id_wish", "" + proddd_id);
+        Log.e("remove_customer_id_wish", "" + Login_preference.getcustomer_id(getActivity()));
+        Log.e("action", "" + action);
+        //makin g api call
         ApiInterface api = ApiClient.getClient().create(ApiInterface.class);
-        Call<ResponseBody> addtocart=api.addtocart(proddd_id,Login_preference.getcustomer_id(getActivity()));
-        Log.e("proddd_idddd",""+proddd_id);
+        Call<ResponseBody> remove_from_wishlist = api.add_to_wishlist(product_id, customer_id, action);
+
+        remove_from_wishlist.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                Log.e("response", "" + response.body().toString());
+
+                JSONObject jsonObject = null;
+
+                try {
+                    jsonObject = new JSONObject(response.body().string());
+                    String status = jsonObject.getString("status");
+                    Log.e("status", "" + status);
+                    String meassg = jsonObject.getString("message");
+                    Log.e("message", "" + meassg);
+                    if (status.equalsIgnoreCase("Success")) {
+                        wish.setVisible(true);
+                        fillwish.setVisible(false);
+                        Toast.makeText(getContext(), "" + meassg, Toast.LENGTH_SHORT).show();
+
+                    } else if (status.equalsIgnoreCase("error")) {
+                        Toast.makeText(getContext(), "" + meassg, Toast.LENGTH_SHORT).show();
+                    }
+
+                } catch (Exception e) {
+                    Log.e("", "" + e);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Toast.makeText(getContext(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
+    private void ADD_TO_WISHLIST_API(String action) {
+
+
+        ApiInterface api = ApiClient.getClient().create(ApiInterface.class);
+        Call<ResponseBody> add_to_wishlist = api.add_to_wishlist(proddd_id, Login_preference.getcustomer_id(getActivity()), action);
+        add_to_wishlist.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                Log.e("response_wish", "" + response.body().toString());
+                JSONObject jsonObject = null;
+                try {
+                    jsonObject = new JSONObject(response.body().string());
+                    String status = jsonObject.getString("status");
+                    String message = null;
+                    if (status.equalsIgnoreCase("success")) {
+                        message = jsonObject.getString("message");
+                        Log.e("message", "" + message);
+
+                        fillwish.setVisible(true);
+                        wish.setVisible(false);
+
+                        Toast.makeText(getContext(), "" + message, Toast.LENGTH_SHORT).show();
+                        //Login_preference.setiteamqty(getActivity(),jsonObject.getString("items_qty"));
+                        //loadFragment(new Cart());
+
+                    } else if (status.equalsIgnoreCase("error")) {
+                        Toast.makeText(getContext(), "" + message, Toast.LENGTH_SHORT).show();
+                    }
+                } catch (Exception e) {
+                    Log.e("exception", "" + e);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Toast.makeText(getContext(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+    }
+
+    private void AddTocart() {
+        String loginflag = Login_preference.getLogin_flag(getActivity());
+        Log.e("customeriddd", "" + Login_preference.getcustomer_id(getActivity()));
+        if (loginflag.equalsIgnoreCase("1") || loginflag == "1") {
+            Log.e("with_login", "");
+            ApiInterface api = ApiClient.getClient().create(ApiInterface.class);
+            addtocart = api.addtocart(proddd_id, Login_preference.getcustomer_id(getActivity()));
+        } else {
+            Log.e("without_login", "");
+            ApiInterface api = ApiClient.getClient().create(ApiInterface.class);
+            Log.e("pass_quote_id", "" + Login_preference.getquote_id(getActivity()));
+            addtocart = api.withoutlogin_addtocart(proddd_id, Login_preference.getquote_id(getActivity()));
+
+        }
+        Log.e("proddd_idddd", "" + proddd_id);
         addtocart.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                Log.e("",""+response.body().toString());
-                JSONObject jsonObject=null;
-                try{
-                    jsonObject=new JSONObject(response.body().string());
-                    String status =jsonObject.getString("status");
-                    String meassg=jsonObject.getString("message");
-                    Log.e("message",""+meassg);
-                    if (status.equalsIgnoreCase("success")){
-                        Toast.makeText(getContext(), ""+meassg, Toast.LENGTH_SHORT).show();
-                        Login_preference.setiteamqty(getActivity(),jsonObject.getString("items_qty"));
+                Log.e("", "" + response.body().toString());
+                JSONObject jsonObject = null;
+                try {
+                    jsonObject = new JSONObject(response.body().string());
+                    String status = jsonObject.getString("status");
+                    String meassg = jsonObject.getString("message");
+                    Log.e("message", "" + meassg);
+                    if (status.equalsIgnoreCase("success")) {
+                        Toast.makeText(getContext(), "" + meassg, Toast.LENGTH_SHORT).show();
+                        Login_preference.setquote_id(getActivity(), jsonObject.getString("quote_id"));
+                        Log.e("quote_iddddd", "" + jsonObject.getString("quote_id"));
+                        Login_preference.setiteamqty(getActivity(), jsonObject.getString("items_qty"));
                         loadFragment(new Cart());
 
-                    }else if (status.equalsIgnoreCase("error")){
-                        Toast.makeText(getContext(), ""+meassg, Toast.LENGTH_SHORT).show();
+                    } else if (status.equalsIgnoreCase("error")) {
+                        Toast.makeText(getContext(), "" + meassg, Toast.LENGTH_SHORT).show();
                     }
-                }catch (Exception e){
-                    Log.e("exception",""+e);
+                } catch (Exception e) {
+                    Log.e("exception", "" + e);
                 }
             }
+
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 Toast.makeText(getContext(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
             }
         });
     }
+
     @Override
     public void onPageScrolled(int i, float v, int i1) {
 

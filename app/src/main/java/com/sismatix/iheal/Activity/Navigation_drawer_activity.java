@@ -42,6 +42,7 @@ import com.sismatix.iheal.Fragments.Favourite;
 import com.sismatix.iheal.Fragments.Home;
 import com.sismatix.iheal.Fragments.Nature_Category_freg;
 import com.sismatix.iheal.Fragments.Search;
+import com.sismatix.iheal.Fragments.Wishlist_fragment;
 import com.sismatix.iheal.Preference.Login_preference;
 import com.sismatix.iheal.R;
 import com.sismatix.iheal.Retrofit.ApiClient;
@@ -66,7 +67,7 @@ public class Navigation_drawer_activity extends AppCompatActivity
     SpannableString shop, account;
     LinearLayout lv_withlogin_header, login_navigation,lv_logout;
     String loginflag;
-    TextView tv_navidrawer;
+    public  static TextView tv_navidrawer,item_count;
 
     //bottom navigation
     private ViewPager viewPager;
@@ -138,6 +139,10 @@ public class Navigation_drawer_activity extends AppCompatActivity
                 }
             }
         });
+
+
+
+
 
 
 /*
@@ -273,8 +278,9 @@ public class Navigation_drawer_activity extends AppCompatActivity
                 pushFragment(new Search(),"Search_fragment");
                 viewPager.setCurrentItem(1);
                 break;
-            case R.id.bottom_nav_favourite:
-                pushFragment(new Favourite(),"Favourite_fragment");
+            case R.id.bottom_nav_Wishlist:
+                pushFragment(new Wishlist_fragment(),"Wishlist_fragment");
+
                 viewPager.setCurrentItem(2);
                 break;
             case R.id.bottom_nav_cart:
@@ -352,7 +358,8 @@ public class Navigation_drawer_activity extends AppCompatActivity
                     bottom_navigation.setSelectedItemId(R.id.bottom_nav_search);
                     break;
                 case 2:
-                    bottom_navigation.setSelectedItemId(R.id.bottom_nav_favourite);
+                    bottom_navigation.setSelectedItemId(R.id.bottom_nav_Wishlist);
+
                     break;
                 case 3:
                     bottom_navigation.setSelectedItemId(R.id.bottom_nav_cart);
@@ -377,29 +384,36 @@ public class Navigation_drawer_activity extends AppCompatActivity
     }
 
     private void AllocateMemory() {
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        //set bydefault itemcount
+        Login_preference.setCart_item_count(Navigation_drawer_activity.this,"0");
+
+       toolbar = (Toolbar) findViewById(R.id.toolbar);
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         View header = navigationView.getHeaderView(0);
         login_navigation = (LinearLayout) findViewById(R.id.login_navigation);
         lv_logout = (LinearLayout) findViewById(R.id.lv_logout);
         tv_navidrawer=(TextView)header.findViewById(R.id.tv_navidraweremail);
+        item_count=(TextView)header.findViewById(R.id.item_count);
         lv_withlogin_header = (LinearLayout) header.findViewById(R.id.lv_withlogin_header);
 
         ///menu in login&logout opetionshow
         if (loginflag.equalsIgnoreCase("1") || loginflag == "1") {
-            lv_withlogin_header.setVisibility(View.GONE);
-            login_navigation.setVisibility(View.VISIBLE);
-        } else {
-            tv_navidrawer.setText(Login_preference.getemail(Navigation_drawer_activity.this));
             lv_withlogin_header.setVisibility(View.VISIBLE);
             login_navigation.setVisibility(View.GONE);
+            lv_logout.setVisibility(View.VISIBLE);
+        } else {
+            tv_navidrawer.setText(Login_preference.getemail(Navigation_drawer_activity.this));
+            lv_withlogin_header.setVisibility(View.GONE);
+            login_navigation.setVisibility(View.VISIBLE);
+            lv_logout.setVisibility(View.GONE);
         }
         ///menu icon change
         setSupportActionBar(toolbar);
         ActionBar actionbar = getSupportActionBar();
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setHomeAsUpIndicator(R.drawable.ic_dehaze_white_36dp);
+
 
     }
 /*
@@ -460,19 +474,26 @@ public class Navigation_drawer_activity extends AppCompatActivity
             fragmentTransaction.replace(R.id.rootLayout, new Nature_Category_freg());
             fragmentTransaction.commit();
 
-        } else if (id == R.id.nav_health_topic) {
+        }/* else if (id == R.id.nav_health_topic) {
 
         } else if (id == R.id.nav_offers) {
 
         } else if (id == R.id.nav_reviews) {
 
-        } else if (id == R.id.nav_recipes) {
+        }*/ else if (id == R.id.nav_recipes) {
 
-        } else if (id == R.id.nav_my_account) {
+        }
+        else if (id == R.id.nav_my_order) {
+
+        }
+        else if (id == R.id.nav_my_account) {
             android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.rootLayout, new Account());
             fragmentTransaction.commit();
         } else if (id == R.id.nav_wishlist) {
+            android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.rootLayout, new Wishlist_fragment());
+            fragmentTransaction.commit();
 
         } else if (id == R.id.nav_messages) {
 

@@ -2,6 +2,7 @@ package com.sismatix.iheal.Fragments;
 
 
 import android.content.ClipData;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -25,6 +26,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -55,14 +57,17 @@ import static com.sismatix.iheal.Activity.Navigation_drawer_activity.bottom_navi
 public class Cart extends Fragment  {
     private Paint p = new Paint();
     private View view;
-    private RecyclerView cart_recyclerview;
-    private List<Cart_Model> cartList = new ArrayList<Cart_Model>();
-    private Cart_List_Adapter cart_adapter;
+    public static RecyclerView cart_recyclerview;
+    public static List<Cart_Model> cartList = new ArrayList<Cart_Model>();
+    public static Cart_List_Adapter cart_adapter;
     Toolbar toolbar;
     ImageView iv_place_order;
-    TextView tv_maintotal;
+    public  static TextView tv_maintotal;
+    public  static Context context=null;
     LinearLayout lv_place_order;
-
+    public static ProgressBar progressBar_cart;
+    public static  String cart_items_count;
+    public static Call<ResponseBody> cartlistt=null;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -70,6 +75,8 @@ public class Cart extends Fragment  {
         // Inflate the layout for this fragment
         view=inflater.inflate(R.layout.fragment_cart, container, false);
         bottom_navigation.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+
+        context=getActivity();
         AllocateMemory(view);
 
         prepare_Cart();
@@ -165,15 +172,29 @@ public class Cart extends Fragment  {
         iv_place_order=(ImageView) v.findViewById(R.id.iv_place_order);
         lv_place_order=(LinearLayout) v.findViewById(R.id.lv_place_order);
         tv_maintotal=(TextView) v.findViewById(R.id.tv_maintotal);
+        progressBar_cart=(ProgressBar) v.findViewById(R.id.progressBar_cart);
     }
     /**
      * method make volley network call and parses json
      */
-    private void prepare_Cart() {
-        String email= Login_preference.getemail(getActivity());
-        ApiInterface api = ApiClient.getClient().create(ApiInterface.class);
-        Call<ResponseBody> cartlistt = api.Cartlist(email);
+    public static void prepare_Cart() {
+        progressBar_cart.setVisibility(View.VISIBLE);
+        cartList.clear();
+        String email= Login_preference.getemail(context);
 
+        String loginflag=Login_preference.getLogin_flag(context);
+        Log.e("customeriddd",""+Login_preference.getcustomer_id(context));
+        if(loginflag.equalsIgnoreCase("1") || loginflag == "1"){
+            Log.e("with_login","");
+            ApiInterface api = ApiClient.getClient().create(ApiInterface.class);
+            cartlistt = api.Cartlist(email);
+        }else{
+            Log.e("without_login","");
+            String quote_id=Login_preference.getquote_id(context);
+            ApiInterface api = ApiClient.getClient().create(ApiInterface.class);
+            cartlistt = api.getlistcart(quote_id);
+
+        }
         cartlistt.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -181,19 +202,27 @@ public class Cart extends Fragment  {
 
                 JSONObject jsonObject = null;
                 try {
+                    progressBar_cart.setVisibility(View.GONE);
                     jsonObject = new JSONObject(response.body().string());
                     String status = jsonObject.getString("status");
-                    Log.e("status",""+status);
+                    Log.e("status_prepare_cart",""+status);
                     if (status.equalsIgnoreCase("success")){
                         String grand_total=jsonObject.getString("grand_total");
                         tv_maintotal.setText(grand_total);
+                        cart_items_count=jsonObject.getString("items_count");
+
+                        Login_preference.setCart_item_count(context,cart_items_count);
                         JSONArray jsonArray=jsonObject.getJSONArray("products");
                         for (int i = 0; i < jsonArray.length(); i++) {
                             try {
                                 JSONObject vac_object = jsonArray.getJSONObject(i);
                                 Log.e("Name",""+vac_object.getString("product_name"));
-                                cartList.add(new Cart_Model(""+vac_object.getString("product_name"), ""+vac_object.getString("product_price"),
-                                        ""+vac_object.getString("product_image"), ""+vac_object.getString("product_sku")));
+                                cartList.add(new Cart_Model(vac_object.getString("product_name"),
+                                        vac_object.getString("product_price"),
+                                        vac_object.getString("product_image"),
+                                        vac_object.getString("product_sku"),vac_object.getString("product_id")
+                                        ,vac_object.getString("row_total"),
+                                        vac_object.getString("product_qty")));
                             }catch (Exception e) {
                                 Log.e("Exception", "" + e);
                             }
@@ -212,7 +241,7 @@ public class Cart extends Fragment  {
             }
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Toast.makeText(getContext(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
             }
         });
 

@@ -13,9 +13,9 @@
         android:title="Search" />
 
     <item
-        android:id="@+id/bottom_nav_favourite"
+        android:id="@+id/bottom_nav_Wishlist"
         android:icon="@drawable/ic_star_border_black_36dp"
-        android:title="Favourite" />
+        android:title="Wishlist" />
 
     <item
         android:id="@+id/bottom_nav_cart"

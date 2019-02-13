@@ -31,7 +31,7 @@
                 android:icon="@drawable/product_cat"
                 android:title="Product Categories"
                />
-            <item
+           <!-- <item
                 android:id="@+id/nav_health_topic"
                 android:icon="@drawable/health_topics"
                 android:title="Health Topics"
@@ -44,7 +44,7 @@
                 android:id="@+id/nav_reviews"
                 android:icon="@drawable/reviews"
                 android:title="Reviews"
-               />
+               />-->
             <item
                 android:id="@+id/nav_recipes"
                 android:icon="@drawable/recipes"
@@ -63,6 +63,11 @@
                 android:icon="@drawable/myaccount"
                 android:title="My Account"
                 />
+                <item
+                    android:id="@+id/nav_my_order"
+                    android:icon="@drawable/offers"
+                    android:title="My Order"
+                    />
             <item
                 android:id="@+id/nav_wishlist"
                 android:icon="@drawable/wishlist"

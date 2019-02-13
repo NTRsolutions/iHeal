@@ -84,7 +84,7 @@ public class Confirmation_fragment extends Fragment {
 
         for (int i=0;i<4;i++) {
             cartList.add(new Cart_Model("", "",
-                    "", ""));
+                    "", "","","",""));
         }
         confirmation_cart_adapter.notifyDataSetChanged();
     }

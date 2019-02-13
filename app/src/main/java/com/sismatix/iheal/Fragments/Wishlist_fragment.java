@@ -5,15 +5,18 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.sismatix.iheal.Activity.Navigation_drawer_activity;
@@ -21,11 +24,22 @@ import com.sismatix.iheal.Adapter.Cart_List_Adapter;
 import com.sismatix.iheal.Adapter.Wishlist_Adapter;
 import com.sismatix.iheal.Model.Cart_Model;
 import com.sismatix.iheal.Model.Wishlist_Model;
+import com.sismatix.iheal.Preference.Login_preference;
 import com.sismatix.iheal.R;
+import com.sismatix.iheal.Retrofit.ApiClient;
+import com.sismatix.iheal.Retrofit.ApiInterface;
 import com.sismatix.iheal.View.CountDrawable;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static com.sismatix.iheal.Activity.Navigation_drawer_activity.bottom_navigation;
 
@@ -34,14 +48,16 @@ import static com.sismatix.iheal.Activity.Navigation_drawer_activity.bottom_navi
  */
 public class Wishlist_fragment extends Fragment {
     RecyclerView recycler_wishlist;
-    private List<Wishlist_Model> wishlist_models = new ArrayList<Wishlist_Model>();
-    private Wishlist_Adapter wishlist_adapter;
+    private static List<Wishlist_Model> wishlist_models = new ArrayList<Wishlist_Model>();
+    private static Wishlist_Adapter wishlist_adapter;
     View v;
     Toolbar toolbar_mywishlist;
 
     public static LayerDrawable icon;
     public String count = "1";
     public static CountDrawable badge;
+    static ProgressBar progressBar;
+    static AppCompatActivity activity;
 
 
     public Wishlist_fragment() {
@@ -78,20 +94,106 @@ public class Wishlist_fragment extends Fragment {
         return v;
     }
 
-    private void CALL_WISHLIST_API() {
+    public static void CALL_WISHLIST_API() {
+        progressBar.setVisibility(View.VISIBLE);
+
         wishlist_models.clear();
-        for (int i = 0; i < 4; i++) ;
-        {
-            wishlist_models.add(new Wishlist_Model("", "abc",
-                    "", ""));
-            //wishlist_adapter.notifyItemChanged(i);
-        }
-        //wishlist_adapter.notifyDataSetChanged();
+
+        ApiInterface api = ApiClient.getClient().create(ApiInterface.class);
+        final Call<ResponseBody> wishlist = api.GetWishlist(Login_preference.getcustomer_id(activity));
+//cartList.clear();
+        wishlist.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                Log.e("responseeeeee_wishlist", "" + response.body().toString());
+                progressBar.setVisibility(View.GONE);
+                JSONObject jsonObject = null;
+                try {
+                    jsonObject = new JSONObject(response.body().string());
+                    String status = jsonObject.getString("status");
+                    Log.e("status_wishlist", "" + status);
+                    if (status.equalsIgnoreCase("success")) {
+                        JSONArray jsonArray = jsonObject.getJSONArray("product");
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            try {
+                                JSONObject wish_object = jsonArray.getJSONObject(i);
+                                Log.e("Name_wishlist", "" + wish_object.getString("name"));
+                                wishlist_models.add(new Wishlist_Model("" + wish_object.getString("image"),
+                                        "" + wish_object.getString("name"),
+                                        "" + wish_object.getString("price"),
+                                        "" + wish_object.getString("category"),
+                                        "" + wish_object.getString("product_id")));
+                            } catch (Exception e) {
+                                Log.e("Exception", "" + e);
+                            } finally {
+                                wishlist_adapter.notifyItemChanged(i);
+                                wishlist_adapter.notifyDataSetChanged();
+                            }
+                        }
+                    } else if (status.equalsIgnoreCase("error")) {
+
+                    }
+
+                } catch (Exception e) {
+                    Log.e("", "" + e);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Toast.makeText(activity, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+/*ApiInterface api = ApiClient.getClient().create(ApiInterface.class);
+Call<ResponseBody> addtocart=api.GetWishlist(Login_preference.getcustomer_id(getActivity()));
+Log.e("user_id_wishlist",""+Login_preference.getcustomer_id(getActivity()));
+addtocart.enqueue(new Callback<ResponseBody>() {
+@Override
+public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+Log.e("",""+response.body().toString());
+JSONObject jsonObject=null;
+try{
+jsonObject=new JSONObject(response.body().string());
+String status =jsonObject.getString("status");
+Log.e("wishlist_status",""+status);
+if (status.equalsIgnoreCase("success")){
+JSONArray jsonArray = jsonObject.getJSONArray("product");
+for (j = 0; j < jsonArray.length(); j++) ;
+{
+JSONObject wish_object = jsonArray.getJSONObject(j);
+Log.e("Name", "" + wish_object.getString("name"));
+wishlist_models.add(new Wishlist_Model(""+wish_object.getString("image"),
+""+wish_object.getString("name"),
+""+wish_object.getString("price"),
+""+wish_object.getString("category"),
+""+wish_object.getString("product_id")));
+//wishlist_adapter.notifyItemChanged(i);
+}
+//loadFragment(new Cart());
+
+}else if (status.equalsIgnoreCase("error")){
+Toast.makeText(getContext(), ""+status, Toast.LENGTH_SHORT).show();
+}
+}catch (Exception e){
+Log.e("exception",""+e);
+}
+}
+@Override
+public void onFailure(Call<ResponseBody> call, Throwable t) {
+Toast.makeText(getContext(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+}
+});*/
+
+
+//wishlist_adapter.notifyDataSetChanged();
 
     }
 
     private void AllocateMemory(View v) {
         recycler_wishlist = (RecyclerView) v.findViewById(R.id.recycler_wishlist);
+        activity = (AppCompatActivity)getContext();
+        progressBar = (ProgressBar)v.findViewById(R.id.progressBar);
     }
 
     @Override

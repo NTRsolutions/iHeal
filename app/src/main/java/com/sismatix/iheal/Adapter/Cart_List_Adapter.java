@@ -11,13 +11,25 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.bumptech.glide.Glide;
+import com.sismatix.iheal.Fragments.Cart;
 import com.sismatix.iheal.Model.Cart_Model;
+import com.sismatix.iheal.Preference.Login_preference;
 import com.sismatix.iheal.R;
+import com.sismatix.iheal.Retrofit.ApiClient;
+import com.sismatix.iheal.Retrofit.ApiInterface;
+
+import org.json.JSONObject;
 
 import java.util.List;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class Cart_List_Adapter extends RecyclerView.Adapter<Cart_List_Adapter.MyViewHolder> {
     private Context context;
@@ -25,6 +37,8 @@ public class Cart_List_Adapter extends RecyclerView.Adapter<Cart_List_Adapter.My
     int minteger = 1;
     int current_price=30;
     int  product_total = current_price;
+
+    public static String cart_item_grand_total;
 
     public Cart_List_Adapter(Context context, List<Cart_Model> cartList) {
         this.context = context;
@@ -98,9 +112,57 @@ public class Cart_List_Adapter extends RecyclerView.Adapter<Cart_List_Adapter.My
     }
 
     public void removeItem(int position) {
-        cartList.remove(position);
+        String product_id=cartList.get(position).getProduct_id();
 
+        Log.e("remove_product_id_113",""+product_id);
+        CALL_REMOVE_FROM_CART_API(product_id);
+        cartList.remove(position);
         notifyItemRemoved(position);
+    }
+
+    public  void CALL_REMOVE_FROM_CART_API(String proddd_id)
+    {
+        String email=Login_preference.getemail(context);
+        Log.e("email=",""+email);
+        Log.e("product_id_remove",""+proddd_id);
+
+        ApiInterface api = ApiClient.getClient().create(ApiInterface.class);
+        Call<ResponseBody> remove_from_cart=api.remove_from_cartlist(proddd_id,email);
+        Log.e("proddd_idddd",""+proddd_id);
+        remove_from_cart.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                Log.e("responjse_remove_cart",""+response.body().toString());
+                JSONObject jsonObject=null;
+                try{
+                    jsonObject=new JSONObject(response.body().string());
+                    String status =jsonObject.getString("status");
+                     Log.e("status_remove",""+status);
+                    if (status.equalsIgnoreCase("Success")){
+                        cart_item_grand_total=jsonObject.getString("grand_total");
+                        Log.e("cart_item_count",""+cart_item_grand_total);
+                        Cart.tv_maintotal.setText(cart_item_grand_total);
+
+                        Cart.cart_items_count=jsonObject.getString("items_count");
+                        Log.e("cart_item_count",""+Cart.cart_items_count);
+
+                        Login_preference.setCart_item_count(context,Cart.cart_items_count);
+
+
+                        Toast.makeText(context, ""+status, Toast.LENGTH_SHORT).show();
+                          //  Cart.prepare_Cart();
+                    }else if (status.equalsIgnoreCase("error")){
+                       // Toast.makeText(context, ""+meassg, Toast.LENGTH_SHORT).show();
+                    }
+                }catch (Exception e){
+                    Log.e("exception",""+e);
+                }
+            }
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Toast.makeText(context, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     public void restoreItem(Cart_Model model_item, int position) {

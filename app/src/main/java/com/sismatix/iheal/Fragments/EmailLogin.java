@@ -1,6 +1,7 @@
 package com.sismatix.iheal.Fragments;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
@@ -14,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.sismatix.iheal.Activity.Navigation_drawer_activity;
 import com.sismatix.iheal.Preference.Login_preference;
 import com.sismatix.iheal.R;
 import com.sismatix.iheal.Retrofit.ApiClient;
@@ -118,15 +120,19 @@ public class EmailLogin extends Fragment implements View.OnClickListener {
                     Log.e("message", "" + meassg);
                     if (status.equalsIgnoreCase("success")) {
                         Toast.makeText(getContext(), "" + meassg, Toast.LENGTH_SHORT).show();
-                        Login_preference.setLogin_flag(getActivity(), "0");
+                        Login_preference.setLogin_flag(getActivity(), "1");
                         Login_preference.setcustomer_id(getActivity(), jsonObject.getString("customer_id"));
                         Login_preference.setemail(getActivity(), jsonObject.getString("email"));
                         Login_preference.setfullname(getActivity(), jsonObject.getString("fullname"));
-                        Home nextFrag = new Home();
+
+                        Intent intent=new Intent(getActivity(),Navigation_drawer_activity.class);
+                        startActivity(intent);
+                        getActivity().finish();
+                       /* Home nextFrag = new Home();
                         getActivity().getSupportFragmentManager().beginTransaction()
                                 .replace(R.id.rootLayout, nextFrag, "home")
                                 .addToBackStack(null)
-                                .commit();
+                                .commit();*/
                     } else if (status.equalsIgnoreCase("error")) {
                         Toast.makeText(getContext(), "" + meassg, Toast.LENGTH_SHORT).show();
                     }

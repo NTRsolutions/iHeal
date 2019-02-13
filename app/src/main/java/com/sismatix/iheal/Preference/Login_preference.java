@@ -23,6 +23,23 @@ public class Login_preference {
         return mPrefs.getString("login_flag", "");
     }
 
+
+    public static void setCart_item_count(Context context, String value)
+    {
+        mPrefs = PreferenceManager.getDefaultSharedPreferences(context);
+        prefsEditor = mPrefs.edit();
+        prefsEditor.putString("item_count", value);
+        prefsEditor.commit();
+    }
+    public static String getCart_item_count(Context context)
+    {
+        mPrefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return mPrefs.getString("item_count", "");
+    }
+
+
+
+
     public static void setcustomer_id(Context context, String value)
     {
         mPrefs = PreferenceManager.getDefaultSharedPreferences(context);
@@ -70,6 +87,19 @@ public class Login_preference {
     {
         mPrefs = PreferenceManager.getDefaultSharedPreferences(context);
         return mPrefs.getString("items_qty", "");
+    }
+
+    public static void setquote_id(Context context, String value)
+    {
+        mPrefs = PreferenceManager.getDefaultSharedPreferences(context);
+        prefsEditor = mPrefs.edit();
+        prefsEditor.putString("quote_id", value);
+        prefsEditor.commit();
+    }
+    public static String getquote_id(Context context)
+    {
+        mPrefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return mPrefs.getString("quote_id", "");
     }
 
 }
