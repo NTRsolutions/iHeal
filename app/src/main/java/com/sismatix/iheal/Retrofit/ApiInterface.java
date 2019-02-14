@@ -46,9 +46,11 @@ public interface ApiInterface {
                                 @Field("customer_id") String password);
     @POST("AppAddToCart.php")
     @FormUrlEncoded
+    Call<ResponseBody>withoutlogin_quote_addtocart(@Field("product_id") String product_id);
+    @POST("AppAddToCart.php")
+    @FormUrlEncoded
     Call<ResponseBody>withoutlogin_addtocart(@Field("product_id") String product_id,
-                                             @Field("quote_id") String quote_id);
-
+                                                   @Field("quote_id") String quote_id);
     @POST("AppCartList.php")
     @FormUrlEncoded
     Call<ResponseBody>Cartlist(@Field("email") String email);
@@ -81,6 +83,10 @@ public interface ApiInterface {
     @POST("AppRemoveFromCart.php")
     @FormUrlEncoded
     Call<ResponseBody>remove_from_cartlist(@Field("product_id") String product_id,@Field("email") String email);
+
+    @POST("AppRemoveFromCart.php")
+    @FormUrlEncoded
+    Call<ResponseBody>withoutlogin_remove_from_cartlist(@Field("product_id") String product_id,@Field("quote_id") String email);
 
     @POST("AppGetWishlist.php")
     @FormUrlEncoded

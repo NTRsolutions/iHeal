@@ -39,7 +39,6 @@ public class EmailLogin extends Fragment implements View.OnClickListener {
     EditText login_email, login_password;
     Button btn_login;
     TextView tv_forgotpassword;
-    ImageView iv_back_login;
 
     public EmailLogin() {
         // Required empty public constructor
@@ -55,7 +54,6 @@ public class EmailLogin extends Fragment implements View.OnClickListener {
 
         AllocateMemory(v);
 
-        iv_back_login.setOnClickListener(this);
         btn_login.setOnClickListener(this);
         tv_forgotpassword.setOnClickListener(this);
 
@@ -67,7 +65,6 @@ public class EmailLogin extends Fragment implements View.OnClickListener {
         login_password = (EditText) v.findViewById(R.id.login_password);
         btn_login = (Button) v.findViewById(R.id.btn_login);
         tv_forgotpassword = (TextView) v.findViewById(R.id.tv_forgotpassword);
-        iv_back_login = (ImageView) v.findViewById(R.id.iv_back_login);
     }
 
     private void validateUserData() {
@@ -163,10 +160,7 @@ public class EmailLogin extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
-        if (view == iv_back_login) {
-
-            loadFragment(new Account());
-        } else if (view == btn_login) {
+       if (view == btn_login) {
             validateUserData();
         } else if (view == tv_forgotpassword) {
             Forgotpassword_fragment nextFrag = new Forgotpassword_fragment();

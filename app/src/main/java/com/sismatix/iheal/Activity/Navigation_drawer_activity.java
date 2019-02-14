@@ -141,68 +141,16 @@ public class Navigation_drawer_activity extends AppCompatActivity
         });
 
 
-
-
-
-
-/*
         lv_logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (drawer.isDrawerOpen(GravityCompat.START)) {
-                    drawer.closeDrawer(GravityCompat.START);
-                } else {
-                }
-                String  Login_preference.getcustomer_id(Navigation_drawer_activity.this)
-                ApiInterface api = ApiClient.getClient().create(ApiInterface.class);
-                Call<ResponseBody> logout = api.login();
+                Login_preference.setLogin_flag(Navigation_drawer_activity.this,"0");
+                Intent intent=new Intent(Navigation_drawer_activity.this,Navigation_drawer_activity.class);
+                startActivity(intent);
 
-                logout.enqueue(new Callback<ResponseBody>() {
-                    @Override
-                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                        Log.e("response", "" + response.body().toString());
 
-                        JSONObject jsonObject = null;
-                        try {
-                            jsonObject = new JSONObject(response.body().string());
-                            String status = jsonObject.getString("status");
-                            Log.e("status",""+status);
-                            String meassg=jsonObject.getString("message");
-                            Log.e("message",""+meassg);
-                            if (status.equalsIgnoreCase("success")){
-                                Toast.makeText(getContext(), ""+meassg, Toast.LENGTH_SHORT).show();
-                                Login_preference.setLogin_flag(this,"0");
-                                Login_preference.setcustomer_id(getActivity(),jsonObject.getString("customer_id"));
-                                Login_preference.setemail(getActivity(),jsonObject.getString("email"));
-                                Login_preference.setfullname(getActivity(),jsonObject.getString("fullname"));
-                                Home nextFrag= new Home();
-                                getActivity().getSupportFragmentManager().beginTransaction()
-                                        .replace(R.id.rootLayout, nextFrag, "home")
-                                        .addToBackStack(null)
-                                        .commit();
-                            }else if (status.equalsIgnoreCase("error")){
-                                Toast.makeText(getContext(), ""+meassg, Toast.LENGTH_SHORT).show();
-
-                            }
-
-                        }catch (Exception e){
-                            Log.e("",""+e);
-                        }
-                    }
-                    @Override
-                    public void onFailure(Call<ResponseBody> call, Throwable t) {
-                        Toast.makeText(getContext(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
-                    }
-                });
-
-                Account nextFrag= new Account();
-                Navigation_drawer_activity.this.getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.rootLayout, nextFrag, "home")
-                        .addToBackStack(null)
-                        .commit();
             }
         });
-*/
         Bootom_Navigation_view();
     }
     public DrawerLayout getmDrawerLayout() {
@@ -211,28 +159,12 @@ public class Navigation_drawer_activity extends AppCompatActivity
 
     private void Bootom_Navigation_view() {
         viewPager = findViewById(R.id.view_pager_bottom_navigation);
-       /* View view1 = getLayoutInflater().inflate(R.layout.item_view_pager_1, null);
-        View view2 = getLayoutInflater().inflate(R.layout.item_view_pager_2, null);
-        View view3 = getLayoutInflater().inflate(R.layout.item_view_pager_3, null);
-        View view4 = getLayoutInflater().inflate(R.layout.item_view_pager_4, null);
-*/
-       /* viewList = new ArrayList<>();
-        viewList.add(view1);
-        viewList.add(view2);
-        viewList.add(view3);
-        viewList.add(view4);
-
-
-        viewPager.setAdapter(pagerAdapter);
-        viewPager.addOnPageChangeListener(pageChangeListener);*/
 
         bottom_navigation = findViewById(R.id.bottom_navigation);
         bottom_navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         Menu menu = bottom_navigation.getMenu();
         selectFragment(menu.getItem(0));
-
-
     }
 
     ////////bottom navigation selected listner
@@ -291,14 +223,11 @@ public class Navigation_drawer_activity extends AppCompatActivity
                 pushFragment(new Account(),"Account_fragment");
                 viewPager.setCurrentItem(4);
                 break;
-
         }
     }
-
     private void pushFragment(Fragment fragment,String add_to_backstack) {
         if (fragment == null)
             return;
-
         FragmentManager fragmentManager = getSupportFragmentManager();
         if (fragmentManager != null) {
             FragmentTransaction ft = fragmentManager.beginTransaction();

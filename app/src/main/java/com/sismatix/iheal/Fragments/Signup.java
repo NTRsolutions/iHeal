@@ -38,7 +38,7 @@ public class Signup extends Fragment implements View.OnClickListener {
     EditText signup_fullname, signup_email, signup_password;
     Button btn_signup;
     TextView tv_login;
-    ImageView iv_back_signup;
+
 
     public Signup() {
         // Required empty public constructor
@@ -49,7 +49,6 @@ public class Signup extends Fragment implements View.OnClickListener {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_signup, container, false);
         bottom_navigation.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
-
         signup_input_layout_fullname = (TextInputLayout) v.findViewById(R.id.signup_input_layout_fullname);
         signup_input_layout_email = (TextInputLayout) v.findViewById(R.id.signup_input_layout_email);
         signup_input_layout_password = (TextInputLayout) v.findViewById(R.id.signup_input_layout_password);
@@ -59,11 +58,10 @@ public class Signup extends Fragment implements View.OnClickListener {
         tv_login = (TextView) v.findViewById(R.id.tv_login);
 
         btn_signup = (Button)v.findViewById(R.id.btn_signup);
-        iv_back_signup = (ImageView) v.findViewById(R.id.iv_back_signup);
 
         tv_login.setOnClickListener(this);
         btn_signup.setOnClickListener(this);
-        iv_back_signup.setOnClickListener(this);
+
         return v;
     }
 
@@ -135,8 +133,6 @@ public class Signup extends Fragment implements View.OnClickListener {
                 Toast.makeText(getContext(),t.getLocalizedMessage(),Toast.LENGTH_SHORT).show();
             }
         });
-
-
     }
 
     public boolean isValidEmailAddress(String email) {
@@ -148,9 +144,7 @@ public class Signup extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
-        if(view==iv_back_signup){
-            loadFragment(new Account());
-        }else if(view==btn_signup){
+        if(view==btn_signup){
             validateSignupData();
         }else if(view==tv_login){
             EmailLogin nextFrag= new EmailLogin();

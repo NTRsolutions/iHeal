@@ -79,6 +79,7 @@ public class Cart extends Fragment  {
         context=getActivity();
         AllocateMemory(view);
 
+        Log.e("cart_quote_id_470", "" +Login_preference.getquote_id(getActivity()) );
         prepare_Cart();
         cart_adapter = new Cart_List_Adapter(getActivity(), cartList);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());

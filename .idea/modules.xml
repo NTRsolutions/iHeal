@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/iHeal.iml" filepath="$PROJECT_DIR$/iHeal.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/iHeal_git.iml" filepath="$PROJECT_DIR$/.idea/iHeal_git.iml" />
     </modules>
   </component>
 </project>

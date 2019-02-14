@@ -16,14 +16,14 @@
     <!--account screen-->
     <string name="signupfb">SIGN UP WITH FACEBOOK</string>
     <string name="or">OR</string>
-    <string name="signupeithemail">SIGN UP WITH EMAIL</string>
+    <string name="signupeithemail">Sing Up With Email</string>
     <string name="login">LOGIN</string>
     <string name="signup">SIGN UP</string>
     <!--signup & Login screen -->
     <string name="fullname">Full Name</string>
     <string name="email">E-mail Address</string>
     <string name="password">Pssword</string>
-    <string name="login_titlr">LOG IN TO YOUR ACCOUNT</string>
+    <string name="login_titlr">Log In To Your Account</string>
     <string name="forgotpw">Forgot Password ?</string>
     <string name="forgot">Forgot Password</string>
     <string name="submit">Submit</string>

@@ -417,14 +417,23 @@ public class Item_details extends Fragment implements View.OnClickListener, View
             Log.e("with_login", "");
             ApiInterface api = ApiClient.getClient().create(ApiInterface.class);
             addtocart = api.addtocart(proddd_id, Login_preference.getcustomer_id(getActivity()));
-        } else {
-            Log.e("without_login", "");
-            ApiInterface api = ApiClient.getClient().create(ApiInterface.class);
-            Log.e("pass_quote_id", "" + Login_preference.getquote_id(getActivity()));
-            addtocart = api.withoutlogin_addtocart(proddd_id, Login_preference.getquote_id(getActivity()));
+            Log.e("proddd_idddd", "" + proddd_id);
 
+        } else {
+            String quote_id=Login_preference.getquote_id(getActivity());
+            if(quote_id.equalsIgnoreCase("") || quote_id == "null"){
+                Log.e("without_quote_login", "");
+                ApiInterface api = ApiClient.getClient().create(ApiInterface.class);
+                addtocart = api.withoutlogin_quote_addtocart(proddd_id);
+                Log.e("proddd_id_witoutquote", "" + proddd_id);
+
+            }else{
+                Log.e("without_login_withquote", "");
+                ApiInterface api = ApiClient.getClient().create(ApiInterface.class);
+                Log.e("with_pass_quote_id_492", "" + Login_preference.getquote_id(getActivity()));
+                addtocart = api.withoutlogin_addtocart(proddd_id, Login_preference.getquote_id(getActivity()));
+            }
         }
-        Log.e("proddd_idddd", "" + proddd_id);
         addtocart.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -455,6 +464,7 @@ public class Item_details extends Fragment implements View.OnClickListener, View
                 Toast.makeText(getContext(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
             }
         });
+
     }
 
     @Override

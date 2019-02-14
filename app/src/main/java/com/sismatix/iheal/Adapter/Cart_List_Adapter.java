@@ -3,6 +3,7 @@ package com.sismatix.iheal.Adapter;
 
 
 import android.content.Context;
+import android.support.annotation.VisibleForTesting;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -37,6 +38,7 @@ public class Cart_List_Adapter extends RecyclerView.Adapter<Cart_List_Adapter.My
     int minteger = 1;
     int current_price=30;
     int  product_total = current_price;
+    Call<ResponseBody> remove_from_cart=null;
 
     public static String cart_item_grand_total;
 
@@ -123,12 +125,18 @@ public class Cart_List_Adapter extends RecyclerView.Adapter<Cart_List_Adapter.My
     public  void CALL_REMOVE_FROM_CART_API(String proddd_id)
     {
         String email=Login_preference.getemail(context);
-        Log.e("email=",""+email);
         Log.e("product_id_remove",""+proddd_id);
-
-        ApiInterface api = ApiClient.getClient().create(ApiInterface.class);
-        Call<ResponseBody> remove_from_cart=api.remove_from_cartlist(proddd_id,email);
-        Log.e("proddd_idddd",""+proddd_id);
+        String loginflag=Login_preference.getLogin_flag(context);
+        if (loginflag.equalsIgnoreCase("1") || loginflag == "1"){
+            ApiInterface api = ApiClient.getClient().create(ApiInterface.class);
+            remove_from_cart=api.remove_from_cartlist(proddd_id,email);
+            Log.e("proddd_idddd",""+proddd_id);
+        }else{
+            String quote_id=Login_preference.getquote_id(context);
+            ApiInterface api = ApiClient.getClient().create(ApiInterface.class);
+            remove_from_cart=api.withoutlogin_remove_from_cartlist(proddd_id,quote_id);
+            Log.e("proddd_idddd",""+proddd_id);
+        }
         remove_from_cart.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
