@@ -4,6 +4,7 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
 
 public interface ApiInterface {
@@ -97,6 +98,13 @@ public interface ApiInterface {
     Call<ResponseBody> Wishlistactions(@Field("action") String action,
                                        @Field("productid") String productid,
                                        @Field("customerid") String customerid);
+
+    //country list
+    //https://ihealkuwait.com/customapi/AppGetCountryList.php
+    @GET("AppGetCountryList.php")
+
+    Call<ResponseBody>get_country_list();
+
 
 
 }

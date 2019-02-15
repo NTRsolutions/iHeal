@@ -400,7 +400,7 @@ public class Navigation_drawer_activity extends AppCompatActivity
         if (id == R.id.nav_product_categories) {
             // Handle the camera action
 
-            android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.rootLayout, new Nature_Category_freg());
             fragmentTransaction.commit();
 
@@ -417,16 +417,16 @@ public class Navigation_drawer_activity extends AppCompatActivity
 
         }
         else if (id == R.id.nav_my_account) {
-            android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.rootLayout, new Account());
             fragmentTransaction.commit();
         } else if (id == R.id.nav_wishlist) {
-            android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.rootLayout, new Wishlist_fragment());
             fragmentTransaction.commit();
 
         } else if (id == R.id.nav_messages) {
-            android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.rootLayout, new MyOrderDetails());
             fragmentTransaction.commit();
         } else if (id == R.id.nav_notification) {
@@ -447,24 +447,19 @@ public class Navigation_drawer_activity extends AppCompatActivity
         }
 
          if (count == 1) {
-            Intent intent = new Intent(Navigation_drawer_activity.this, Navigation_drawer_activity.class);
-            startActivity(intent);
-             super.onBackPressed();
-             super.finish();
-        } else if (count == 0) {
-            if (doubleBackToExitPressedOnce) {
-                super.onBackPressed();
-                super.finish();
-                return;
-            }
-            this.doubleBackToExitPressedOnce = true;
-            Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    doubleBackToExitPressedOnce = false;
-                }
-            }, 2000);
+             if (doubleBackToExitPressedOnce) {
+                 super.onBackPressed();
+                 super.finish();
+                 return;
+             }
+             this.doubleBackToExitPressedOnce = true;
+             Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
+             new Handler().postDelayed(new Runnable() {
+                 @Override
+                 public void run() {
+                     doubleBackToExitPressedOnce = false;
+                 }
+             }, 2000);
         } else {
             String title = fragmentManager.getBackStackEntryAt(count - 2).getName();
             super.onBackPressed();

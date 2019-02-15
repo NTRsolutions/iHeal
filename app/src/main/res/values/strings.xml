@@ -30,11 +30,11 @@
 
     <!--shipping &payment &conform screen-->
     <string name="firstname">FIRST NAME</string>
-    <string name="secondname">SECOND NAME</string>
+    <string name="secondname">LAST NAME</string>
     <string name="phonenumber">PHONE NUMBER</string>
     <string name="address">ADDRESS</string>
     <string name="zip">ZIP CODE</string>
-    <string name="city">CITY</string>
+    <string name="city">City</string>
     <string name="savefuture">SAVE FOR FUTURE PURCHASE</string>
     <string name="continuepayment">CONTINUE TO PAYMENT</string>
     <string name="shippingto">SHIPPING TOT</string>
@@ -71,6 +71,22 @@
     <string name="ordernow">ORDER NOW</string>
 
     <string name="item">items</string>
+    <string name="my_account">My Account</string>
+    <string name="Manage_Address">Manage Address</string>
+    <string name="add_new_address">ADD NEW ADDRESS</string>
+    <string name="contact_info">CONTACT INFORMATION</string>
+    <string name="last_name">Last Name</string>
+    <string name="company">Company</string>
+    <string name="phone_no">Phone Number</string>
+    <string name="street_add">Street Address</string>
+    <string name="state">State/Province</string>
+    <string name="zip_code">Zip/Postal Code</string>
+    <string name="country">COUNTRY</string>
+    <string name="first_name">First Name</string>
+    <string name="default_billing_add">Use as my default billing address</string>
+    <string name="default_shipping_add">Use as my default shipping address</string>
+    <string name="companyy">COMPANY</string>
+    <string name="fax">FAX</string>
 
 
 </resources>

@@ -121,6 +121,12 @@ public class Home extends Fragment implements View.OnClickListener {
         switch (v.getId()) {
 
             case R.id.iv_hair_care:
+                if (loginflag.equalsIgnoreCase("1") || loginflag == "1") {
+
+                } else {
+
+                }
+
                 /*if (loginflag.equalsIgnoreCase("1") || loginflag == "1") {
                     loadFragment(new Account(), value);
                 } else {
@@ -137,63 +143,104 @@ public class Home extends Fragment implements View.OnClickListener {
                 break;
 
             case R.id.iv_brain:
-                value = "20";
-                loadFragment(new TransParant_Hair_care_freg(), value);
+                if (loginflag.equalsIgnoreCase("1") || loginflag == "1") {
+                    value = "20";
+                    loadFragment(new TransParant_Hair_care_freg(), value);
+                } else {
+                    loadFragment(new Account(), value);
+                }
+
                 break;
 
             case R.id.iv_lung:
-                value = "26";
                 if (loginflag.equalsIgnoreCase("1") || loginflag == "1") {
-                    loadFragment(new Account(), value);
-                } else {
+                    value = "26";
                     loadFragment(new TransParant_Hair_care_freg(), value);
+                } else {
+                    loadFragment(new Account(), value);
                 }
-                loadFragment(new TransParant_Hair_care_freg(), value);
                 break;
 
             case R.id.iv_eye:
-                value = "21";
-                loadFragment(new TransParant_Hair_care_freg(), value);
+                if (loginflag.equalsIgnoreCase("1") || loginflag == "1") {
+                    value = "21";
+                    loadFragment(new TransParant_Hair_care_freg(), value);
+                } else {
+                    loadFragment(new Account(), value);
+                }
+
                 break;
 
             case R.id.iv_nose:
-                value = "22";
-                loadFragment(new TransParant_Hair_care_freg(), value);
+                if (loginflag.equalsIgnoreCase("1") || loginflag == "1") {
+                    value = "22";
+                    loadFragment(new TransParant_Hair_care_freg(), value);
+                } else {
+                    loadFragment(new Account(), value);
+                }
                 break;
 
             case R.id.iv_mouth:
-                value = "23";
-                loadFragment(new TransParant_Hair_care_freg(), value);
+                if (loginflag.equalsIgnoreCase("1") || loginflag == "1") {
+                    value = "23";
+                    loadFragment(new TransParant_Hair_care_freg(), value);
+                } else {
+                    loadFragment(new Account(), value);
+                }
                 break;
 
             case R.id.iv_teeth:
-                value = "24";
-                loadFragment(new TransParant_Hair_care_freg(), value);
+                if (loginflag.equalsIgnoreCase("1") || loginflag == "1") {
+                    value = "24";
+                    loadFragment(new TransParant_Hair_care_freg(), value);
+                } else {
+                    loadFragment(new Account(), value);
+                }
                 break;
 
             case R.id.iv_bones:
-                value = "25";
-                loadFragment(new TransParant_Hair_care_freg(), value);
+                if (loginflag.equalsIgnoreCase("1") || loginflag == "1") {
+                    value = "25";
+                    loadFragment(new TransParant_Hair_care_freg(), value);
+                } else {
+                    loadFragment(new Account(), value);
+                }
                 break;
 
             case R.id.iv_stomach:
-                value = "27";
-                loadFragment(new TransParant_Hair_care_freg(), value);
+                if (loginflag.equalsIgnoreCase("1") || loginflag == "1") {
+                    value = "27";
+                    loadFragment(new TransParant_Hair_care_freg(), value);
+                } else {
+                    loadFragment(new Account(), value);
+                }
                 break;
 
             case R.id.iv_liver:
-                value = "28";
-                loadFragment(new TransParant_Hair_care_freg(), value);
+                if (loginflag.equalsIgnoreCase("1") || loginflag == "1") {
+                    value = "28";
+                    loadFragment(new TransParant_Hair_care_freg(), value);
+                } else {
+                    loadFragment(new Account(), value);
+                }
                 break;
 
             case R.id.iv_kidney:
-                value = "29";
-                loadFragment(new TransParant_Hair_care_freg(), value);
+                if (loginflag.equalsIgnoreCase("1") || loginflag == "1") {
+                    value = "29";
+                    loadFragment(new TransParant_Hair_care_freg(), value);
+                } else {
+                    loadFragment(new Account(), value);
+                }
                 break;
 
             case R.id.iv_UT:
-                value = "30";
-                loadFragment(new TransParant_Hair_care_freg(), value);
+                if (loginflag.equalsIgnoreCase("1") || loginflag == "1") {
+                    value = "30";
+                    loadFragment(new TransParant_Hair_care_freg(), value);
+                } else {
+                    loadFragment(new Account(), value);
+                }
                 break;
 
             default:

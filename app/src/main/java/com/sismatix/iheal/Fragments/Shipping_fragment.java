@@ -5,7 +5,6 @@ import android.app.Activity;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -18,13 +17,12 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.sismatix.iheal.Adapter.Cart_Delivery_Adapter;
 import com.sismatix.iheal.Adapter.Cart_List_Adapter;
 import com.sismatix.iheal.Model.Cart_Delivery_Model;
 import com.sismatix.iheal.Model.Cart_Model;
-import com.sismatix.iheal.OnBackPressed;
+import com.sismatix.iheal.Preference.Login_preference;
 import com.sismatix.iheal.R;
 
 import java.util.ArrayList;
@@ -35,8 +33,7 @@ import static com.sismatix.iheal.Activity.Navigation_drawer_activity.bottom_navi
 /**
  * A simple {@link Fragment} subclass.
  */
-
-public class Shipping_fragment extends Fragment implements OnBackPressed {
+public class Shipping_fragment extends Fragment {
     View v;
     RecyclerView recyclerview_item_delivery;
     Cart_Delivery_Adapter cart_delivery_adapter;
@@ -44,6 +41,9 @@ public class Shipping_fragment extends Fragment implements OnBackPressed {
     ImageView iv_continue_payment;
     EditText et_shippingfirstname;
     LinearLayout lv_continue_payment;
+    String loginflag;
+
+
     public Shipping_fragment() {
         // Required empty public constructor
     }
@@ -53,6 +53,8 @@ public class Shipping_fragment extends Fragment implements OnBackPressed {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         v= inflater.inflate(R.layout.fragment_shipping, container, false);
+        loginflag = Login_preference.getLogin_flag(getActivity());
+
         AllocateMEmory(v);
         CALL_CART_DELIVERY();
 
@@ -74,7 +76,14 @@ public class Shipping_fragment extends Fragment implements OnBackPressed {
         lv_continue_payment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                loadFragment(new Payment_fragment());
+
+                if (loginflag.equalsIgnoreCase("1") || loginflag == "1") {
+
+                    loadFragment(new Payment_fragment());
+                } else {
+                    loadFragment(new EmailLogin());
+                }
+
             }
         });
 
@@ -97,7 +106,6 @@ public class Shipping_fragment extends Fragment implements OnBackPressed {
         }
         cart_delivery_adapter.notifyDataSetChanged();
     }
-
     private void AllocateMEmory(View v) {
         recyclerview_item_delivery=(RecyclerView)v.findViewById(R.id.recyclerview_item_delivery);
         iv_continue_payment=(ImageView) v.findViewById(R.id.iv_continue_payment);
@@ -109,15 +117,7 @@ public class Shipping_fragment extends Fragment implements OnBackPressed {
         recyclerview_item_delivery.setLayoutManager(layoutManager);
         recyclerview_item_delivery.setAdapter(cart_delivery_adapter);
         recyclerview_item_delivery.setHasFixedSize(true);
-    }
 
-    @Override
-    public void onBackPressed() {
-        if (getActivity().getSupportFragmentManager().getBackStackEntryCount() > 1) {
-            getActivity().getSupportFragmentManager().popBackStack();
-        } else {
-            getActivity().finish();
-        }
     }
 
 }

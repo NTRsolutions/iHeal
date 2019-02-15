@@ -64,4 +64,10 @@
         <item name="android:homeAsUpIndicator">@drawable/ic_keyboard_arrow_left_white_36dp</item>
     </style>
 
+
+    ///change checkbox color
+    <style name="WhiteCheck">
+        <item name="colorAccent">@color/colorPrimary</item>
+    </style>
+
 </resources>

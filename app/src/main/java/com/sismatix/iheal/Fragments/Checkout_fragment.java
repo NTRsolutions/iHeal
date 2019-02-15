@@ -1,13 +1,10 @@
 package com.sismatix.iheal.Fragments;
 
 
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.sismatix.iheal.Activity.Navigation_drawer_activity;
+import com.sismatix.iheal.Preference.Login_preference;
 import com.sismatix.iheal.R;
 
 import static com.sismatix.iheal.Activity.Navigation_drawer_activity.bottom_navigation;
@@ -29,8 +26,7 @@ public class Checkout_fragment extends Fragment implements View.OnClickListener 
     public static LinearLayout lv_shipping_selected,lv_payment_selected,lv_confirmation_selected;
     public static ImageView iv_confirmation_done,iv_payment_done,iv_shipping_done;
     public static TextView tv_shipping,tv_payment,tv_confirmation;
-    ImageView iv_close_checkout;
-
+    String loginflag;
     View v;
     public Checkout_fragment() {
         // Required empty public constructor
@@ -43,15 +39,11 @@ public class Checkout_fragment extends Fragment implements View.OnClickListener 
         // Inflate the layout for this fragment
         v=inflater.inflate(R.layout.fragment_checkout_fragment, container, false);
         bottom_navigation.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+
+        loginflag = Login_preference.getLogin_flag(getActivity());
+
         AllocateMemory(v);
 
-       /* getActivity().getSupportFragmentManager().addOnBackStackChangedListener(
-                new FragmentManager.OnBackStackChangedListener() {
-                    public void onBackStackChanged() {
-                        Toast.makeText(getContext(), "hmm barabar", Toast.LENGTH_SHORT).show();   // Update your UI here.
-                    }
-                });
-*/
         lv_shipping.setOnClickListener(this);
         lv_confirmation.setOnClickListener(this);
         lv_payment.setOnClickListener(this);
@@ -60,15 +52,16 @@ public class Checkout_fragment extends Fragment implements View.OnClickListener 
         lv_confirmation_selected.setVisibility(View.INVISIBLE);
         lv_shipping_selected.setVisibility(View.VISIBLE);
 
-        iv_close_checkout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(getContext(), Navigation_drawer_activity.class);
-                startActivity(i);
-            }
-        });
 
-        loadFragment(new Shipping_fragment());
+        if (loginflag.equalsIgnoreCase("1") || loginflag == "1") {
+
+            loadFragment(new Shipping_fragment());
+        } else {
+            loadFragment(new EmailLogin());
+        }
+
+
+
 
         return v;
     }
@@ -80,7 +73,6 @@ public class Checkout_fragment extends Fragment implements View.OnClickListener 
         lv_shipping_selected=(LinearLayout)v.findViewById(R.id.lv_shipping_selected);
         lv_payment_selected=(LinearLayout)v.findViewById(R.id.lv_payment_selected);
         lv_confirmation_selected=(LinearLayout)v.findViewById(R.id.lv_confirmation_selected);
-        iv_close_checkout = (ImageView)v.findViewById(R.id.iv_close_checkout);
 
         iv_confirmation_done=(ImageView)v.findViewById(R.id.iv_confirmation_done);
         iv_payment_done=(ImageView)v.findViewById(R.id.iv_payment_done);
@@ -97,6 +89,7 @@ public class Checkout_fragment extends Fragment implements View.OnClickListener 
         android.support.v4.app.FragmentTransaction transaction = manager.beginTransaction();
         transaction.replace(R.id.frameLayout_checkout, fragment);
         transaction.addToBackStack(null);
+
         transaction.commit();
     }
 
@@ -111,7 +104,12 @@ public class Checkout_fragment extends Fragment implements View.OnClickListener 
                 tv_shipping.setTextColor(getActivity().getColor(R.color.white));
             }
 
-            loadFragment(new Shipping_fragment());
+            if (loginflag.equalsIgnoreCase("1") || loginflag == "1") {
+
+                loadFragment(new Shipping_fragment());
+            } else {
+                loadFragment(new EmailLogin());
+            }
 
         }else if(view==lv_confirmation)
         {
@@ -122,7 +120,14 @@ public class Checkout_fragment extends Fragment implements View.OnClickListener 
             lv_payment_selected.setVisibility(View.INVISIBLE);
             lv_confirmation_selected.setVisibility(View.VISIBLE);
             lv_shipping_selected.setVisibility(View.INVISIBLE);
-            loadFragment(new Confirmation_fragment());
+
+            if (loginflag.equalsIgnoreCase("1") || loginflag == "1") {
+
+                loadFragment(new Confirmation_fragment());
+            } else {
+                loadFragment(new EmailLogin());
+            }
+
 
         }
         else if(view==lv_payment) {
@@ -133,7 +138,15 @@ public class Checkout_fragment extends Fragment implements View.OnClickListener 
             lv_payment_selected.setVisibility(View.VISIBLE);
             lv_confirmation_selected.setVisibility(View.INVISIBLE);
             lv_shipping_selected.setVisibility(View.INVISIBLE);
-            loadFragment(new Payment_fragment());
+
+
+            if (loginflag.equalsIgnoreCase("1") || loginflag == "1") {
+
+                loadFragment(new Payment_fragment());
+            } else {
+                loadFragment(new EmailLogin());
+            }
+
         }
     }
 }

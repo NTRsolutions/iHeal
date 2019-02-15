@@ -61,13 +61,14 @@ public class Cart extends Fragment  {
     public static List<Cart_Model> cartList = new ArrayList<Cart_Model>();
     public static Cart_List_Adapter cart_adapter;
     Toolbar toolbar;
-    ImageView iv_place_order,iv_close;
+    ImageView iv_place_order;
     public  static TextView tv_maintotal;
     public  static Context context=null;
     LinearLayout lv_place_order;
     public static ProgressBar progressBar_cart;
     public static  String cart_items_count;
     public static Call<ResponseBody> cartlistt=null;
+    String loginflag;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -75,11 +76,10 @@ public class Cart extends Fragment  {
         // Inflate the layout for this fragment
         view=inflater.inflate(R.layout.fragment_cart, container, false);
         bottom_navigation.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
-
+        loginflag = Login_preference.getLogin_flag(getActivity());
         context=getActivity();
         AllocateMemory(view);
 
-        Log.e("cart_quote_id_470", "" +Login_preference.getquote_id(getActivity()) );
         prepare_Cart();
         cart_adapter = new Cart_List_Adapter(getActivity(), cartList);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
@@ -89,16 +89,21 @@ public class Cart extends Fragment  {
         cart_recyclerview.setAdapter(cart_adapter);
 
         init_Swipe_recyclerview();//swiper recyclerview
+
+
+
         lv_place_order.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                loadFragment(new Checkout_fragment());
-            }
-        });
-        iv_close.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                loadFragment(new Home());
+
+
+                if (loginflag.equalsIgnoreCase("1") || loginflag == "1") {
+
+                    loadFragment(new Checkout_fragment());
+                } else {
+                    loadFragment(new EmailLogin());
+                }
+
             }
         });
         return view;
@@ -180,7 +185,6 @@ public class Cart extends Fragment  {
         lv_place_order=(LinearLayout) v.findViewById(R.id.lv_place_order);
         tv_maintotal=(TextView) v.findViewById(R.id.tv_maintotal);
         progressBar_cart=(ProgressBar) v.findViewById(R.id.progressBar_cart);
-        iv_close = (ImageView)v.findViewById(R.id.iv_close);
     }
     /**
      * method make volley network call and parses json

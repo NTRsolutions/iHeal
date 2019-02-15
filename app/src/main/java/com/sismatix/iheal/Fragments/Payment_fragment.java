@@ -17,6 +17,7 @@ import com.sismatix.iheal.Adapter.Cart_Delivery_Adapter;
 import com.sismatix.iheal.Adapter.Payment_Method_Adapter;
 import com.sismatix.iheal.Model.Cart_Delivery_Model;
 import com.sismatix.iheal.Model.Payment_Method_Model;
+import com.sismatix.iheal.Preference.Login_preference;
 import com.sismatix.iheal.R;
 
 import java.util.ArrayList;
@@ -34,7 +35,7 @@ public class Payment_fragment extends Fragment {
     private List<Payment_Method_Model> payment_method_models = new ArrayList<Payment_Method_Model>();
     ImageView iv_confirm_order;
     LinearLayout lv_confirm_order;
-
+    String loginflag;
     View v;
     public Payment_fragment() {
         // Required empty public constructor
@@ -48,6 +49,7 @@ public class Payment_fragment extends Fragment {
         v= inflater.inflate(R.layout.fragment_payment, container, false);
         AllocateMEmory(v);
         CALL_CART_DELIVERY();
+        loginflag = Login_preference.getLogin_flag(getActivity());
 
         Checkout_fragment.iv_shipping_done.setVisibility(View.VISIBLE);
         Checkout_fragment.iv_payment_done.setVisibility(View.INVISIBLE);
@@ -63,10 +65,17 @@ public class Payment_fragment extends Fragment {
             Checkout_fragment.tv_payment.setTextColor(getActivity().getColor(R.color.white));
             Checkout_fragment.tv_shipping.setTextColor(getActivity().getColor(R.color.colorPrimary));
         }
+
         lv_confirm_order.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                loadFragment(new Confirmation_fragment());
+                if (loginflag.equalsIgnoreCase("1") || loginflag == "1") {
+
+                    loadFragment(new Confirmation_fragment());
+                } else {
+                    loadFragment(new EmailLogin());
+                }
+
             }
         });
         return v;
