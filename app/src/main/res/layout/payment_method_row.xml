@@ -4,6 +4,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical"
+    android:background="@color/white"
     android:layout_margin="5dp">
     <LinearLayout
         android:id="@+id/lv_paymenet_greenlayout"

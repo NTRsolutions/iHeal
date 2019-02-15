@@ -100,7 +100,7 @@ public class Nature_Category_freg extends Fragment {
         collapsing_toolbar_nature.setTitle("Product's Categories");
 
         recycler_product_category = (RecyclerView) view.findViewById(R.id.recycler_product_category);
-        progressBar = view.findViewById(R.id.progressBar);
+        progressBar = (ProgressBar)view.findViewById(R.id.nature_progressBar);
 
         CALL_PRODUCT_CATEGORY_API();
         product_category_adapter = new Product_Category_adapter(getActivity(), product_model);
@@ -111,6 +111,7 @@ public class Nature_Category_freg extends Fragment {
 
        // SetTablayout();
         return view;
+
     }
 
     private void CALL_PRODUCT_CATEGORY_API() {

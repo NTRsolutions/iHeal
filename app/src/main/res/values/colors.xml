@@ -45,4 +45,6 @@
 
     <color name="light_green">#8FA050</color>
 
+    <color name="product_back">#f0f0f0</color>
+
 </resources>

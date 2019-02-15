@@ -40,6 +40,8 @@ import com.sismatix.iheal.Fragments.Cart;
 import com.sismatix.iheal.Fragments.EmailLogin;
 import com.sismatix.iheal.Fragments.Favourite;
 import com.sismatix.iheal.Fragments.Home;
+import com.sismatix.iheal.Fragments.MyOrder;
+import com.sismatix.iheal.Fragments.MyOrderDetails;
 import com.sismatix.iheal.Fragments.Nature_Category_freg;
 import com.sismatix.iheal.Fragments.Search;
 import com.sismatix.iheal.Fragments.Wishlist_fragment;
@@ -207,12 +209,11 @@ public class Navigation_drawer_activity extends AppCompatActivity
                 viewPager.setCurrentItem(0);
                 break;
             case R.id.bottom_nav_search:
-                pushFragment(new Search(),"Search_fragment");
+                pushFragment(new MyOrder(),"Search_fragment");//Search
                 viewPager.setCurrentItem(1);
                 break;
             case R.id.bottom_nav_Wishlist:
                 pushFragment(new Wishlist_fragment(),"Wishlist_fragment");
-
                 viewPager.setCurrentItem(2);
                 break;
             case R.id.bottom_nav_cart:
@@ -425,7 +426,9 @@ public class Navigation_drawer_activity extends AppCompatActivity
             fragmentTransaction.commit();
 
         } else if (id == R.id.nav_messages) {
-
+            android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.rootLayout, new MyOrderDetails());
+            fragmentTransaction.commit();
         } else if (id == R.id.nav_notification) {
 
         }

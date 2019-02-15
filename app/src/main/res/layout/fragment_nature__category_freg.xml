@@ -92,7 +92,7 @@
             android:id="@+id/recycler_product_category"/>
 
         <ProgressBar
-            android:id="@+id/progressBar"
+            android:id="@+id/nature_progressBar"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginTop="100dp"

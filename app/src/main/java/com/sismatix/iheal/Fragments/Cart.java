@@ -61,7 +61,7 @@ public class Cart extends Fragment  {
     public static List<Cart_Model> cartList = new ArrayList<Cart_Model>();
     public static Cart_List_Adapter cart_adapter;
     Toolbar toolbar;
-    ImageView iv_place_order;
+    ImageView iv_place_order,iv_close;
     public  static TextView tv_maintotal;
     public  static Context context=null;
     LinearLayout lv_place_order;
@@ -93,6 +93,12 @@ public class Cart extends Fragment  {
             @Override
             public void onClick(View view) {
                 loadFragment(new Checkout_fragment());
+            }
+        });
+        iv_close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadFragment(new Home());
             }
         });
         return view;
@@ -174,6 +180,7 @@ public class Cart extends Fragment  {
         lv_place_order=(LinearLayout) v.findViewById(R.id.lv_place_order);
         tv_maintotal=(TextView) v.findViewById(R.id.tv_maintotal);
         progressBar_cart=(ProgressBar) v.findViewById(R.id.progressBar_cart);
+        iv_close = (ImageView)v.findViewById(R.id.iv_close);
     }
     /**
      * method make volley network call and parses json
