@@ -31,6 +31,7 @@ public class My_Account_With_Login extends Fragment {
 
     Toolbar toolbar_myaccount;
     TextView tv_manage_address;
+    TextView txt_username,tv_email;
     View v;
     public My_Account_With_Login() {
         // Required empty public constructor
@@ -53,8 +54,8 @@ public class My_Account_With_Login extends Fragment {
                 .setDisplayHomeAsUpEnabled(true);
         ((Navigation_drawer_activity) getActivity()).getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_keyboard_arrow_left_white_36dp);
 
-
-
+        txt_username.setText(Login_preference.getfullname(getActivity()));
+        tv_email.setText(Login_preference.getemail(getActivity()));
 
         return v;
     }
@@ -62,23 +63,15 @@ public class My_Account_With_Login extends Fragment {
     private void AllocateMemory(View v) {
         toolbar_myaccount = (Toolbar) v.findViewById(R.id.toolbar_myaccount);
         tv_manage_address = (TextView) v.findViewById(R.id.tv_manage_address);
+        txt_username=(TextView)v.findViewById(R.id.txt_username);
+        tv_email=(TextView)v.findViewById(R.id.tv_email);
 
     }
-
-
-
-
-
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.cart, menu);
-        MenuItem item = menu.findItem(R.id.cart);
+
         MenuItem item_search = menu.findItem(R.id.search);
         item_search.setVisible(false);
-        item.setVisible(false);
-
-
-
         super.onCreateOptionsMenu(menu, inflater);
     }
 

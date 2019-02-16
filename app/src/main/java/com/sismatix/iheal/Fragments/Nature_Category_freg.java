@@ -91,6 +91,7 @@ public class Nature_Category_freg extends Fragment {
 
         final Toolbar toolbar_nature = (Toolbar) view.findViewById(R.id.toolbar_nature);
 
+
         ((Navigation_drawer_activity) getActivity()).setSupportActionBar(toolbar_nature);
         ((Navigation_drawer_activity) getActivity()).getSupportActionBar()
                 .setDisplayHomeAsUpEnabled(true);

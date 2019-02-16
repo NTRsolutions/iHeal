@@ -36,6 +36,7 @@ import android.widget.Toast;
 import java.util.List;
 
 import com.sismatix.iheal.Fragments.Account;
+import com.sismatix.iheal.Fragments.AccountTabs;
 import com.sismatix.iheal.Fragments.Cart;
 import com.sismatix.iheal.Fragments.EmailLogin;
 import com.sismatix.iheal.Fragments.Favourite;
@@ -149,9 +150,7 @@ public class Navigation_drawer_activity extends AppCompatActivity
                 Login_preference.setLogin_flag(Navigation_drawer_activity.this,"0");
                 Intent intent=new Intent(Navigation_drawer_activity.this,Navigation_drawer_activity.class);
                 startActivity(intent);
-
-
-            }
+                }
         });
         Bootom_Navigation_view();
     }
@@ -169,31 +168,10 @@ public class Navigation_drawer_activity extends AppCompatActivity
         selectFragment(menu.getItem(0));
     }
 
-    ////////bottom navigation selected listner
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
             selectFragment(item);
-
-
-           /* switch (item.getItemId()) {
-                case R.id.bottom_nav_home:
-                    viewPager.setCurrentItem(0);
-                    return true;
-                case R.id.bottom_nav_search:
-                    viewPager.setCurrentItem(1);
-                    return true;
-                case R.id.bottom_nav_favourite:
-                    viewPager.setCurrentItem(2);
-                    return true;
-                case R.id.bottom_nav_cart:
-                    viewPager.setCurrentItem(3);
-                    return true;
-                case R.id.bottom_nav_account:
-                    viewPager.setCurrentItem(4);
-                    return true;
-            }*/
             return false;
         }
     };
@@ -209,19 +187,37 @@ public class Navigation_drawer_activity extends AppCompatActivity
                 viewPager.setCurrentItem(0);
                 break;
             case R.id.bottom_nav_search:
-                pushFragment(new MyOrder(),"Search_fragment");//Search
+                pushFragment(new Search(),"Search_fragment");//Search
                 viewPager.setCurrentItem(1);
                 break;
             case R.id.bottom_nav_Wishlist:
-                pushFragment(new Wishlist_fragment(),"Wishlist_fragment");
-                viewPager.setCurrentItem(2);
-                break;
+
+                if (loginflag.equalsIgnoreCase("1") || loginflag == "1") {
+                    pushFragment(new Wishlist_fragment(),"Wishlist_fragment");
+                    viewPager.setCurrentItem(2);
+                    break;
+                } else {
+                    Toast.makeText(this, "Please try to login.", Toast.LENGTH_SHORT).show();
+                    break;
+                }
             case R.id.bottom_nav_cart:
                 pushFragment(new Cart(),null);
                 viewPager.setCurrentItem(3);
                 break;
             case R.id.bottom_nav_account:
-                pushFragment(new Account(),"Account_fragment");
+                if (loginflag.equalsIgnoreCase("1") || loginflag == "1") {
+
+                    FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                    fragmentTransaction.replace(R.id.rootLayout, new AccountTabs());
+                    fragmentTransaction.commit();
+
+                } else {
+
+                    FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                    fragmentTransaction.replace(R.id.rootLayout, new Account());
+                    fragmentTransaction.commit();
+
+                }
                 viewPager.setCurrentItem(4);
                 break;
         }
@@ -239,7 +235,180 @@ public class Navigation_drawer_activity extends AppCompatActivity
             }
         }
     }
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
 
+        if (id == R.id.nav_product_categories) {
+            // Handle the camera action
+            pushFragment(new Nature_Category_freg(),"Nature_category");
+
+        }/* else if (id == R.id.nav_health_topic) {
+
+        } else if (id == R.id.nav_offers) {
+
+        } else if (id == R.id.nav_reviews) {
+
+        }*/ else if (id == R.id.nav_recipes) {
+
+        }
+        else if (id == R.id.nav_my_order) {
+
+        }
+        else if (id == R.id.nav_my_account) {
+
+            if (loginflag.equalsIgnoreCase("1") || loginflag == "1") {
+
+                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.rootLayout, new AccountTabs());
+                fragmentTransaction.commit();
+
+            } else {
+
+                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.rootLayout, new Account());
+                fragmentTransaction.commit();
+
+            }
+
+        } else if (id == R.id.nav_wishlist) {
+            if (loginflag.equalsIgnoreCase("1") || loginflag == "1") {
+                pushFragment(new Wishlist_fragment(),"wishlist");
+            } else {
+                Toast.makeText(this, "Please try to login.", Toast.LENGTH_SHORT).show();
+            }
+        } else if (id == R.id.nav_messages) {
+
+            pushFragment(new MyOrderDetails(),"MyOrder_details");
+        } else if (id == R.id.nav_notification) { }
+
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
+    }
+
+    private void disableNavigationViewScrollbars(NavigationView navigationView) {
+        if (navigationView != null) {
+            NavigationMenuView navigationMenuView = (NavigationMenuView) navigationView.getChildAt(0);
+            if (navigationMenuView != null) {
+                navigationMenuView.setVerticalScrollBarEnabled(false);
+            }
+        }
+    }
+
+    private void AllocateMemory() {
+        //set bydefault itemcount
+        Login_preference.setCart_item_count(Navigation_drawer_activity.this,"0");
+
+       toolbar = (Toolbar) findViewById(R.id.toolbar);
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
+        View header = navigationView.getHeaderView(0);
+        login_navigation = (LinearLayout) findViewById(R.id.login_navigation);
+        lv_logout = (LinearLayout) findViewById(R.id.lv_logout);
+        tv_navidrawer=(TextView)header.findViewById(R.id.tv_navidraweremail);
+        item_count=(TextView)header.findViewById(R.id.item_count);
+        lv_withlogin_header = (LinearLayout) header.findViewById(R.id.lv_withlogin_header);
+
+        ///menu in login&logout opetionshow
+        if (loginflag.equalsIgnoreCase("1") || loginflag == "1") {
+            lv_withlogin_header.setVisibility(View.VISIBLE);
+            login_navigation.setVisibility(View.GONE);
+            lv_logout.setVisibility(View.VISIBLE);
+        } else {
+            tv_navidrawer.setText(Login_preference.getemail(Navigation_drawer_activity.this));
+            lv_withlogin_header.setVisibility(View.GONE);
+            login_navigation.setVisibility(View.VISIBLE);
+            lv_logout.setVisibility(View.GONE);
+        }
+        ///menu icon change
+        setSupportActionBar(toolbar);
+        ActionBar actionbar = getSupportActionBar();
+        actionbar.setDisplayHomeAsUpEnabled(true);
+        actionbar.setHomeAsUpIndicator(R.drawable.ic_dehaze_white_36dp);
+
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_search, menu);
+     /*   MenuItem item = menu.findItem(R.id.cart);
+
+        LayerDrawable icon = (LayerDrawable) item.getIcon();
+
+        CountDrawable badge;
+
+        // Reuse drawable if possible
+        Drawable reuse = icon.findDrawableByLayerId(R.id.ic_group_count);
+        if (reuse != null && reuse instanceof CountDrawable) {
+            badge = (CountDrawable) reuse;
+        } else {
+            badge = new CountDrawable(Navigation_drawer_activity.this);
+        }
+
+        badge.setCount("1");
+        icon.mutate();
+        icon.setDrawableByLayerId(R.id.ic_group_count, badge);
+*/
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @SuppressWarnings("StatementWithEmptyBody")
+
+    ///////////
+    @Override
+    public void onBackPressed() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        int count = fragmentManager.getBackStackEntryCount();
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        }
+
+         if (count == 1) {
+             if (doubleBackToExitPressedOnce) {
+                 super.onBackPressed();
+                 super.finish();
+                 return;
+             }
+             this.doubleBackToExitPressedOnce = true;
+             Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
+             new Handler().postDelayed(new Runnable() {
+                 @Override
+                 public void run() {
+                     doubleBackToExitPressedOnce = false;
+                 }
+             }, 2000);
+        } else {
+            String title = fragmentManager.getBackStackEntryAt(count - 2).getName();
+            super.onBackPressed();
+            Log.e("onBackPressetitle", "" + title);
+           // tv_title.setText(title);
+        }
+        //doExitApp();
+    }
+    private long exitTime = 0;
+    public void doExitApp() {
+        if ((System.currentTimeMillis() - exitTime) > 2000) {
+            Toast.makeText(Navigation_drawer_activity.this,
+                    "Please click BACK again to exit",
+                    Toast.LENGTH_SHORT).show();
+            exitTime = System.currentTimeMillis();
+        } else {
+            finish();
+        }
+    }
     private PagerAdapter pagerAdapter = new PagerAdapter() {
         @Override
         public int getCount() {
@@ -304,180 +473,5 @@ public class Navigation_drawer_activity extends AppCompatActivity
         }
     };
 
-    private void disableNavigationViewScrollbars(NavigationView navigationView) {
-        if (navigationView != null) {
-            NavigationMenuView navigationMenuView = (NavigationMenuView) navigationView.getChildAt(0);
-            if (navigationMenuView != null) {
-                navigationMenuView.setVerticalScrollBarEnabled(false);
-            }
-        }
-    }
-
-    private void AllocateMemory() {
-        //set bydefault itemcount
-        Login_preference.setCart_item_count(Navigation_drawer_activity.this,"0");
-
-       toolbar = (Toolbar) findViewById(R.id.toolbar);
-        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        navigationView = (NavigationView) findViewById(R.id.nav_view);
-        View header = navigationView.getHeaderView(0);
-        login_navigation = (LinearLayout) findViewById(R.id.login_navigation);
-        lv_logout = (LinearLayout) findViewById(R.id.lv_logout);
-        tv_navidrawer=(TextView)header.findViewById(R.id.tv_navidraweremail);
-        item_count=(TextView)header.findViewById(R.id.item_count);
-        lv_withlogin_header = (LinearLayout) header.findViewById(R.id.lv_withlogin_header);
-
-        ///menu in login&logout opetionshow
-        if (loginflag.equalsIgnoreCase("1") || loginflag == "1") {
-            lv_withlogin_header.setVisibility(View.VISIBLE);
-            login_navigation.setVisibility(View.GONE);
-            lv_logout.setVisibility(View.VISIBLE);
-        } else {
-            tv_navidrawer.setText(Login_preference.getemail(Navigation_drawer_activity.this));
-            lv_withlogin_header.setVisibility(View.GONE);
-            login_navigation.setVisibility(View.VISIBLE);
-            lv_logout.setVisibility(View.GONE);
-        }
-        ///menu icon change
-        setSupportActionBar(toolbar);
-        ActionBar actionbar = getSupportActionBar();
-        actionbar.setDisplayHomeAsUpEnabled(true);
-        actionbar.setHomeAsUpIndicator(R.drawable.ic_dehaze_white_36dp);
-
-
-    }
-/*
-    @Override
-    public void onBackPressed() {
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
-    }*/
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_search, menu);
-     /*   MenuItem item = menu.findItem(R.id.cart);
-
-        LayerDrawable icon = (LayerDrawable) item.getIcon();
-
-        CountDrawable badge;
-
-        // Reuse drawable if possible
-        Drawable reuse = icon.findDrawableByLayerId(R.id.ic_group_count);
-        if (reuse != null && reuse instanceof CountDrawable) {
-            badge = (CountDrawable) reuse;
-        } else {
-            badge = new CountDrawable(Navigation_drawer_activity.this);
-        }
-
-        badge.setCount("1");
-        icon.mutate();
-        icon.setDrawableByLayerId(R.id.ic_group_count, badge);
-*/
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    @SuppressWarnings("StatementWithEmptyBody")
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
-
-        if (id == R.id.nav_product_categories) {
-            // Handle the camera action
-
-            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.rootLayout, new Nature_Category_freg());
-            fragmentTransaction.commit();
-
-        }/* else if (id == R.id.nav_health_topic) {
-
-        } else if (id == R.id.nav_offers) {
-
-        } else if (id == R.id.nav_reviews) {
-
-        }*/ else if (id == R.id.nav_recipes) {
-
-        }
-        else if (id == R.id.nav_my_order) {
-
-        }
-        else if (id == R.id.nav_my_account) {
-            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.rootLayout, new Account());
-            fragmentTransaction.commit();
-        } else if (id == R.id.nav_wishlist) {
-            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.rootLayout, new Wishlist_fragment());
-            fragmentTransaction.commit();
-
-        } else if (id == R.id.nav_messages) {
-            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.rootLayout, new MyOrderDetails());
-            fragmentTransaction.commit();
-        } else if (id == R.id.nav_notification) {
-
-        }
-
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
-    }
-
-    ///////////
-    @Override
-    public void onBackPressed() {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        int count = fragmentManager.getBackStackEntryCount();
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        }
-
-         if (count == 1) {
-             if (doubleBackToExitPressedOnce) {
-                 super.onBackPressed();
-                 super.finish();
-                 return;
-             }
-             this.doubleBackToExitPressedOnce = true;
-             Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
-             new Handler().postDelayed(new Runnable() {
-                 @Override
-                 public void run() {
-                     doubleBackToExitPressedOnce = false;
-                 }
-             }, 2000);
-        } else {
-            String title = fragmentManager.getBackStackEntryAt(count - 2).getName();
-            super.onBackPressed();
-            Log.e("onBackPressetitle", "" + title);
-           // tv_title.setText(title);
-        }
-        //doExitApp();
-    }
-    private long exitTime = 0;
-    public void doExitApp() {
-        if ((System.currentTimeMillis() - exitTime) > 2000) {
-            Toast.makeText(Navigation_drawer_activity.this,
-                    "Please click BACK again to exit",
-                    Toast.LENGTH_SHORT).show();
-            exitTime = System.currentTimeMillis();
-        } else {
-            finish();
-        }
-    }
 
 }

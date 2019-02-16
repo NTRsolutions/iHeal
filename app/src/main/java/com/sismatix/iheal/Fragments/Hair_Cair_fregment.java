@@ -40,6 +40,8 @@ import com.sismatix.iheal.Adapter.TabPageAdapter;
 import com.sismatix.iheal.Model.Product_Grid_Model;
 import com.sismatix.iheal.Preference.Login_preference;
 import com.sismatix.iheal.R;
+import com.sismatix.iheal.Retrofit.ApiClient;
+import com.sismatix.iheal.Retrofit.ApiInterface;
 import com.sismatix.iheal.View.CountDrawable;
 
 import org.json.JSONArray;
@@ -48,6 +50,11 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static com.sismatix.iheal.Activity.Navigation_drawer_activity.bottom_navigation;
 
@@ -74,6 +81,8 @@ public class Hair_Cair_fregment extends Fragment {
     private List<Product_Grid_Model> product_model = new ArrayList<Product_Grid_Model>();
     private Product_recycler_adapter product_adapter;
     ProgressBar progressBar;
+    LinearLayout lv_productnotfound;
+    String cat_id,mainname;
 
     public Hair_Cair_fregment() {
         // Required empty public constructor
@@ -89,14 +98,18 @@ public class Hair_Cair_fregment extends Fragment {
         setHasOptionsMenu(true);
         Bundle bundle = this.getArguments();
 
+        cat_id =bundle.getString("cat_id");
+        mainname=bundle.getString("name");
+        Log.e("category_id_thcf",""+cat_id);
 
 
-        product_array =bundle.getString("products_array");
+       /// product_array =bundle.getString("products_array");
 
         Log.e("products_arrayyyy",""+product_array);
 
         viewPager = (ViewPager) view.findViewById(R.id.viewpager);
         tabLayout = (TabLayout) view.findViewById(R.id.tablayout);
+        lv_productnotfound=(LinearLayout)view.findViewById(R.id.lv_productnotfound);
         // fragment_container = (LinearLayout) view.findViewById(R.id.fragment_container);
         collapsingToolbar = (CollapsingToolbarLayout) view
                 .findViewById(R.id.collapsing_toolbar);
@@ -111,24 +124,87 @@ public class Hair_Cair_fregment extends Fragment {
 
 
 
-        collapsingToolbar.setTitle("Hair Care");
-
         recycler_product=(RecyclerView) view.findViewById(R.id.recycler_product);
         progressBar=(ProgressBar)view.findViewById(R.id.progressBar);
         product_adapter = new Product_recycler_adapter(getActivity(), product_model);
         recycler_product.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         recycler_product.setItemAnimator(new DefaultItemAnimator());
         recycler_product.setAdapter(product_adapter);
-        CALL_PRODUCT_API();
+        CALL_PRODUCT_API(cat_id);
 
        // SetTablayout();
 
         return view;
     }
 
-    private void CALL_PRODUCT_API() {
+    private void CALL_PRODUCT_API(String cat_id) {
         progressBar.setVisibility(View.VISIBLE);
         product_model.clear();
+        ApiInterface api = ApiClient.getClient().create(ApiInterface.class);
+        Call<ResponseBody> addcategory = api.addcategoryprod(cat_id);
+
+        addcategory.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                Log.e("response", "" + response.body().toString());
+                progressBar.setVisibility(View.GONE);
+                JSONObject jsonObject = null;
+                try {
+                    jsonObject = new JSONObject(response.body().string());
+                    String status = jsonObject.getString("status");
+                    Log.e("status",""+status);
+                    String title = jsonObject.getString("title");
+                    collapsingToolbar.setTitle(title);
+                    String categoryimage = jsonObject.getString("categoryimage");
+                    Log.e("categoryimage",""+categoryimage);
+
+                    if (status.equalsIgnoreCase("success")){
+                        String products = jsonObject.getString("products");
+                        if(products.equalsIgnoreCase("[]")){
+                            Log.e("nulll","");
+                            lv_productnotfound.setVisibility(View.VISIBLE);
+                        }else{
+                            lv_productnotfound.setVisibility(View.GONE);
+                        }
+                        JSONArray jsonArray=new JSONArray(products);
+                        Log.e("arrprod",""+jsonArray);
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            try {
+                                JSONObject vac_object = jsonArray.getJSONObject(i);
+                                Log.e("prod_name",""+vac_object.getString("product_name"));
+                                product_model.add(new Product_Grid_Model(vac_object.getString("product_image"),
+                                        vac_object.getString("product_price"),vac_object.getString("product_name"),
+                                        vac_object.getString("type"),vac_object.getString("product_id"),"product_specialprice"));
+
+                            } catch (Exception e) {
+                                Log.e("Exception", "" + e);
+                            } finally {
+                                product_adapter.notifyItemChanged(i);
+                            }
+
+                        }
+
+
+
+
+
+                    }else if (status.equalsIgnoreCase("error")){
+                        // Toast.makeText(getContext(), ""+meassg, Toast.LENGTH_SHORT).show();
+                    }
+
+                }catch (Exception e){
+                    Log.e("",""+e);
+                }
+            }
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Toast.makeText(getContext(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+
+
         JSONObject jsonObject = null;
         try {
             // JSONArray jsonArray=jsonObject.getJSONArray(product_array);

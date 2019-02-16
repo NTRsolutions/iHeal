@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.sismatix.iheal.Fragments.Hair_Cair_fregment;
 import com.sismatix.iheal.Fragments.TransParant_Hair_care_freg;
 import com.sismatix.iheal.Model.Product_Category_model;
 import com.sismatix.iheal.Model.Product_Grid_Model;
@@ -49,9 +50,10 @@ public class Product_Category_adapter extends RecyclerView.Adapter<Product_Categ
             public void onClick(View view) {
                 Bundle b=new Bundle();
                 b.putString("cat_id",product_model.getValue());
+                b.putString("name",product_model.getCategory_name());
                 Log.e("categotyidd",""+product_model.getValue());
                 AppCompatActivity activity = (AppCompatActivity) view.getContext();
-                Fragment myFragment = new TransParant_Hair_care_freg();
+                Fragment myFragment = new Hair_Cair_fregment();
                 myFragment.setArguments(b);
                 activity.getSupportFragmentManager().beginTransaction().replace(R.id.rootLayout, myFragment).addToBackStack(null).commit();
             }

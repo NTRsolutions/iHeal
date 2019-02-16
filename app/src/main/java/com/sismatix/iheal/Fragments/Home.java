@@ -110,6 +110,7 @@ public class Home extends Fragment implements View.OnClickListener {
 
         Bundle b = new Bundle();
         b.putString("cat_id", value);
+        b.putString("name", value);
         //Fragment myFragment = new TransParant_Hair_care_freg();
         fragment.setArguments(b);
         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.rootLayout, fragment).addToBackStack(null).commit();
@@ -126,7 +127,6 @@ public class Home extends Fragment implements View.OnClickListener {
                 } else {
 
                 }
-
                 /*if (loginflag.equalsIgnoreCase("1") || loginflag == "1") {
                     loadFragment(new Account(), value);
                 } else {
@@ -145,7 +145,7 @@ public class Home extends Fragment implements View.OnClickListener {
             case R.id.iv_brain:
                 if (loginflag.equalsIgnoreCase("1") || loginflag == "1") {
                     value = "20";
-                    loadFragment(new TransParant_Hair_care_freg(), value);
+                    loadFragment(new Hair_Cair_fregment(), value);
                 } else {
                     loadFragment(new Account(), value);
                 }
@@ -155,7 +155,7 @@ public class Home extends Fragment implements View.OnClickListener {
             case R.id.iv_lung:
                 if (loginflag.equalsIgnoreCase("1") || loginflag == "1") {
                     value = "26";
-                    loadFragment(new TransParant_Hair_care_freg(), value);
+                    loadFragment(new Hair_Cair_fregment(), value);
                 } else {
                     loadFragment(new Account(), value);
                 }
@@ -164,7 +164,7 @@ public class Home extends Fragment implements View.OnClickListener {
             case R.id.iv_eye:
                 if (loginflag.equalsIgnoreCase("1") || loginflag == "1") {
                     value = "21";
-                    loadFragment(new TransParant_Hair_care_freg(), value);
+                    loadFragment(new Hair_Cair_fregment(), value);
                 } else {
                     loadFragment(new Account(), value);
                 }
@@ -174,7 +174,7 @@ public class Home extends Fragment implements View.OnClickListener {
             case R.id.iv_nose:
                 if (loginflag.equalsIgnoreCase("1") || loginflag == "1") {
                     value = "22";
-                    loadFragment(new TransParant_Hair_care_freg(), value);
+                    loadFragment(new Hair_Cair_fregment(), value);
                 } else {
                     loadFragment(new Account(), value);
                 }
@@ -183,7 +183,7 @@ public class Home extends Fragment implements View.OnClickListener {
             case R.id.iv_mouth:
                 if (loginflag.equalsIgnoreCase("1") || loginflag == "1") {
                     value = "23";
-                    loadFragment(new TransParant_Hair_care_freg(), value);
+                    loadFragment(new Hair_Cair_fregment(), value);
                 } else {
                     loadFragment(new Account(), value);
                 }
@@ -192,7 +192,7 @@ public class Home extends Fragment implements View.OnClickListener {
             case R.id.iv_teeth:
                 if (loginflag.equalsIgnoreCase("1") || loginflag == "1") {
                     value = "24";
-                    loadFragment(new TransParant_Hair_care_freg(), value);
+                    loadFragment(new Hair_Cair_fregment(), value);
                 } else {
                     loadFragment(new Account(), value);
                 }
@@ -201,7 +201,7 @@ public class Home extends Fragment implements View.OnClickListener {
             case R.id.iv_bones:
                 if (loginflag.equalsIgnoreCase("1") || loginflag == "1") {
                     value = "25";
-                    loadFragment(new TransParant_Hair_care_freg(), value);
+                    loadFragment(new Hair_Cair_fregment(), value);
                 } else {
                     loadFragment(new Account(), value);
                 }
@@ -210,7 +210,7 @@ public class Home extends Fragment implements View.OnClickListener {
             case R.id.iv_stomach:
                 if (loginflag.equalsIgnoreCase("1") || loginflag == "1") {
                     value = "27";
-                    loadFragment(new TransParant_Hair_care_freg(), value);
+                    loadFragment(new Hair_Cair_fregment(), value);
                 } else {
                     loadFragment(new Account(), value);
                 }
@@ -219,7 +219,7 @@ public class Home extends Fragment implements View.OnClickListener {
             case R.id.iv_liver:
                 if (loginflag.equalsIgnoreCase("1") || loginflag == "1") {
                     value = "28";
-                    loadFragment(new TransParant_Hair_care_freg(), value);
+                    loadFragment(new Hair_Cair_fregment(), value);
                 } else {
                     loadFragment(new Account(), value);
                 }
@@ -228,7 +228,7 @@ public class Home extends Fragment implements View.OnClickListener {
             case R.id.iv_kidney:
                 if (loginflag.equalsIgnoreCase("1") || loginflag == "1") {
                     value = "29";
-                    loadFragment(new TransParant_Hair_care_freg(), value);
+                    loadFragment(new Hair_Cair_fregment(), value);
                 } else {
                     loadFragment(new Account(), value);
                 }
@@ -237,7 +237,7 @@ public class Home extends Fragment implements View.OnClickListener {
             case R.id.iv_UT:
                 if (loginflag.equalsIgnoreCase("1") || loginflag == "1") {
                     value = "30";
-                    loadFragment(new TransParant_Hair_care_freg(), value);
+                    loadFragment(new Hair_Cair_fregment(), value);
                 } else {
                     loadFragment(new Account(), value);
                 }

@@ -51,7 +51,7 @@ public class Wishlist_fragment extends Fragment {
     private static List<Wishlist_Model> wishlist_models = new ArrayList<Wishlist_Model>();
     private static Wishlist_Adapter wishlist_adapter;
     View v;
-    Toolbar toolbar_mywishlist;
+    public static Toolbar toolbar_mywishlist;
 
     public static LayerDrawable icon;
     public String count = "1";
@@ -77,6 +77,7 @@ public class Wishlist_fragment extends Fragment {
         //option manu
         setHasOptionsMenu(true);
         toolbar_mywishlist = (Toolbar) v.findViewById(R.id.toolbar_mywishlist);
+       // toolbar_mywishlist.setTitle("My Wishlist");
 
         ((Navigation_drawer_activity) getActivity()).setSupportActionBar(toolbar_mywishlist);
         ((Navigation_drawer_activity) getActivity()).getSupportActionBar()
