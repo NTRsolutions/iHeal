@@ -216,6 +216,7 @@
                         android:orientation="horizontal">
 
                         <TextView
+                            android:id="@+id/tv_myaccount_fistname"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Test_fistname"
@@ -223,6 +224,7 @@
                             android:textSize="14dp" />
 
                         <TextView
+                            android:id="@+id/tv_myaccount_lastname"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="5dp"
@@ -232,6 +234,7 @@
                     </LinearLayout>
 
                     <TextView
+                        android:id="@+id/tv_myaccount_compny"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Test_compny"
@@ -239,6 +242,7 @@
                         android:textSize="14dp" />
 
                     <TextView
+                        android:id="@+id/tv_myaccount_address"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Test_Address"
@@ -251,6 +255,7 @@
                         android:orientation="horizontal">
 
                         <TextView
+                            android:id="@+id/tv_myaccount_city"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Test_city"
@@ -258,6 +263,7 @@
                             android:textSize="14dp" />
 
                         <TextView
+                            android:id="@+id/tv_myaccount_zipcode"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="5dp"
@@ -267,6 +273,7 @@
                     </LinearLayout>
 
                     <TextView
+
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="City"

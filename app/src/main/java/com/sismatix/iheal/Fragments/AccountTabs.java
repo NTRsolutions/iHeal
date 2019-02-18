@@ -36,7 +36,6 @@ public class AccountTabs extends Fragment {
     public AccountTabs() {
         // Required empty public constructor
     }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -68,9 +67,7 @@ public class AccountTabs extends Fragment {
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-
                 viewPager.setCurrentItem(tab.getPosition());
-
                 if (tab.getPosition() == 0) {
                     //tv_tab_titles.setText("MY ACCOUNT");
                     toolbar_myaccount.setTitle("MY ACCOUNT");
@@ -85,17 +82,12 @@ public class AccountTabs extends Fragment {
                     //tv_tab_titles.setText("WISHLIST");
                     toolbar_myaccount.setTitle("WISHLIST");
                 }
-
             }
-
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
-
             }
-
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
-
             }
 
         });

@@ -102,7 +102,6 @@ public interface ApiInterface {
     //country list
     //https://ihealkuwait.com/customapi/AppGetCountryList.php
     @GET("AppGetCountryList.php")
-
     Call<ResponseBody>get_country_list();
 
 
