@@ -25,8 +25,8 @@ public class Checkout_fragment extends Fragment implements View.OnClickListener 
     LinearLayout lv_shipping,lv_confirmation,lv_payment;
     public static LinearLayout lv_shipping_selected,lv_payment_selected,lv_confirmation_selected;
     public static ImageView iv_confirmation_done,iv_payment_done,iv_shipping_done;
-    public static TextView tv_shipping,tv_payment,tv_confirmation;
-    String loginflag;
+    public static TextView tv_shipping,tv_payment,tv_confirmation,tv_checkout_total;
+    String loginflag,grand_total;
     View v;
     public Checkout_fragment() {
         // Required empty public constructor
@@ -43,6 +43,11 @@ public class Checkout_fragment extends Fragment implements View.OnClickListener 
         loginflag = Login_preference.getLogin_flag(getActivity());
 
         AllocateMemory(v);
+        Bundle bundle = this.getArguments();
+
+        grand_total = bundle.getString("cart_grand_total");
+        Log.e("grand_to_checkout", "" + grand_total);
+
 
         lv_shipping.setOnClickListener(this);
         lv_confirmation.setOnClickListener(this);
@@ -51,6 +56,8 @@ public class Checkout_fragment extends Fragment implements View.OnClickListener 
         lv_payment_selected.setVisibility(View.INVISIBLE);
         lv_confirmation_selected.setVisibility(View.INVISIBLE);
         lv_shipping_selected.setVisibility(View.VISIBLE);
+
+        tv_checkout_total.setText(grand_total);
 
 
         if (loginflag.equalsIgnoreCase("1") || loginflag == "1") {
@@ -76,6 +83,7 @@ public class Checkout_fragment extends Fragment implements View.OnClickListener 
         tv_shipping=(TextView)v.findViewById(R.id.tv_shipping);
         tv_payment=(TextView)v.findViewById(R.id.tv_payment);
         tv_confirmation=(TextView)v.findViewById(R.id.tv_confirmation);
+        tv_checkout_total=(TextView)v.findViewById(R.id.tv_checkout_total);
 
     }
 

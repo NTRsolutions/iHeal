@@ -118,6 +118,13 @@ public interface ApiInterface {
                                        @Field("company") String company,
                                        @Field("street") String street);
 
+    //call shipping address api
+     //https://ihealkuwait.com/customapi/AppGetAddressList.php?customer_id=1
+
+    @POST("AppGetAddressList.php")
+    @FormUrlEncoded
+    Call<ResponseBody>GET_SHIPPING_ADDRESS(@Field("customer_id") String customer_id);
+
 
 
 }

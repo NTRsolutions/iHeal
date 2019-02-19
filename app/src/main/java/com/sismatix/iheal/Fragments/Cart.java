@@ -77,7 +77,7 @@ public class Cart extends Fragment  {
     public static ProgressBar progressBar_cart;
     public static  String cart_items_count;
     public static Call<ResponseBody> cartlistt=null;
-    String loginflag;
+   public static String loginflag,grand_total;
 
 
     //-------------login-------------//
@@ -108,25 +108,30 @@ public class Cart extends Fragment  {
 
         lv_place_order.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(final View view) {
 
                 Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {
                     public void run() {
                         if (loginflag.equalsIgnoreCase("1") || loginflag == "1") {
-
-                            loadFragment(new Checkout_fragment(),"");
+                            Bundle b=new Bundle();
+                            b.putString("cart_grand_total",grand_total);
+                            Log.e("grand_tot_cart_one",""+grand_total);
+                            AppCompatActivity activity = (AppCompatActivity) view.getContext();
+                            Fragment myFragment = new Checkout_fragment();
+                            myFragment.setArguments(b);
+                            activity.getSupportFragmentManager().beginTransaction().replace(R.id.rootLayout, myFragment).addToBackStack(null).commit();
+                            /*loadFragment(new Checkout_fragment(),"");*/
                         } else {
                             String screen_type="cart";
-                            // fullscreen_login_dialog();
+// fullscreen_login_dialog();
                             loadFragment(new EmailLogin(),screen_type);
                         }
                     }
                 }, 1000);
 
-                }
+            }
         });
-
 
 
 
@@ -402,7 +407,7 @@ public class Cart extends Fragment  {
                     String status = jsonObject.getString("status");
                     Log.e("status_prepare_cart",""+status);
                     if (status.equalsIgnoreCase("success")){
-                        String grand_total=jsonObject.getString("grand_total");
+                         grand_total=jsonObject.getString("grand_total");
                         tv_maintotal.setText(grand_total);
                         cart_items_count=jsonObject.getString("items_count");
 
