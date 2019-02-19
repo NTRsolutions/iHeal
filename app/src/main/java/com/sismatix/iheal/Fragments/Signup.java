@@ -42,7 +42,7 @@ public class Signup extends Fragment implements View.OnClickListener {
 
 
     public Signup() {
-        // Required empty public constructor
+
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
