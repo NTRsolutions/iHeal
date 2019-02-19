@@ -59,10 +59,6 @@ public class Checkout_fragment extends Fragment implements View.OnClickListener 
         } else {
             loadFragment(new EmailLogin());
         }
-
-
-
-
         return v;
     }
 

@@ -3,6 +3,7 @@ package com.sismatix.iheal.Fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -54,11 +55,17 @@ public class Account extends Fragment {
             @Override
             public void onClick(View v) {
 
-                EmailLogin nextFrag= new EmailLogin();
-                getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.rootLayout, nextFrag, "findThisFragment")
-                        .addToBackStack(null)
-                        .commit();
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    public void run() {
+                        EmailLogin nextFrag= new EmailLogin();
+                        getActivity().getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.rootLayout, nextFrag, "findThisFragment")
+                                .addToBackStack(null)
+                                .commit();
+                    }
+                }, 1000);
+
             }
         });
 

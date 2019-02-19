@@ -3,6 +3,7 @@ package com.sismatix.iheal.Fragments;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -68,14 +69,19 @@ public class Payment_fragment extends Fragment {
         lv_confirm_order.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (loginflag.equalsIgnoreCase("1") || loginflag == "1") {
 
-                    loadFragment(new Confirmation_fragment());
-                } else {
-                    loadFragment(new EmailLogin());
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    public void run() {
+                        if (loginflag.equalsIgnoreCase("1") || loginflag == "1") {
+
+                            loadFragment(new Confirmation_fragment());
+                        } else {
+                            loadFragment(new EmailLogin());
+                        }
+                    }
+                }, 1000);
                 }
-
-            }
         });
         return v;
     }

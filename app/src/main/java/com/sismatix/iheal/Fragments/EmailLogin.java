@@ -39,6 +39,8 @@ public class EmailLogin extends Fragment implements View.OnClickListener {
     EditText login_email, login_password;
     Button btn_login;
     TextView tv_forgotpassword;
+    String screen,loginflag;
+    Bundle bundle;
 
     public EmailLogin() {
         // Required empty public constructor
@@ -50,9 +52,10 @@ public class EmailLogin extends Fragment implements View.OnClickListener {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_email_login, container, false);
         bottom_navigation.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
-
+        bundle= this.getArguments();
 
         AllocateMemory(v);
+
 
         btn_login.setOnClickListener(this);
         tv_forgotpassword.setOnClickListener(this);
@@ -121,10 +124,35 @@ public class EmailLogin extends Fragment implements View.OnClickListener {
                         Login_preference.setcustomer_id(getActivity(), jsonObject.getString("customer_id"));
                         Login_preference.setemail(getActivity(), jsonObject.getString("email"));
                         Login_preference.setfullname(getActivity(), jsonObject.getString("fullname"));
+                        Log.e("screennn",""+screen);
+                        Log.e("bundleee",""+bundle);
+                        if (bundle!=null){
+                            Navigation_drawer_activity.loginflagmain=Login_preference.getLogin_flag(getActivity());
+                            loginflag=Login_preference.getLogin_flag(getActivity());
+                            if (loginflag.equalsIgnoreCase("1") || loginflag == "1") {
+                                Navigation_drawer_activity.lv_withlogin_header.setVisibility(View.VISIBLE);
+                                Navigation_drawer_activity.login_navigation.setVisibility(View.GONE);
+                                Navigation_drawer_activity.lv_logout.setVisibility(View.VISIBLE);
+                            } else {
+                                Navigation_drawer_activity.tv_navidrawer.setText(Login_preference.getemail(getActivity()));
+                                Navigation_drawer_activity.lv_withlogin_header.setVisibility(View.GONE);
+                                Navigation_drawer_activity.login_navigation.setVisibility(View.VISIBLE);
+                                Navigation_drawer_activity.lv_logout.setVisibility(View.GONE);
+                            }
+                            screen =bundle.getString("value");
+                            Log.e("screen_59",""+screen);
+                            Checkout_fragment nextFrag = new Checkout_fragment();
+                            getActivity().getSupportFragmentManager().beginTransaction()
+                                    .replace(R.id.rootLayout, nextFrag, "login")
+                                    .addToBackStack(null)
+                                    .commit();
+                        }else{
+                            Intent intent=new Intent(getActivity(),Navigation_drawer_activity.class);
+                            startActivity(intent);
+                            getActivity().finish();
+                        }
 
-                        Intent intent=new Intent(getActivity(),Navigation_drawer_activity.class);
-                        startActivity(intent);
-                        getActivity().finish();
+
                        /* Home nextFrag = new Home();
                         getActivity().getSupportFragmentManager().beginTransaction()
                                 .replace(R.id.rootLayout, nextFrag, "home")
@@ -144,20 +172,16 @@ public class EmailLogin extends Fragment implements View.OnClickListener {
                 Toast.makeText(getContext(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
             }
         });
-
-
     }
-
     public void loadFragment(Fragment fragment) {
         Log.e("clickone", "");
         android.support.v4.app.FragmentManager manager = getFragmentManager();
         android.support.v4.app.FragmentTransaction transaction = manager.beginTransaction();
         transaction.replace(R.id.rootLayout, fragment);
         transaction.addToBackStack(null);
-
         transaction.commit();
-    }
 
+    }
     @Override
     public void onClick(View view) {
        if (view == btn_login) {

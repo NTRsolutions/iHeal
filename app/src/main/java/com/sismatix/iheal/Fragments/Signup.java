@@ -3,6 +3,7 @@ package com.sismatix.iheal.Fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -145,7 +146,16 @@ public class Signup extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View view) {
         if(view==btn_signup){
-            validateSignupData();
+
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                public void run() {
+                    validateSignupData();
+                }
+            }, 1000);
+
+
+
         }else if(view==tv_login){
             EmailLogin nextFrag= new EmailLogin();
             getActivity().getSupportFragmentManager().beginTransaction()

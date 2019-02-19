@@ -9,124 +9,137 @@
         android:id="@+id/view_foreground"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/white"
+        android:background="@drawable/cart_white_ripple"
         >
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:orientation="horizontal"
-            android:weightSum="12">
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:padding="20dp"
-                android:layout_weight="4">
+                android:layout_height="150dp"
+                android:orientation="horizontal"
+                android:weightSum="12">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:padding="15dp"
-                    android:background="@color/cart_image_bg">
-                    <ImageView
-                        android:id="@+id/iv_cart_product_image"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/product"
-                        />
+                    android:layout_weight="4"
+                    android:padding="20dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/cart_image_bg"
+                        android:gravity="center"
+                        android:padding="15dp">
+
+                        <ImageView
+                            android:id="@+id/iv_cart_product_image"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/product" />
+                    </LinearLayout>
+
                 </LinearLayout>
 
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:layout_weight="2.6">
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2.6"
                     android:orientation="vertical">
-                    <TextView
-                        android:layout_width="wrap_content"
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/black"
-                        android:textStyle="bold"
-                        android:textSize="18dp"
-                        android:text="ActiFem"
-                        android:id="@+id/tv_cart_product_title"/>
-                    <TextView
-                        android:id="@+id/tv_cart_product_description"
-                        android:layout_width="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tv_cart_product_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="ActiFem"
+                            android:textColor="@color/black"
+                            android:textSize="18dp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tv_cart_product_description"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:text="30.00 KD"
+                            android:textColor="@color/edittext"
+                            android:textSize="16dp"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/edittext"
-                        android:textStyle="bold"
                         android:layout_marginTop="10dp"
-                        android:textSize="16dp"
-                        android:text="30.00 KD"/>
+                        android:gravity="center|left"
+                        android:orientation="vertical">
 
+                        <TextView
+                            android:id="@+id/tv_product_price_total"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="30.00 KD"
+                            android:textColor="@color/black"
+                            android:textSize="16dp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:gravity="center|left"
-                    android:orientation="vertical">
+                    android:layout_height="match_parent"
+                    android:layout_weight="5.4"
+                    android:orientation="vertical"
+                    android:weightSum="6">
+
+                    <ImageView
+                        android:id="@+id/iv_cart_quantity_increase"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="20dp"
+                        android:layout_weight="2"
+                        android:onClick="increaseInteger"
+                        android:src="@drawable/ic_add_black_24dp" />
+
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:id="@+id/tv_cart_quantity_total"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="2"
+                        android:gravity="center"
+                        android:text=""
                         android:textColor="@color/black"
-                        android:textStyle="bold"
-                        android:textSize="16dp"
-                        android:text="30.00 KD"
-                        android:id="@+id/tv_product_price_total"/>
+                        android:textSize="18dp"
+                        android:textStyle="bold" />
+
+                    <ImageView
+                        android:id="@+id/iv_cart_quantity_decrease"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="20dp"
+                        android:layout_weight="2"
+                        android:onClick="decreaseInteger"
+                        android:src="@drawable/ic_remove_black_24dp" />
+
                 </LinearLayout>
+
             </LinearLayout>
-            <LinearLayout
+
+            <View
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:layout_weight="5.4"
-                android:weightSum="6">
-                <ImageView
-                    android:id="@+id/iv_cart_quantity_increase"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="2"
-                    android:onClick="increaseInteger"
-                    android:layout_marginTop="20dp"
-                    android:src="@drawable/ic_add_black_24dp"/>
-                <TextView
-                    android:id="@+id/tv_cart_quantity_total"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text=""
-                    android:textSize="18dp"
-                    android:textStyle="bold"
-                    android:textColor="@color/black"
-                    android:gravity="center"
-                    android:layout_weight="2"/>
-                <ImageView
-                    android:id="@+id/iv_cart_quantity_decrease"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/ic_remove_black_24dp"
-                    android:layout_marginBottom="20dp"
-                    android:onClick="decreaseInteger"
-                    android:layout_weight="2"/>
-
-            </LinearLayout>
-
-        </LinearLayout>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:background="@color/view"/>
+                android:layout_height="2dp"
+                android:background="@color/view" />
         </LinearLayout>
     </RelativeLayout>
 </FrameLayout>

@@ -3,6 +3,7 @@ package com.sismatix.iheal.Fragments;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
@@ -67,8 +68,14 @@ public class Confirmation_fragment extends Fragment {
         lv_confirm_pay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                loadFragment(new Fianl_Order_Checkout_freg());
-            }
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    public void run() {
+                        loadFragment(new Fianl_Order_Checkout_freg());
+                    }
+                }, 1000);
+
+                }
         });
         return  v;
     }

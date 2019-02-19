@@ -68,8 +68,8 @@ public class Navigation_drawer_activity extends AppCompatActivity
     Toolbar toolbar;
     MenuItem title_account_tools, title_shop_tools;
     SpannableString shop, account;
-    LinearLayout lv_withlogin_header, login_navigation,lv_logout;
-    String loginflag;
+    public static LinearLayout lv_withlogin_header, login_navigation,lv_logout;
+    public static String loginflagmain;
     public  static TextView tv_navidrawer,item_count;
 
     //bottom navigation
@@ -84,7 +84,8 @@ public class Navigation_drawer_activity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navigation_drawer);
-        loginflag = Login_preference.getLogin_flag(Navigation_drawer_activity.this);
+        loginflagmain = Login_preference.getLogin_flag(Navigation_drawer_activity.this);
+        Log.e("logingflag",""+loginflagmain);
         AllocateMemory();
 
         login_navigation.setOnClickListener(new View.OnClickListener() {
@@ -183,7 +184,7 @@ public class Navigation_drawer_activity extends AppCompatActivity
         switch (item.getItemId()) {
             case R.id.bottom_nav_home:
                 // Action to perform when Home Menu item is selected.
-                pushFragment(new Home(),"Home_fragment");
+                pushFragment(new Home(),"Home");//Search
                 viewPager.setCurrentItem(0);
                 break;
             case R.id.bottom_nav_search:
@@ -191,8 +192,7 @@ public class Navigation_drawer_activity extends AppCompatActivity
                 viewPager.setCurrentItem(1);
                 break;
             case R.id.bottom_nav_Wishlist:
-
-                if (loginflag.equalsIgnoreCase("1") || loginflag == "1") {
+                if (loginflagmain.equalsIgnoreCase("1") || loginflagmain == "1") {
                     pushFragment(new Wishlist_fragment(),"Wishlist_fragment");
                     viewPager.setCurrentItem(2);
                     break;
@@ -205,7 +205,7 @@ public class Navigation_drawer_activity extends AppCompatActivity
                 viewPager.setCurrentItem(3);
                 break;
             case R.id.bottom_nav_account:
-                if (loginflag.equalsIgnoreCase("1") || loginflag == "1") {
+                if (loginflagmain.equalsIgnoreCase("1") || loginflagmain == "1") {
 
                     FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
                     fragmentTransaction.replace(R.id.rootLayout, new AccountTabs());
@@ -258,7 +258,7 @@ public class Navigation_drawer_activity extends AppCompatActivity
         }
         else if (id == R.id.nav_my_account) {
 
-            if (loginflag.equalsIgnoreCase("1") || loginflag == "1") {
+            if (loginflagmain.equalsIgnoreCase("1") || loginflagmain == "1") {
 
                 FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.replace(R.id.rootLayout, new AccountTabs());
@@ -273,7 +273,7 @@ public class Navigation_drawer_activity extends AppCompatActivity
             }
 
         } else if (id == R.id.nav_wishlist) {
-            if (loginflag.equalsIgnoreCase("1") || loginflag == "1") {
+            if (loginflagmain.equalsIgnoreCase("1") || loginflagmain == "1") {
                 pushFragment(new Wishlist_fragment(),"wishlist");
             } else {
                 Toast.makeText(this, "Please try to login.", Toast.LENGTH_SHORT).show();
@@ -311,7 +311,7 @@ public class Navigation_drawer_activity extends AppCompatActivity
         lv_withlogin_header = (LinearLayout) header.findViewById(R.id.lv_withlogin_header);
 
         ///menu in login&logout opetionshow
-        if (loginflag.equalsIgnoreCase("1") || loginflag == "1") {
+        if (loginflagmain.equalsIgnoreCase("1") || loginflagmain == "1") {
             lv_withlogin_header.setVisibility(View.VISIBLE);
             login_navigation.setVisibility(View.GONE);
             lv_logout.setVisibility(View.VISIBLE);

@@ -3,6 +3,7 @@ package com.sismatix.iheal.Fragments;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,6 +13,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.sismatix.iheal.Activity.Navigation_drawer_activity;
 import com.sismatix.iheal.Preference.Login_preference;
@@ -123,7 +125,7 @@ public class Home extends Fragment implements View.OnClickListener {
 
             case R.id.iv_hair_care:
                 if (loginflag.equalsIgnoreCase("1") || loginflag == "1") {
-
+                    Toast.makeText(getActivity(), "product is not ", Toast.LENGTH_SHORT).show();
                 } else {
 
                 }
@@ -135,11 +137,28 @@ public class Home extends Fragment implements View.OnClickListener {
                 break;
 
             case R.id.lv_creatnewaccount:
-                loadFragment(new Account(), value);
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    public void run() {
+
+                        loadFragment(new Account(), value);
+                    }
+                }, 1000);
+
+
                 break;
 
             case R.id.lv_loginaccount:
-                loadFragment(new EmailLogin(), value);
+
+                Handler handler1 = new Handler();
+                handler1.postDelayed(new Runnable() {
+                    public void run() {
+
+                        loadFragment(new EmailLogin(), value);
+                    }
+                }, 1000);
+
+
                 break;
 
             case R.id.iv_brain:

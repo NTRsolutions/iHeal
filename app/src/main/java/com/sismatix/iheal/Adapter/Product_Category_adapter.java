@@ -2,6 +2,7 @@ package com.sismatix.iheal.Adapter;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
@@ -47,17 +48,23 @@ public class Product_Category_adapter extends RecyclerView.Adapter<Product_Categ
         holder.tv_category_name.setText(product_model.getCategory_name());
         holder.lv_nature_click.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                Bundle b=new Bundle();
-                b.putString("cat_id",product_model.getValue());
-                b.putString("name",product_model.getCategory_name());
-                Log.e("categotyidd",""+product_model.getValue());
-                AppCompatActivity activity = (AppCompatActivity) view.getContext();
-                Fragment myFragment = new Hair_Cair_fregment();
-                myFragment.setArguments(b);
-                activity.getSupportFragmentManager().beginTransaction().replace(R.id.rootLayout, myFragment).addToBackStack(null).commit();
+            public void onClick(final View view) {
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    public void run() {
+                        Bundle b=new Bundle();
+                        b.putString("cat_id",product_model.getValue());
+                        b.putString("name",product_model.getCategory_name());
+                        Log.e("categotyidd",""+product_model.getValue());
+                        AppCompatActivity activity = (AppCompatActivity) view.getContext();
+                        Fragment myFragment = new Hair_Cair_fregment();
+                        myFragment.setArguments(b);
+                        activity.getSupportFragmentManager().beginTransaction().replace(R.id.rootLayout, myFragment).addToBackStack(null).commit();
+                    }
+                }, 1000);
             }
         });
+
 
     }
 

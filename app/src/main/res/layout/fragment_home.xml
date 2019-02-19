@@ -38,7 +38,7 @@
                     android:id="@+id/lv_creatnewaccount"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@color/addtocart"
+                    android:background="@drawable/btn_ripple_effect"
                     android:gravity="center"
                     android:layout_marginRight="8dp"
                     android:layout_weight="1">
@@ -55,7 +55,7 @@
                     android:id="@+id/lv_loginaccount"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@color/addtocart"
+                    android:background="@drawable/btn_ripple_effect"
                     android:layout_marginLeft="8dp"
                     android:gravity="center"
                     android:layout_weight="1">
@@ -253,7 +253,7 @@
                         android:layout_width="200dp"
                         android:layout_height="30dp"
                         android:visibility="gone"
-                        android:background="#f05857"
+                        android:background="@drawable/btn_ripple_effect"
                         android:text="CONTACT A SPECIALIST"
                         android:textColor="@color/white" />
 

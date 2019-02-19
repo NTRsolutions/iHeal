@@ -2,7 +2,7 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:background="@color/nature_bg"
+    android:background="@drawable/green_nature_ripple"
     android:layout_height="?attr/actionBarSize"
     android:orientation="vertical"
     android:layout_margin="10dp"

@@ -253,7 +253,7 @@
             android:id="@+id/lv_confirm_order"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/edit"
+            android:background="@drawable/btn_green_ripple"
             android:gravity="center"
             android:orientation="horizontal"
             android:weightSum="4">

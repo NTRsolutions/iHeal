@@ -1,8 +1,10 @@
 package com.sismatix.iheal.Fragments;
 
 
+import android.app.Dialog;
 import android.content.ClipData;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -10,20 +12,25 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -31,6 +38,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.bumptech.glide.Glide;
+import com.sismatix.iheal.Activity.Navigation_drawer_activity;
 import com.sismatix.iheal.Adapter.Cart_List_Adapter;
 import com.sismatix.iheal.Model.Cart_Model;
 import com.sismatix.iheal.Preference.Login_preference;
@@ -70,6 +79,11 @@ public class Cart extends Fragment  {
     public static Call<ResponseBody> cartlistt=null;
     String loginflag;
 
+
+    //-------------login-------------//
+     Dialog fullscreenDialog;
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -96,20 +110,189 @@ public class Cart extends Fragment  {
             @Override
             public void onClick(View view) {
 
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    public void run() {
+                        if (loginflag.equalsIgnoreCase("1") || loginflag == "1") {
 
-                if (loginflag.equalsIgnoreCase("1") || loginflag == "1") {
+                            loadFragment(new Checkout_fragment(),"");
+                        } else {
+                            String screen_type="cart";
+                            // fullscreen_login_dialog();
+                            loadFragment(new EmailLogin(),screen_type);
+                        }
+                    }
+                }, 1000);
 
-                    loadFragment(new Checkout_fragment());
-                } else {
-                    loadFragment(new EmailLogin());
                 }
+        });
+
+
+
+
+        return view;
+    }
+
+    private void validateUserData(EditText email,EditText password,Button btnlogin) {
+        final String username = email.getText().toString();
+        final String psd = password.getText().toString();
+
+        //checking if username is empty
+        if (TextUtils.isEmpty(username)) {
+            email.setError("Please enter your Email");
+            email.requestFocus();
+            // Vibrate for 100 milliseconds
+            // v.vibrate(100);
+            btnlogin.setEnabled(true);
+            return;
+        }
+        //checking if password is empty
+        if (TextUtils.isEmpty(psd)) {
+            password.setError("Please enter your password");
+            password.requestFocus();
+            //Vibrate for 100 milliseconds
+            //v.vibrate(100);
+            btnlogin.setEnabled(true);
+            return;
+        }
+        //Login User if everything is fine
+        loginUser(username, psd);
+    }
+
+
+
+    public void fullscreen_login_dialog()
+    {
+         fullscreenDialog = new Dialog(getContext(), R.style.DialogFullscreen);
+        fullscreenDialog.setContentView(R.layout.dialog_fullscreen);
+        ImageView img_full_screen_dialog = fullscreenDialog.findViewById(R.id.img_full_screen_dialog);
+        // Glide.with(getContext()).load(R.drawable.app_logo).into(img_full_screen_dialog);
+        ImageView img_dialog_fullscreen_close = fullscreenDialog.findViewById(R.id.img_dialog_fullscreen_close);
+        final EditText login_dialog_email, login_dialog_password;
+        final Button btn_dialog_login;
+        TextView tv_dialog_forgotpassword;
+
+        login_dialog_email = (EditText) fullscreenDialog.findViewById(R.id.login_dialog_email);
+        login_dialog_password = (EditText) fullscreenDialog.findViewById(R.id.login_dialog_password);
+        btn_dialog_login = (Button) fullscreenDialog.findViewById(R.id.btn_dialog_login);
+        tv_dialog_forgotpassword = (TextView) fullscreenDialog.findViewById(R.id.tv_dialog_forgotpassword);
+
+
+
+/*
+        final String username = login_dialog_email.getText().toString();
+        final String password = login_dialog_password.getText().toString();
+
+                    //checking if username is empty
+                    if (TextUtils.isEmpty(username)) {
+                        login_dialog_email.setError("Please enter your Email");
+                        login_dialog_email.requestFocus();
+                        // Vibrate for 100 milliseconds
+                        // v.vibrate(100);
+                        btn_dialog_login.setEnabled(true);
+                        return;
+                    }
+                    //checking if password is empty
+                    if (TextUtils.isEmpty(password)) {
+                        login_dialog_password.setError("Please enter your password");
+                        login_dialog_password.requestFocus();
+                        //Vibrate for 100 milliseconds
+                        //v.vibrate(100);
+                        btn_dialog_login.setEnabled(true);
+                        return;
+                    }*/
+
+        btn_dialog_login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                validateUserData(login_dialog_email,login_dialog_password,btn_dialog_login);
 
             }
         });
-        return view;
+
+
+
+
+
+
+        img_dialog_fullscreen_close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fullscreenDialog.dismiss();
+            }
+        });
+        fullscreenDialog.show();
+
     }
-    private void loadFragment(Fragment fragment) {
+    private void loginUser(String username, String password) {
+
+        Log.e("username ", "" + username);
+        Log.e("password ", "" + password);
+
+        //makin g api call
+        ApiInterface api = ApiClient.getClient().create(ApiInterface.class);
+        Call<ResponseBody> login = api.login(username, password);
+
+        login.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                Log.e("response", "" + response.body().toString());
+
+                JSONObject jsonObject = null;
+
+                try {
+                    jsonObject = new JSONObject(response.body().string());
+                    String status = jsonObject.getString("status");
+                    Log.e("status", "" + status);
+                    String meassg = jsonObject.getString("message");
+                    Log.e("message", "" + meassg);
+                    if (status.equalsIgnoreCase("success")) {
+                        Toast.makeText(getContext(), "" + meassg, Toast.LENGTH_SHORT).show();
+                        Login_preference.setLogin_flag(getActivity(), "1");
+                        Login_preference.setcustomer_id(getActivity(), jsonObject.getString("customer_id"));
+                        Login_preference.setemail(getActivity(), jsonObject.getString("email"));
+                        Login_preference.setfullname(getActivity(), jsonObject.getString("fullname"));
+
+                        Toast.makeText(getActivity(), "Login succcessfull", Toast.LENGTH_SHORT).show();
+
+
+                        getActivity().finish();
+                        getActivity().overridePendingTransition( 0, 0);
+                        startActivity(getActivity().getIntent());
+                        getActivity().overridePendingTransition( 0, 0);
+                        fullscreenDialog.dismiss();
+                       // Intent intent=new Intent(getActivity(),Navigation_drawer_activity.class);
+                      //  startActivity(intent);
+                      //  getActivity().finish();
+                       /* Home nextFrag = new Home();
+                        getActivity().getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.rootLayout, nextFrag, "home")
+                                .addToBackStack(null)
+                                .commit();*/
+                    } else if (status.equalsIgnoreCase("error")) {
+                        Toast.makeText(getContext(), "" + meassg, Toast.LENGTH_SHORT).show();
+                    }
+
+                } catch (Exception e) {
+                    Log.e("", "" + e);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Toast.makeText(getContext(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+    }
+
+    private void loadFragment(Fragment fragment,String value) {
         Log.e("clickone", "");
+        Bundle bundle=new Bundle();
+        bundle.putString("value",value);
+
+        fragment.setArguments(bundle);
         android.support.v4.app.FragmentManager manager = getFragmentManager();
         android.support.v4.app.FragmentTransaction transaction = manager.beginTransaction();
         transaction.replace(R.id.rootLayout, fragment);

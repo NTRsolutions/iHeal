@@ -2,6 +2,7 @@ package com.sismatix.iheal.Adapter;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
@@ -46,16 +47,21 @@ public class Product_recycler_adapter extends RecyclerView.Adapter<Product_recyc
 
         holder.lv_product_click.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                iddd = product_model.getProduct_id();
-                Log.e("iddddddddddd",""+iddd);
-                Bundle b=new Bundle();
-                b.putString("prod_id",iddd);
-                Log.e("productidd",""+iddd);
-                AppCompatActivity activity = (AppCompatActivity) view.getContext();
-                Fragment myFragment = new Item_details();
-                myFragment.setArguments(b);
-                activity.getSupportFragmentManager().beginTransaction().replace(R.id.rootLayout, myFragment).addToBackStack(null).commit();
+            public void onClick(final View view) {
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    public void run() {
+                        iddd = product_model.getProduct_id();
+                        Log.e("iddddddddddd", "" + iddd);
+                        Bundle b = new Bundle();
+                        b.putString("prod_id", iddd);
+                        Log.e("productidd", "" + iddd);
+                        AppCompatActivity activity = (AppCompatActivity) view.getContext();
+                        Fragment myFragment = new Item_details();
+                        myFragment.setArguments(b);
+                        activity.getSupportFragmentManager().beginTransaction().replace(R.id.rootLayout, myFragment).addToBackStack(null).commit();
+                    }
+                }, 1000);
             }
         });
 

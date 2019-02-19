@@ -105,6 +105,20 @@ public interface ApiInterface {
 
     Call<ResponseBody>get_country_list();
 
+    @POST("AppCreateAddress.php")
+    @FormUrlEncoded
+    Call<ResponseBody>AppCreateAddress(@Field("customer_id") String customer_id,
+                                       @Field("FirstName") String FirstName,
+                                       @Field("LastName") String LastName,
+                                       @Field("countryid") String countryid,
+                                       @Field("postcode") String postcode,
+                                       @Field("city") String city,
+                                       @Field("region")String region,
+                                       @Field("telephone") String telephone,
+                                       @Field("fax") String fax,
+                                       @Field("company") String company,
+                                       @Field("street") String street);
+
 
 
 }

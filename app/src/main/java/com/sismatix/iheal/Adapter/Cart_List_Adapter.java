@@ -3,7 +3,11 @@ package com.sismatix.iheal.Adapter;
 
 
 import android.content.Context;
+import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.VisibleForTesting;
+import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,6 +21,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.sismatix.iheal.Fragments.Cart;
+import com.sismatix.iheal.Fragments.Item_details;
 import com.sismatix.iheal.Model.Cart_Model;
 import com.sismatix.iheal.Preference.Login_preference;
 import com.sismatix.iheal.R;
@@ -69,6 +74,20 @@ public class Cart_List_Adapter extends RecyclerView.Adapter<Cart_List_Adapter.My
                 product_total = product_total + current_price;
                 display(minteger, holder,product_total);
                 Log.e("minteger_50", "" + minteger);
+
+            }
+        });
+
+
+        holder.viewForeground.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    public void run() {
+                    }
+                }, 1000);
 
             }
         });

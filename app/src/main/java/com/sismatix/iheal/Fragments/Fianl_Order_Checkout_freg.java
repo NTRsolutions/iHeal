@@ -31,6 +31,8 @@ public class Fianl_Order_Checkout_freg extends Fragment {
         bottom_navigation.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
 
         lv_track_order=(LinearLayout)v.findViewById(R.id.lv_track_order);
+
+
         return v;
     }
 

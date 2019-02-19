@@ -70,4 +70,12 @@
         <item name="colorAccent">@color/colorPrimary</item>
     </style>
 
+
+    //dialog fullscreen dialog
+    <style name="DialogFullscreen" parent="@android:style/Theme.Material.Light.DialogWhenLarge">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:statusBarColor">@color/colorPrimaryDark</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
+    </style>
+
 </resources>

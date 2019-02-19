@@ -14,6 +14,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="center"
         android:gravity="center"
+        android:background="@drawable/linear_product_ripple"
         android:orientation="vertical">
 
         <LinearLayout
