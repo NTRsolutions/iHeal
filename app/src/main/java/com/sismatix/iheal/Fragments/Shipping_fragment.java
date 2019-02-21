@@ -1,6 +1,7 @@
 package com.sismatix.iheal.Fragments;
 
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Build;
 import android.os.Bundle;
@@ -23,10 +24,13 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.sismatix.iheal.Adapter.Cart_Delivery_Adapter;
 import com.sismatix.iheal.Adapter.Cart_List_Adapter;
 import com.sismatix.iheal.Model.Cart_Delivery_Model;
 import com.sismatix.iheal.Model.Cart_Model;
+import com.sismatix.iheal.Model.Product_Category_model;
 import com.sismatix.iheal.Preference.Login_preference;
 import com.sismatix.iheal.R;
 import com.sismatix.iheal.Retrofit.ApiClient;
@@ -52,7 +56,7 @@ public class Shipping_fragment extends Fragment {
     View v;
     RecyclerView recyclerview_item_delivery;
     Cart_Delivery_Adapter cart_delivery_adapter;
-    private List<Cart_Delivery_Model>cart_delivery_models = new ArrayList<Cart_Delivery_Model>();
+    private List<Cart_Delivery_Model> cart_delivery_models = new ArrayList<Cart_Delivery_Model>();
     ImageView iv_continue_payment;
     EditText et_shippingfirstname, et_shippinglastname, et_shippingphonenumber, et_shippingcompany, et_shippingaddress, et_street, et_fax,
             et_shippingzipcode, et_shippingcity, et_shippingregion;
@@ -63,9 +67,6 @@ public class Shipping_fragment extends Fragment {
     ArrayList<String> country_name = new ArrayList<String>();
     String customer_id, firstName, lastName, countryid, postcode, city, region, telephone, fax, company, street;
 
-
-
-
     public Shipping_fragment() {
         // Required empty public constructor
     }
@@ -74,14 +75,14 @@ public class Shipping_fragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        v= inflater.inflate(R.layout.fragment_shipping, container, false);
+        v = inflater.inflate(R.layout.fragment_shipping, container, false);
         loginflag = Login_preference.getLogin_flag(getActivity());
 
         AllocateMEmory(v);
         CALL_CART_DELIVERY();
         Countrylist();
 
-        et_shippingfirstname=(EditText)v.findViewById(R.id.et_shippingfirstname);
+        et_shippingfirstname = (EditText) v.findViewById(R.id.et_shippingfirstname);
         Checkout_fragment.lv_payment_selected.setVisibility(View.INVISIBLE);
         Checkout_fragment.iv_shipping_done.setVisibility(View.INVISIBLE);
         Checkout_fragment.iv_payment_done.setVisibility(View.INVISIBLE);
@@ -116,9 +117,9 @@ public class Shipping_fragment extends Fragment {
 
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-           Checkout_fragment.tv_confirmation.setTextColor(getActivity().getColor(R.color.colorPrimary));
-           Checkout_fragment.tv_payment.setTextColor(getActivity().getColor(R.color.colorPrimary));
-           Checkout_fragment.tv_shipping.setTextColor(getActivity().getColor(R.color.white));
+            Checkout_fragment.tv_confirmation.setTextColor(getActivity().getColor(R.color.colorPrimary));
+            Checkout_fragment.tv_payment.setTextColor(getActivity().getColor(R.color.colorPrimary));
+            Checkout_fragment.tv_shipping.setTextColor(getActivity().getColor(R.color.white));
         }
 
         lv_continue_payment.setOnClickListener(new View.OnClickListener() {
@@ -137,7 +138,7 @@ public class Shipping_fragment extends Fragment {
                     }
                 }, 1000);
 
-                }
+            }
         });
 
 
@@ -275,6 +276,58 @@ public class Shipping_fragment extends Fragment {
         });
     }
 
+    private void CALL_CART_DELIVERY() {
+
+        ApiInterface api = ApiClient.getClient().create(ApiInterface.class);
+        Call<ResponseBody> shippingmethods = api.getShippingMethods();
+        shippingmethods.enqueue(new Callback<ResponseBody>() {
+            @SuppressLint("LongLogTag")
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                Log.e("response_shipping_methods", "" + response.body().toString());
+                //progressBar.setVisibility(View.GONE);
+                JSONObject jsonObject = null;
+                try {
+                    jsonObject = new JSONObject(response.body().string());
+                    String status = jsonObject.getString("status");
+                    String msg = jsonObject.getString("message");
+                    if (status.equalsIgnoreCase("success")) {
+                        JSONArray jsonArray = jsonObject.getJSONArray("shipping_method");
+                        for (int j = 0; j < jsonArray.length(); j++) {
+                            JSONObject obj = jsonArray.getJSONObject(j);
+                            JSONArray val_array = obj.getJSONArray("value");
+                            for (int k = 0; k < val_array.length(); k++) {
+                                try {
+                                    JSONObject val_object = val_array.getJSONObject(k);
+                                    cart_delivery_models.add(new Cart_Delivery_Model(val_object.getString("code"),
+                                            val_object.getString("method"), val_object.getString("title"),
+                                            val_object.getString("price")));
+
+                                } catch (Exception e) {
+                                    Log.e("Exception", "" + e);
+                                } finally {
+                                    cart_delivery_adapter.notifyDataSetChanged();
+                                }
+
+                            }
+
+                        }
+
+                    } else if (status.equalsIgnoreCase("error")) {
+                        Toast.makeText(getContext(), "" + msg, Toast.LENGTH_SHORT).show();
+                    }
+
+                } catch (Exception e) {
+                    Log.e("Exception", "" + e);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Toast.makeText(getContext(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 
     private void loadFragment(Fragment fragment) {
         Log.e("clickone", "");
@@ -284,12 +337,7 @@ public class Shipping_fragment extends Fragment {
         transaction.addToBackStack(null);
         transaction.commit();
     }
-    private void CALL_CART_DELIVERY() {
-        for (int i=0;i<6;i++) {
-            cart_delivery_models.add(new Cart_Delivery_Model("", ""));
-        }
-        cart_delivery_adapter.notifyDataSetChanged();
-    }
+
     private void AllocateMEmory(View v) {
         recyclerview_item_delivery = (RecyclerView) v.findViewById(R.id.recyclerview_item_delivery);
         iv_continue_payment = (ImageView) v.findViewById(R.id.iv_continue_payment);

@@ -84,16 +84,12 @@ public class Item_details extends Fragment implements View.OnClickListener, View
         AllocateMemory(v);
         loginflag = Login_preference.getLogin_flag(getActivity());
 
-
         //set back icon by defult
         ((Navigation_drawer_activity) getActivity()).setSupportActionBar(toolbar);
-
-        ((Navigation_drawer_activity) getActivity()).getSupportActionBar()
-                .setDisplayHomeAsUpEnabled(true);
+        ((Navigation_drawer_activity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ((Navigation_drawer_activity) getActivity()).getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_keyboard_arrow_left_white_36dp);
         getActivity().setTitle("Shopping Cart");
 
-        //----------//
         Bundle bundle = this.getArguments();
         proddd_id = bundle.getString("prod_id");
         Log.e("prod_itemdetail_id", "" + proddd_id);
@@ -110,8 +106,8 @@ public class Item_details extends Fragment implements View.OnClickListener, View
             }
         });
 
-
         return v;
+
     }
 
     private void AllocateMemory(View v) {
@@ -420,14 +416,14 @@ public class Item_details extends Fragment implements View.OnClickListener, View
             Log.e("proddd_idddd", "" + proddd_id);
 
         } else {
-            String quote_id=Login_preference.getquote_id(getActivity());
-            if(quote_id.equalsIgnoreCase("") || quote_id == "null"){
+            String quote_id = Login_preference.getquote_id(getActivity());
+            if (quote_id.equalsIgnoreCase("") || quote_id == "null") {
                 Log.e("without_quote_login", "");
                 ApiInterface api = ApiClient.getClient().create(ApiInterface.class);
                 addtocart = api.withoutlogin_quote_addtocart(proddd_id);
                 Log.e("proddd_id_witoutquote", "" + proddd_id);
 
-            }else{
+            } else {
                 Log.e("without_login_withquote", "");
                 ApiInterface api = ApiClient.getClient().create(ApiInterface.class);
                 Log.e("with_pass_quote_id_492", "" + Login_preference.getquote_id(getActivity()));

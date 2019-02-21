@@ -46,6 +46,11 @@ public class Cart_Delivery_Adapter extends RecyclerView.Adapter<com.sismatix.ihe
     public void onBindViewHolder(final Cart_Delivery_Adapter.MyViewHolder holder, final int position) {
         final Cart_Delivery_Model cart_delivery_model = model.get(position);
 
+        holder.tv_product_delivery_type.setText(cart_delivery_model.getTitle());
+        Log.e("shipping_title",""+cart_delivery_model.getTitle());
+        holder.tv_delivery_price.setText(cart_delivery_model.getPrice());
+        Log.e("shipping_price",""+cart_delivery_model.getPrice());
+
         holder.lv_greylayout_click.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
@@ -55,7 +60,6 @@ public class Cart_Delivery_Adapter extends RecyclerView.Adapter<com.sismatix.ihe
                 Toast.makeText(context, "lv_click", Toast.LENGTH_SHORT).show();
             }
         });
-
 
         if (selectedPosition == position) {
             holder.itemView.setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.round_boder_green));
@@ -89,24 +93,3 @@ public class Cart_Delivery_Adapter extends RecyclerView.Adapter<com.sismatix.ihe
         }
     }
 }
-
-/*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    holder.tv_delivery_price.setTextColor(context.getColor(R.color.colorPrimary));
-                    holder.tv_product_delivery_type.setTextColor(context.getColor(R.color.colorPrimary));
-                    holder.lv_greenlayout.setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.round_boder_green));
-                }
-
-                else {
-                    holder.tv_delivery_price.setTextColor(context.getColor(R.color.titlepayal));
-                    holder.tv_product_delivery_type.setTextColor(context.getColor(R.color.textcolor));
-                    holder.lv_greenlayout.setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.round_border_greey));
-                }
-
-holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                selectedPosition = position;
-                notifyDataSetChanged();
-            }
-        });*/
-

@@ -1,6 +1,7 @@
 package com.sismatix.iheal.Activity;
 
 import android.animation.ArgbEvaluator;
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
@@ -370,6 +371,21 @@ public class Navigation_drawer_activity extends AppCompatActivity
     ///////////
     @Override
     public void onBackPressed() {
+
+        int seletedItemId = bottom_navigation.getSelectedItemId();
+        if (R.id.home != seletedItemId) {
+            setHomeItem(Navigation_drawer_activity.this);
+        } else {
+            super.onBackPressed();
+        }
+
+        if (getSupportFragmentManager().getBackStackEntryCount() > 0 ){
+            getFragmentManager().popBackStack();
+        } else {
+            super.onBackPressed();
+        }
+
+
         FragmentManager fragmentManager = getSupportFragmentManager();
         int count = fragmentManager.getBackStackEntryCount();
         if (drawer.isDrawerOpen(GravityCompat.START)) {
@@ -398,6 +414,15 @@ public class Navigation_drawer_activity extends AppCompatActivity
         }
         //doExitApp();
     }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        bottom_navigation.getMenu().getItem(0).setChecked(true);
+    }
+    public static void setHomeItem(Activity activity) {
+        bottom_navigation.setSelectedItemId(R.id.home);
+    }
+
     private long exitTime = 0;
     public void doExitApp() {
         if ((System.currentTimeMillis() - exitTime) > 2000) {

@@ -39,7 +39,7 @@ public class Signup extends Fragment implements View.OnClickListener {
     EditText signup_fullname, signup_email, signup_password;
     Button btn_signup;
     TextView tv_login;
-
+    String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
 
     public Signup() {
 
@@ -75,6 +75,7 @@ public class Signup extends Fragment implements View.OnClickListener {
 
         transaction.commit();
     }
+
     private void validateSignupData() {
 
         final String signup_fullnamee = signup_fullname.getText().toString();

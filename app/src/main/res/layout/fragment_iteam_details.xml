@@ -246,14 +246,14 @@
                                     android:id="@+id/iv_item_desc"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:src="@drawable/ic_remove_black_24dp"
+                                    android:src="@drawable/ic_add_black_24dp"
                                     android:visibility="visible" />
 
                                 <ImageView
                                     android:id="@+id/iv_show_more"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:src="@drawable/ic_add_black_24dp"
+                                    android:src="@drawable/ic_remove_black_24dp"
                                     android:visibility="gone" />
 
                             </LinearLayout>

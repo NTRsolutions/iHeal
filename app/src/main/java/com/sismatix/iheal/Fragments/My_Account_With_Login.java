@@ -44,13 +44,14 @@ public class My_Account_With_Login extends Fragment {
 
     Toolbar toolbar_myaccount;
     TextView tv_manage_address;
-    TextView txt_username,tv_email,tv_edit_shipping;
+    TextView txt_username, tv_email, tv_edit_shipping;
 
-    TextView tv_telephone_no,tv_shipping_country,tv_shipping_postcode,tv_shipping_def_add,
-            tv_shipping_city,tv_shipping_addr,tv_shipping_company_nm,tv_shipping_lastname,tv_shipping_firstname;
+    TextView tv_telephone_no, tv_shipping_country, tv_shipping_postcode, tv_shipping_def_add,
+            tv_shipping_city, tv_shipping_addr, tv_shipping_company_nm, tv_shipping_lastname, tv_shipping_firstname;
 
-    LinearLayout lv_edit_shipping,lv_my_account,lv_update_add;
+    LinearLayout lv_edit_shipping, lv_my_account, lv_update_add;
     View v;
+
     public My_Account_With_Login() {
         // Required empty public constructor
     }
@@ -60,13 +61,13 @@ public class My_Account_With_Login extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        v= inflater.inflate(R.layout.fragment_my__account__with__login, container, false);
+        v = inflater.inflate(R.layout.fragment_my__account__with__login, container, false);
         bottom_navigation.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
         setHasOptionsMenu(true);
         AllocateMemory(v);
 
         //set back icon by defult
-           getActivity().setTitle("MY Account");
+        getActivity().setTitle("MY ACCOUNT");
         ((Navigation_drawer_activity) getActivity()).setSupportActionBar(toolbar_myaccount);
         ((Navigation_drawer_activity) getActivity()).getSupportActionBar()
                 .setDisplayHomeAsUpEnabled(true);
@@ -129,7 +130,7 @@ public class My_Account_With_Login extends Fragment {
                                 JSONObject addr_object = jsonArray.getJSONObject(0);
                                 Log.e("Name_wishlist", "" + addr_object.getString("firstname"));
                                 tv_shipping_def_add.setText("Shipping Address");
-                                  tv_telephone_no.setText(addr_object.getString("telephone"));
+                                tv_telephone_no.setText(addr_object.getString("telephone"));
                                 tv_shipping_firstname.setText(addr_object.getString("firstname"));
                                 tv_shipping_lastname.setText(addr_object.getString("middlename"));
                                 tv_shipping_company_nm.setText(addr_object.getString("company"));
@@ -139,7 +140,7 @@ public class My_Account_With_Login extends Fragment {
                                 tv_shipping_country.setText(addr_object.getString("region"));
 
 
-                                 } catch (Exception e) {
+                            } catch (Exception e) {
                                 Log.e("Exception", "" + e);
                             } finally {
 
@@ -166,27 +167,27 @@ public class My_Account_With_Login extends Fragment {
     private void AllocateMemory(View v) {
         toolbar_myaccount = (Toolbar) v.findViewById(R.id.toolbar_myaccount);
         tv_manage_address = (TextView) v.findViewById(R.id.tv_manage_address);
-        txt_username=(TextView)v.findViewById(R.id.txt_username);
-        tv_email=(TextView)v.findViewById(R.id.tv_email);
-        lv_edit_shipping=(LinearLayout) v.findViewById(R.id.lv_edit_shipping);
-        lv_my_account=(LinearLayout) v.findViewById(R.id.lv_my_account);
-        lv_update_add=(LinearLayout) v.findViewById(R.id.lv_update_add);
+        txt_username = (TextView) v.findViewById(R.id.txt_username);
+        tv_email = (TextView) v.findViewById(R.id.tv_email);
+        lv_edit_shipping = (LinearLayout) v.findViewById(R.id.lv_edit_shipping);
+        lv_my_account = (LinearLayout) v.findViewById(R.id.lv_my_account);
+        lv_update_add = (LinearLayout) v.findViewById(R.id.lv_update_add);
 
 
-
-        tv_edit_shipping=(TextView)v.findViewById(R.id.tv_edit_shipping);
-        tv_email=(TextView)v.findViewById(R.id.tv_email);
-        tv_telephone_no=(TextView)v.findViewById(R.id.tv_telephone_no);
-        tv_shipping_country=(TextView)v.findViewById(R.id.tv_shipping_country);
-        tv_shipping_postcode=(TextView)v.findViewById(R.id.tv_shipping_postcode);
-        tv_shipping_city=(TextView)v.findViewById(R.id.tv_shipping_city);
-        tv_shipping_addr=(TextView)v.findViewById(R.id.tv_shipping_addr);
-        tv_shipping_company_nm=(TextView)v.findViewById(R.id.tv_shipping_company_nm);
-        tv_shipping_lastname=(TextView)v.findViewById(R.id.tv_shipping_lastname);
-        tv_shipping_firstname=(TextView)v.findViewById(R.id.tv_shipping_firstname);
-        tv_shipping_def_add=(TextView)v.findViewById(R.id.tv_shipping_def_add);
+        tv_edit_shipping = (TextView) v.findViewById(R.id.tv_edit_shipping);
+        tv_email = (TextView) v.findViewById(R.id.tv_email);
+        tv_telephone_no = (TextView) v.findViewById(R.id.tv_telephone_no);
+        tv_shipping_country = (TextView) v.findViewById(R.id.tv_shipping_country);
+        tv_shipping_postcode = (TextView) v.findViewById(R.id.tv_shipping_postcode);
+        tv_shipping_city = (TextView) v.findViewById(R.id.tv_shipping_city);
+        tv_shipping_addr = (TextView) v.findViewById(R.id.tv_shipping_addr);
+        tv_shipping_company_nm = (TextView) v.findViewById(R.id.tv_shipping_company_nm);
+        tv_shipping_lastname = (TextView) v.findViewById(R.id.tv_shipping_lastname);
+        tv_shipping_firstname = (TextView) v.findViewById(R.id.tv_shipping_firstname);
+        tv_shipping_def_add = (TextView) v.findViewById(R.id.tv_shipping_def_add);
 
     }
+
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 

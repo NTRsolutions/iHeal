@@ -29,7 +29,7 @@ import com.sismatix.iheal.View.CountDrawable;
  */
 public class AccountTabs extends Fragment {
 
-  public static   Toolbar toolbar_myaccount;
+  public static Toolbar toolbar_myaccount;
 
     /*TextView tv_tab_titles;*/
 

@@ -13,16 +13,29 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.sismatix.iheal.Adapter.Cart_Delivery_Adapter;
 import com.sismatix.iheal.Adapter.Payment_Method_Adapter;
 import com.sismatix.iheal.Model.Cart_Delivery_Model;
 import com.sismatix.iheal.Model.Payment_Method_Model;
+import com.sismatix.iheal.Model.Product_Category_model;
+import com.sismatix.iheal.Model.Product_Grid_Model;
 import com.sismatix.iheal.Preference.Login_preference;
 import com.sismatix.iheal.R;
+import com.sismatix.iheal.Retrofit.ApiClient;
+import com.sismatix.iheal.Retrofit.ApiInterface;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static com.sismatix.iheal.Activity.Navigation_drawer_activity.bottom_navigation;
 
@@ -48,7 +61,7 @@ public class Payment_fragment extends Fragment {
                              Bundle savedInstanceState) {
         v= inflater.inflate(R.layout.fragment_payment, container, false);
         AllocateMEmory(v);
-        CALL_CART_DELIVERY();
+        CALL_PAYMENT_API();
         loginflag = Login_preference.getLogin_flag(getActivity());
 
         Checkout_fragment.iv_shipping_done.setVisibility(View.VISIBLE);
@@ -58,7 +71,6 @@ public class Payment_fragment extends Fragment {
         Checkout_fragment.lv_payment_selected.setVisibility(View.VISIBLE);
         Checkout_fragment.lv_shipping_selected.setVisibility(View.INVISIBLE);
         Checkout_fragment.lv_confirmation_selected.setVisibility(View.INVISIBLE);
-
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             Checkout_fragment.tv_confirmation.setTextColor(getActivity().getColor(R.color.colorPrimary));
@@ -94,11 +106,53 @@ public class Payment_fragment extends Fragment {
 
         transaction.commit();
     }
-    private void CALL_CART_DELIVERY() {
-        for (int i=0;i<6;i++) {
+    private void CALL_PAYMENT_API() {
+
+        ApiInterface api = ApiClient.getClient().create(ApiInterface.class);
+        Call<ResponseBody> categorylist = api.getPaymentMethods();
+
+        categorylist.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                Log.e("response_payment", "" + response.body().toString());
+                JSONObject jsonObject = null;
+                try {
+                    jsonObject = new JSONObject(response.body().string());
+                    String status = jsonObject.getString("status");
+                    if (status.equalsIgnoreCase("success")){
+                        JSONArray jsonArray=jsonObject.getJSONArray("payment_method");
+                        for (int i = 0; i < jsonArray.length(); i++) {
+
+                            try {
+                                JSONObject vac_object = jsonArray.getJSONObject(i);
+                                payment_method_models.add(new Payment_Method_Model(vac_object.getString("label"),
+                                        vac_object.getString("value")));
+
+                            } catch (Exception e) {
+                                Log.e("Exception", "" + e);
+                            } finally {
+                                payment_method_adapter.notifyItemChanged(i);
+                            }
+
+                        }
+
+                    }else if (status.equalsIgnoreCase("error")){
+                    }
+
+                }catch (Exception e){
+                    Log.e("Exc",""+e);
+                }
+            }
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Toast.makeText(getContext(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        /*for (int i=0;i<6;i++) {
             payment_method_models.add(new Payment_Method_Model("", ""));
         }
-        payment_method_adapter.notifyDataSetChanged();
+        payment_method_adapter.notifyDataSetChanged();*/
     }
 
     private void AllocateMEmory(View v) {
@@ -107,11 +161,10 @@ public class Payment_fragment extends Fragment {
         lv_confirm_order=(LinearLayout) v.findViewById(R.id.lv_confirm_order);
 
         payment_method_adapter = new Payment_Method_Adapter(getActivity(), payment_method_models);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, true);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         layoutManager.setReverseLayout(false);
         payment_method_recyclerview.setLayoutManager(layoutManager);
         payment_method_recyclerview.setAdapter(payment_method_adapter);
-
 
     }
 

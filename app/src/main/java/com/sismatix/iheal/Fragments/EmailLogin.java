@@ -74,8 +74,10 @@ public class EmailLogin extends Fragment implements View.OnClickListener {
         final String username = login_email.getText().toString();
         final String password = login_password.getText().toString();
 
+
+
         //checking if username is empty
-        if (TextUtils.isEmpty(username)) {
+        /*if (TextUtils.isEmpty(username)) {
             login_email.setError("Please enter your Email");
             login_email.requestFocus();
             // Vibrate for 100 milliseconds
@@ -91,7 +93,7 @@ public class EmailLogin extends Fragment implements View.OnClickListener {
             //v.vibrate(100);
             btn_login.setEnabled(true);
             return;
-        }
+        }*/
         //Login User if everything is fine
         loginUser(username, password);
     }
