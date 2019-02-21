@@ -140,4 +140,22 @@ public interface ApiInterface {
                                      @Field("qty") String qty,
                                      @Field("item_id") String item_id);
 
+    @POST("AppCreateOrder.php")
+    @FormUrlEncoded
+    Call<ResponseBody> AppCreateOrder(@Field("customer_id") String customer_id,
+                                        @Field("email") String email,
+                                        @Field("quote_id") String quote_id,
+                                        @Field("FirstName") String FirstName,
+                                        @Field("LastName") String LastName,
+                                        @Field("countryid") String countryid,
+                                        @Field("postcode") String postcode,
+                                        @Field("city") String city,
+                                        @Field("telephone") String telephone,
+                                        @Field("fax") String fax,
+                                        @Field("company") String company,
+                                        @Field("street")String street,
+                                        @Field("shippingcode")String shippingcode,
+                                        @Field("paymentcode")String paymentcode,
+                                        @Field("saveaddress")String saveaddress);
+
 }

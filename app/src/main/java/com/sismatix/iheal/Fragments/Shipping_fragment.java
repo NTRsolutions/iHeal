@@ -7,6 +7,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -46,6 +47,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static com.sismatix.iheal.Activity.Navigation_drawer_activity.bottom_navigation;
+import static com.sismatix.iheal.Adapter.Cart_Delivery_Adapter.shippingmethod;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -54,18 +56,17 @@ public class Shipping_fragment extends Fragment {
     View v;
     RecyclerView recyclerview_item_delivery;
     Cart_Delivery_Adapter cart_delivery_adapter;
-    private List<Cart_Delivery_Model>cart_delivery_models = new ArrayList<Cart_Delivery_Model>();
+    private List<Cart_Delivery_Model> cart_delivery_models = new ArrayList<Cart_Delivery_Model>();
     ImageView iv_continue_payment;
-    EditText et_shippingfirstname, et_shippinglastname, et_shippingphonenumber, et_shippingcompany, et_shippingaddress, et_street, et_fax,
+    EditText et_shippingfirstname, et_shippinglastname, et_shippingphonenumber, et_shippingcompany,  et_streetadd, et_fax,
             et_shippingzipcode, et_shippingcity, et_shippingregion;
     LinearLayout lv_continue_payment;
-    String loginflag,setdefault;
+    String loginflag, setdefault;
     Spinner spinner_country_Name;
     CheckBox ck_default;
     ArrayList<String> country_name_code = new ArrayList<String>();
     ArrayList<String> country_name = new ArrayList<String>();
-    String customer_id, firstName, lastName, countryid, postcode, city, region, telephone, fax, company, street;
-
+    String qidd,email_id,customer_id, firstName, lastName, countryid, postcode, city, region, telephone, fax, company, street;
 
     public Shipping_fragment() {
         // Required empty public constructor
@@ -75,14 +76,17 @@ public class Shipping_fragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        v= inflater.inflate(R.layout.fragment_shipping, container, false);
+        v = inflater.inflate(R.layout.fragment_shipping, container, false);
         loginflag = Login_preference.getLogin_flag(getActivity());
 
         AllocateMEmory(v);
         CALL_CART_DELIVERY();
         Countrylist();
 
-        et_shippingfirstname=(EditText)v.findViewById(R.id.et_shippingfirstname);
+        qidd = Login_preference.getquote_id(getActivity());
+        Log.e("quoteidd_shippingfrag",""+qidd);
+
+        et_shippingfirstname = (EditText) v.findViewById(R.id.et_shippingfirstname);
         Checkout_fragment.lv_payment_selected.setVisibility(View.INVISIBLE);
         Checkout_fragment.iv_shipping_done.setVisibility(View.INVISIBLE);
         Checkout_fragment.iv_payment_done.setVisibility(View.INVISIBLE);
@@ -117,9 +121,9 @@ public class Shipping_fragment extends Fragment {
 
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-           Checkout_fragment.tv_confirmation.setTextColor(getActivity().getColor(R.color.colorPrimary));
-           Checkout_fragment.tv_payment.setTextColor(getActivity().getColor(R.color.colorPrimary));
-           Checkout_fragment.tv_shipping.setTextColor(getActivity().getColor(R.color.white));
+            Checkout_fragment.tv_confirmation.setTextColor(getActivity().getColor(R.color.colorPrimary));
+            Checkout_fragment.tv_payment.setTextColor(getActivity().getColor(R.color.colorPrimary));
+            Checkout_fragment.tv_shipping.setTextColor(getActivity().getColor(R.color.white));
         }
 
         lv_continue_payment.setOnClickListener(new View.OnClickListener() {
@@ -130,10 +134,10 @@ public class Shipping_fragment extends Fragment {
                 handler.postDelayed(new Runnable() {
                     public void run() {
                         if (loginflag.equalsIgnoreCase("1") || loginflag == "1") {
-                            if(ck_default.isChecked()){
-                                setdefault="1";
-                            }else{
-                                setdefault="0";
+                            if (ck_default.isChecked()) {
+                                setdefault = "1";
+                            } else {
+                                setdefault = "0";
                             }
                             validateShippingData();
                             /*loadFragment(new Payment_fragment());*/
@@ -143,7 +147,7 @@ public class Shipping_fragment extends Fragment {
                     }
                 }, 1000);
 
-                }
+            }
         });
 
 
@@ -153,7 +157,8 @@ public class Shipping_fragment extends Fragment {
     private void validateShippingData() {
 
         customer_id = Login_preference.getcustomer_id(getActivity());
-        Log.e("Shipping_cust_id", "" + customer_id);
+        email_id = Login_preference.getemail(getActivity());
+
         firstName = et_shippingfirstname.getText().toString();
         lastName = et_shippinglastname.getText().toString();
         postcode = et_shippingzipcode.getText().toString();
@@ -161,7 +166,7 @@ public class Shipping_fragment extends Fragment {
         telephone = et_shippingphonenumber.getText().toString();
         fax = et_fax.getText().toString();
         company = et_shippingcompany.getText().toString();
-        street = et_street.getText().toString();
+        street = et_streetadd.getText().toString();
         region = et_shippingregion.getText().toString();
 
         if (et_shippingfirstname.getText().length() == 0) {
@@ -178,29 +183,58 @@ public class Shipping_fragment extends Fragment {
             et_fax.setError("Please enter your Fax");
         } else if (et_shippingcompany.getText().length() == 0) {
             et_shippingcompany.setError("Please enter your Company Name");
-        } else if (et_street.getText().length() == 0) {
-            et_street.setError("Please enter your Street");
+        } else if (et_streetadd.getText().length() == 0) {
+            et_streetadd.setError("Please enter your Street");
         } else if (et_shippingregion.getText().length() == 0) {
             et_shippingregion.setError("Please enter your Region");
         }
-        Bundle bundle=new Bundle();
-        bundle.putString("Firstname",""+et_shippingfirstname.getText().toString());
-        bundle.putString("Lastname",""+et_shippinglastname.getText().toString());
-        bundle.putString("Zipcode",""+et_shippingzipcode.getText().toString());
-        bundle.putString("City",""+et_shippingcity.getText().toString());
-        bundle.putString("Phonenumber",""+et_shippingphonenumber.getText().toString());
-        bundle.putString("Fax",""+et_fax.getText().toString());
-        bundle.putString("Company",""+et_shippingcompany.getText().toString());
-        bundle.putString("Street",""+et_street.getText().toString());
-        bundle.putString("Region",""+et_shippingregion.getText().toString());
-        bundle.putString("Address",""+et_shippingaddress.getText().toString());
-        bundle.putString("Countryid",""+countryid);
 
-        callAppCreateAddressApi(customer_id, firstName, lastName, countryid, postcode, city, telephone, fax, company, street);
+        Log.e("firstname_shipping",""+et_shippingfirstname.getText().toString());
+        Log.e("lastname_shipping",""+et_shippinglastname.getText().toString());
+        Log.e("zipcode_shipping",""+et_shippingzipcode.getText().toString());
+        Log.e("city_shipping",""+et_shippingcity.getText().toString());
+        Log.e("phonenumber_shipping",""+et_shippingphonenumber.getText().toString());
+        Log.e("fax_shipping",""+et_fax.getText().toString());
+        Log.e("company_shipping",""+et_shippingcompany.getText().toString());
+        Log.e("streetadd_shipping",""+et_streetadd.getText().toString());
+        Log.e("countryid_shipping",""+countryid);
+        Log.e("Shipping_cust_id", "" + customer_id);
+        Log.e("saveadd", "" + setdefault);
+        Log.e("shippingmethod",""+shippingmethod);
+        Log.e("email_id_shipping",""+email_id);
+        Log.e("quoteidshipping",""+qidd);
+        /*Log.e("shippingcode", "" + setdefault);*/
+        /*Log.e("address_shipping",""+et_shippingaddress.getText().toString());*/
+
+        loadfrag();
+
+        //callAppCreateAddressApi(customer_id, firstName, lastName, countryid, postcode, city, telephone, fax, company, street);
 
     }
 
-    private void callAppCreateAddressApi(String customer_id, String firstName, String lastName, String countryid, String postcode,
+    private void loadfrag() {
+        Bundle bundle = new Bundle();
+        bundle.putString("Firstname_shipping", "" + et_shippingfirstname.getText().toString());
+        bundle.putString("Lastname_shipping", "" + et_shippinglastname.getText().toString());
+        bundle.putString("Zipcode_shipping", "" + et_shippingzipcode.getText().toString());
+        bundle.putString("City_shipping", "" + et_shippingcity.getText().toString());
+        bundle.putString("Phonenumber_shipping", "" + et_shippingphonenumber.getText().toString());
+        bundle.putString("Fax_shipping", "" + et_fax.getText().toString());
+        bundle.putString("Company_shipping", "" + et_shippingcompany.getText().toString());
+        bundle.putString("streetadd_shipping", "" + et_streetadd.getText().toString());
+        bundle.putString("Countryid_shipping", "" + countryid);
+        bundle.putString("customer_id_shipping", "" + customer_id);
+        bundle.putString("saveadd_shipping",""+setdefault);
+        bundle.putString("shippingmethod",""+shippingmethod);
+        bundle.putString("email_id_shipping",""+email_id);
+        bundle.putString("quote_id_shipping",""+qidd);
+        Fragment myFragment = new Payment_fragment();
+        myFragment.setArguments(bundle);
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout_checkout, myFragment).addToBackStack(null).commit();
+
+    }
+
+    /*private void callAppCreateAddressApi(String customer_id, String firstName, String lastName, String countryid, String postcode,
                                          String city, String telephone, String fax, String company, String street) {
 
         ApiInterface apii = ApiClient.getClient().create(ApiInterface.class);
@@ -247,7 +281,7 @@ public class Shipping_fragment extends Fragment {
             }
         });
 
-    }
+    }*/
 
     private void Countrylist() {
         ApiInterface api = ApiClient.getClient().create(ApiInterface.class);
@@ -302,6 +336,7 @@ public class Shipping_fragment extends Fragment {
         transaction.addToBackStack(null);
         transaction.commit();
     }
+
     private void CALL_CART_DELIVERY() {
 
         ApiInterface api = ApiClient.getClient().create(ApiInterface.class);
@@ -354,6 +389,7 @@ public class Shipping_fragment extends Fragment {
             }
         });
     }
+
     private void AllocateMEmory(View v) {
         recyclerview_item_delivery = (RecyclerView) v.findViewById(R.id.recyclerview_item_delivery);
         iv_continue_payment = (ImageView) v.findViewById(R.id.iv_continue_payment);
@@ -364,12 +400,13 @@ public class Shipping_fragment extends Fragment {
         et_shippinglastname = (EditText) v.findViewById(R.id.et_shippinglastname);
         et_shippingphonenumber = (EditText) v.findViewById(R.id.et_shippingphonenumber);
         et_shippingcompany = (EditText) v.findViewById(R.id.et_shippingcompany);
-        et_shippingaddress = (EditText) v.findViewById(R.id.et_shippingaddress);
-        et_street = (EditText) v.findViewById(R.id.et_street);
+        /*et_shippingaddress = (EditText) v.findViewById(R.id.et_shippingaddress);*/
+        et_streetadd = (EditText) v.findViewById(R.id.et_street);
         et_fax = (EditText) v.findViewById(R.id.et_fax);
         et_shippingzipcode = (EditText) v.findViewById(R.id.et_shippingzipcode);
         et_shippingcity = (EditText) v.findViewById(R.id.et_shippingcity);
         et_shippingregion = (EditText) v.findViewById(R.id.et_shippingregion);
+        ck_default = (CheckBox)v.findViewById(R.id.ck_default);
 
         cart_delivery_adapter = new Cart_Delivery_Adapter(getActivity(), cart_delivery_models);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, true);

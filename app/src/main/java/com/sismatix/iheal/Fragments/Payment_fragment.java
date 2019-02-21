@@ -38,6 +38,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static com.sismatix.iheal.Activity.Navigation_drawer_activity.bottom_navigation;
+import static com.sismatix.iheal.Adapter.Cart_Delivery_Adapter.shippingmethod;
+import static com.sismatix.iheal.Adapter.Payment_Method_Adapter.paymentcode_ada;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -51,18 +53,53 @@ public class Payment_fragment extends Fragment {
     LinearLayout lv_confirm_order;
     String loginflag;
     View v;
+    String fname_shipping, lname_shipping, zipcode_shipping, city_shipping, phone_shipping, fax_shipping, company_shipping, streetadd_shipping,
+            countryid_shipping, customerid_shipping, saveaddress_shipping, shipping_method, email_shipping, quote_shipping;
+
     public Payment_fragment() {
         // Required empty public constructor
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        v= inflater.inflate(R.layout.fragment_payment, container, false);
+        v = inflater.inflate(R.layout.fragment_payment, container, false);
         AllocateMEmory(v);
         CALL_PAYMENT_API();
         loginflag = Login_preference.getLogin_flag(getActivity());
+
+        Bundle bundle = this.getArguments();
+
+        fname_shipping = bundle.getString("Firstname_shipping");
+        lname_shipping = bundle.getString("Lastname_shipping");
+        zipcode_shipping = bundle.getString("Zipcode_shipping");
+        city_shipping = bundle.getString("City_shipping");
+        phone_shipping = bundle.getString("Phonenumber_shipping");
+        fax_shipping = bundle.getString("Fax_shipping");
+        company_shipping = bundle.getString("Company_shipping");
+        streetadd_shipping = bundle.getString("streetadd_shipping");
+        countryid_shipping = bundle.getString("Countryid_shipping");
+        customerid_shipping = bundle.getString("customer_id_shipping");
+        saveaddress_shipping = bundle.getString("saveadd_shipping");
+        shipping_method = bundle.getString("shippingmethod");
+        email_shipping = bundle.getString("email_id_shipping");
+        quote_shipping = bundle.getString("quote_id_shipping");
+
+        Log.e("payment_fname",""+fname_shipping);
+        Log.e("payment_lname",""+lname_shipping);
+        Log.e("payment_zip",""+zipcode_shipping);
+        Log.e("payment_city",""+city_shipping);
+        Log.e("payment_phone",""+phone_shipping);
+        Log.e("payment_fax",""+fax_shipping);
+        Log.e("payment_comp",""+company_shipping);
+        Log.e("payment_streetadd",""+streetadd_shipping);
+        Log.e("payment_countrtyid",""+countryid_shipping);
+        Log.e("payment_customerid",""+customerid_shipping);
+        Log.e("payment_saveadd",""+saveaddress_shipping);
+        Log.e("payment_shipmethod",""+shipping_method);
+        Log.e("payment_emailid",""+email_shipping);
+        Log.e("payment_qid",""+quote_shipping);
+        Log.e("payment_code",""+paymentcode_ada);
 
         Checkout_fragment.iv_shipping_done.setVisibility(View.VISIBLE);
         Checkout_fragment.iv_payment_done.setVisibility(View.INVISIBLE);
@@ -87,16 +124,44 @@ public class Payment_fragment extends Fragment {
                     public void run() {
                         if (loginflag.equalsIgnoreCase("1") || loginflag == "1") {
 
-                            loadFragment(new Confirmation_fragment());
+                            Bundle bundle1 = new Bundle();
+                            bundle1.putString("Firstname_payment", "" + fname_shipping);
+                            bundle1.putString("Lastname_payment", "" + lname_shipping);
+                            bundle1.putString("Zipcode_payment", "" + zipcode_shipping);
+                            bundle1.putString("City_payment", "" + city_shipping);
+                            bundle1.putString("Phonenumber_payment", "" + phone_shipping);
+                            bundle1.putString("Fax_payment", "" + fax_shipping);
+                            bundle1.putString("Company_payment", "" + company_shipping);
+                            bundle1.putString("streetadd_payment", "" + streetadd_shipping);
+                            bundle1.putString("Countryid_payment", "" + countryid_shipping);
+                            bundle1.putString("customer_id_payment", "" + customerid_shipping);
+                            bundle1.putString("saveadd_payment",""+saveaddress_shipping);
+                            bundle1.putString("shippingmethod_payment",""+shippingmethod);
+                            bundle1.putString("email_id_payment",""+email_shipping);
+                            bundle1.putString("quote_id_payment",""+quote_shipping);
+                            bundle1.putString("paymentcode_payment",""+paymentcode_ada);
+                            Fragment myFragment = new Confirmation_fragment();
+                            myFragment.setArguments(bundle1);
+                            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout_checkout, myFragment).addToBackStack(null).commit();
+
+                            /*Bundle bundle = new Bundle();
+                            bundle.putString("paymentcode_payment",""+paymentcode_ada);
+                            Fragment myFragment = new Confirmation_fragment();
+                            myFragment.setArguments(bundle);
+                            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout_checkout, myFragment).addToBackStack(null).commit();*/
+
                         } else {
+
                             loadFragment(new EmailLogin());
+
                         }
                     }
                 }, 1000);
-                }
+            }
         });
         return v;
     }
+
     private void loadFragment(Fragment fragment) {
         Log.e("clickone", "");
         android.support.v4.app.FragmentManager manager = getFragmentManager();
@@ -106,6 +171,7 @@ public class Payment_fragment extends Fragment {
 
         transaction.commit();
     }
+
     private void CALL_PAYMENT_API() {
 
         ApiInterface api = ApiClient.getClient().create(ApiInterface.class);
@@ -119,8 +185,8 @@ public class Payment_fragment extends Fragment {
                 try {
                     jsonObject = new JSONObject(response.body().string());
                     String status = jsonObject.getString("status");
-                    if (status.equalsIgnoreCase("success")){
-                        JSONArray jsonArray=jsonObject.getJSONArray("payment_method");
+                    if (status.equalsIgnoreCase("success")) {
+                        JSONArray jsonArray = jsonObject.getJSONArray("payment_method");
                         for (int i = 0; i < jsonArray.length(); i++) {
 
                             try {
@@ -136,13 +202,14 @@ public class Payment_fragment extends Fragment {
 
                         }
 
-                    }else if (status.equalsIgnoreCase("error")){
+                    } else if (status.equalsIgnoreCase("error")) {
                     }
 
-                }catch (Exception e){
-                    Log.e("Exc",""+e);
+                } catch (Exception e) {
+                    Log.e("Exc", "" + e);
                 }
             }
+
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 Toast.makeText(getContext(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
@@ -156,9 +223,9 @@ public class Payment_fragment extends Fragment {
     }
 
     private void AllocateMEmory(View v) {
-        payment_method_recyclerview=(RecyclerView)v.findViewById(R.id.payment_method_recyclerview);
-        iv_confirm_order=(ImageView) v.findViewById(R.id.iv_confirm_order);
-        lv_confirm_order=(LinearLayout) v.findViewById(R.id.lv_confirm_order);
+        payment_method_recyclerview = (RecyclerView) v.findViewById(R.id.payment_method_recyclerview);
+        iv_confirm_order = (ImageView) v.findViewById(R.id.iv_confirm_order);
+        lv_confirm_order = (LinearLayout) v.findViewById(R.id.lv_confirm_order);
 
         payment_method_adapter = new Payment_Method_Adapter(getActivity(), payment_method_models);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);

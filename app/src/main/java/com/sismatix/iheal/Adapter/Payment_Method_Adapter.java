@@ -28,6 +28,7 @@ public class Payment_Method_Adapter  extends RecyclerView.Adapter<com.sismatix.i
     //int minteger = 1;
     int current_price = 30;
     int selectedPosition = -1;
+    public static String paymentcode_ada;
     //int product_total = current_price;
 
     public Payment_Method_Adapter (Context context, List<Payment_Method_Model> cartList) {
@@ -49,11 +50,14 @@ public class Payment_Method_Adapter  extends RecyclerView.Adapter<com.sismatix.i
 
         holder.tv_payment_name.setText(payment_model.getLabel());
 
+
         holder.lv_greylayout_click.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
             public void onClick(View view) {
                 selectedPosition = position;
+                paymentcode_ada = payment_model.getValue();
+                Log.e("paycode",""+payment_model.getValue());
                 notifyDataSetChanged();
                 Toast.makeText(context, "lv_click", Toast.LENGTH_SHORT).show();
             }

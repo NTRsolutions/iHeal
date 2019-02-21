@@ -400,7 +400,7 @@ public class Cart extends Fragment  {
                     if (status.equalsIgnoreCase("success")){
                         String grand_total=jsonObject.getString("grand_total");
                         tv_maintotal.setText(grand_total);
-
+                        Login_preference.setquote_id(context, jsonObject.getString("quote_id"));
                         qoute_id_cart = jsonObject.getString("quote_id");
                         Log.e("qoute_id_cart",""+qoute_id_cart);
 
