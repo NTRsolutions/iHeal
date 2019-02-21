@@ -135,4 +135,10 @@ public interface ApiInterface {
     @GET("AppPaymentMethod.php")
     Call<ResponseBody> getPaymentMethods();
 
+    @POST("AppUpdateCart.php")
+    @FormUrlEncoded
+    Call<ResponseBody> appUpdatecart(@Field("quote_id") String quote_id,
+                                     @Field("qty") String qty,
+                                     @Field("item_id") String item_id);
+
 }

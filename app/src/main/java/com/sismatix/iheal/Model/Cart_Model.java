@@ -1,11 +1,11 @@
 package com.sismatix.iheal.Model;
 
 public class Cart_Model {
-    String product_name,product_price,product_image,product_description,product_id,row_total,product_qty;
+    String product_name,product_price,product_image,product_description,product_id,row_total,product_qty,itemid;
 
     public Cart_Model(String product_name, String product_price, String product_image,
                       String product_description, String product_id, String row_total,
-                      String product_qty) {
+                      String product_qty,String itemid) {
         this.product_name = product_name;
         this.product_price = product_price;
         this.product_image = product_image;
@@ -13,6 +13,7 @@ public class Cart_Model {
         this.product_id = product_id;
         this.row_total = row_total;
         this.product_qty = product_qty;
+        this.itemid = itemid;
     }
 
     public String getProduct_id() {
@@ -72,5 +73,11 @@ public class Cart_Model {
         this.product_description = product_description;
     }
 
+    public String getItemid() {
+        return itemid;
+    }
 
+    public void setItemid(String itemid) {
+        this.itemid = itemid;
+    }
 }

@@ -1,7 +1,6 @@
 package com.sismatix.iheal.Adapter;
 
 
-
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
@@ -28,6 +27,7 @@ import com.sismatix.iheal.R;
 import com.sismatix.iheal.Retrofit.ApiClient;
 import com.sismatix.iheal.Retrofit.ApiInterface;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.List;
@@ -37,13 +37,18 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.sismatix.iheal.Fragments.Cart.prepare_Cart;
+import static com.sismatix.iheal.Fragments.Cart.qoute_id_cart;
+import static com.sismatix.iheal.Fragments.Cart.qt;
+
 public class Cart_List_Adapter extends RecyclerView.Adapter<Cart_List_Adapter.MyViewHolder> {
     private Context context;
     private List<Cart_Model> cartList;
-    int minteger = 1;
-    int current_price=30;
-    int  product_total = current_price;
-    Call<ResponseBody> remove_from_cart=null;
+    int quantity;
+    int current_price = 30;
+    int product_total = current_price;
+    Call<ResponseBody> remove_from_cart = null;
+    String itemid_cart,quoteid_cart;
 
     public static String cart_item_grand_total;
 
@@ -51,12 +56,14 @@ public class Cart_List_Adapter extends RecyclerView.Adapter<Cart_List_Adapter.My
         this.context = context;
         this.cartList = cartList;
     }
+
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.cart_list_item_row, parent, false);
         return new MyViewHolder(itemView);
     }
+
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
         final Cart_Model cart_model = cartList.get(position);
@@ -64,50 +71,69 @@ public class Cart_List_Adapter extends RecyclerView.Adapter<Cart_List_Adapter.My
         Glide.with(context).load(cart_model.getProduct_image()).into(holder.iv_cart_product_image);
         holder.tv_product_price_total.setText(cart_model.getProduct_price());
         holder.tv_cart_product_description.setText(cart_model.getProduct_description());
+        String tot_qty = cart_model.getProduct_qty();
+        holder.tv_cart_quantity_total.setText(tot_qty);
+        Log.e("text_qty",""+holder.tv_cart_quantity_total.getText());
+        Log.e("qtyyy",""+tot_qty);
 
-        display(minteger,holder,product_total);
+        itemid_cart = cart_model.getItemid();
+        quoteid_cart = qoute_id_cart;
+        quantity = Integer.parseInt(cart_model.getProduct_qty());
+        //quantity = holder.tv_cart_quantity_total.getText().toString();
+
+        Log.e("quoteid_cart",""+ quoteid_cart);
+        Log.e("quant_cartlist",""+quantity);
+        Log.e("itemid_cartlist",""+itemid_cart);
+
+        display(quantity, holder, product_total);
 
         holder.iv_cart_quantity_increase.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                minteger = minteger + 1;
-                product_total = product_total + current_price;
-                display(minteger, holder,product_total);
-                Log.e("minteger_50", "" + minteger);
+
+                quantity = quantity + 1;
+
+                Toast.makeText(context, "prouduct id is ->" + " " + cart_model.getProduct_id() +
+                        " " + " and item id is ->" + " " + cart_model.getItemid(), Toast.LENGTH_SHORT).show();
+
+                callAppUpdateCart();
+                prepare_Cart();
+
+               // product_total = product_total + current_price;
+
+                display(quantity, holder, product_total);
+                Log.e("minteger_50", "" + quantity);
 
             }
         });
 
-
         holder.viewForeground.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {
                     public void run() {
+                        Toast.makeText(context, "prouduct id is ->" + " " + cart_model.getProduct_id() +
+                                " " + " and item id is ->" + " " + cart_model.getItemid(), Toast.LENGTH_SHORT).show();
                     }
                 }, 1000);
-
             }
         });
 
         holder.iv_cart_quantity_decrease.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (minteger != 0) {
-                    minteger = minteger - 1;
-                        if(minteger==0)
-                        {
-                            Log.e("minteger_zero", "" + minteger);
-                            minteger=1;
-                          // product_total = product_total - current_price;
-                        }else {
+                if (quantity != 0) {
+                    quantity = quantity - 1;
+                    if (quantity == 0) {
+                        Log.e("minteger_zero", "" + quantity);
+                        quantity = 1;
+                        // product_total = product_total - current_price;
+                    } else {
                         product_total = product_total - current_price;
-                            Log.e("minteger_69", "" + product_total);
-                        display(minteger, holder, product_total);
-                        }
-
+                        Log.e("minteger_69", "" + product_total);
+                        //display(minteger, holder, product_total);
+                    }
                 } else {
                     //display(minteger, holder,product_total);
                 }
@@ -116,16 +142,47 @@ public class Cart_List_Adapter extends RecyclerView.Adapter<Cart_List_Adapter.My
 
     }
 
+    private void callAppUpdateCart() {
 
-    private void display(int number, MyViewHolder holder,int total_price) {
+        ApiInterface api = ApiClient.getClient().create(ApiInterface.class);
+        Call<ResponseBody> appupdate = api.appUpdatecart(quoteid_cart, String.valueOf(quantity), itemid_cart);
+        appupdate.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                Log.e("responseeeeee", "" + response.body().toString());
 
+                JSONObject jsonObject = null;
+                try {
+                    jsonObject = new JSONObject(response.body().string());
+                    String status = jsonObject.getString("status");
+                    Log.e("status_prepare_cart", "" + status);
+                    if (status.equalsIgnoreCase("success")) {
+
+                        Toast.makeText(context, "Increased", Toast.LENGTH_SHORT).show();
+
+                    } else if (status.equalsIgnoreCase("error")) {
+
+                    }
+
+                } catch (Exception e) {
+                    Log.e("", "" + e);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Toast.makeText(context, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
+    private void display(int number, MyViewHolder holder, int total_price) {
         Log.e("minteger_83", "" + number);
         Log.e("total_price_83", "" + total_price);
         holder.tv_cart_quantity_total.setText("" + number);
-
         //holder.tv_product_price_total.setText("" + total_price);
     }
-
 
     @Override
     public int getItemCount() {
@@ -133,58 +190,59 @@ public class Cart_List_Adapter extends RecyclerView.Adapter<Cart_List_Adapter.My
     }
 
     public void removeItem(int position) {
-        String product_id=cartList.get(position).getProduct_id();
+        String product_id = cartList.get(position).getProduct_id();
 
-        Log.e("remove_product_id_113",""+product_id);
+        Log.e("remove_product_id_113", "" + product_id);
         CALL_REMOVE_FROM_CART_API(product_id);
         cartList.remove(position);
         notifyItemRemoved(position);
     }
 
-    public  void CALL_REMOVE_FROM_CART_API(String proddd_id)
-    {
-        String email=Login_preference.getemail(context);
-        Log.e("product_id_remove",""+proddd_id);
-        String loginflag=Login_preference.getLogin_flag(context);
-        if (loginflag.equalsIgnoreCase("1") || loginflag == "1"){
+    public void CALL_REMOVE_FROM_CART_API(String proddd_id) {
+
+        String email = Login_preference.getemail(context);
+        Log.e("product_id_remove", "" + proddd_id);
+        String loginflag = Login_preference.getLogin_flag(context);
+        if (loginflag.equalsIgnoreCase("1") || loginflag == "1") {
             ApiInterface api = ApiClient.getClient().create(ApiInterface.class);
-            remove_from_cart=api.remove_from_cartlist(proddd_id,email);
-            Log.e("proddd_idddd",""+proddd_id);
-        }else{
-            String quote_id=Login_preference.getquote_id(context);
+            remove_from_cart = api.remove_from_cartlist(proddd_id, email);
+            Log.e("proddd_idddd", "" + proddd_id);
+        } else {
+            String quote_id = Login_preference.getquote_id(context);
             ApiInterface api = ApiClient.getClient().create(ApiInterface.class);
-            remove_from_cart=api.withoutlogin_remove_from_cartlist(proddd_id,quote_id);
-            Log.e("proddd_idddd",""+proddd_id);
+            remove_from_cart = api.withoutlogin_remove_from_cartlist(proddd_id, quote_id);
+            Log.e("proddd_idddd", "" + proddd_id);
         }
+
         remove_from_cart.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                Log.e("responjse_remove_cart",""+response.body().toString());
-                JSONObject jsonObject=null;
-                try{
-                    jsonObject=new JSONObject(response.body().string());
-                    String status =jsonObject.getString("status");
-                     Log.e("status_remove",""+status);
-                    if (status.equalsIgnoreCase("Success")){
-                        cart_item_grand_total=jsonObject.getString("grand_total");
-                        Log.e("cart_item_count",""+cart_item_grand_total);
+                Log.e("responjse_remove_cart", "" + response.body().toString());
+                JSONObject jsonObject = null;
+                try {
+                    jsonObject = new JSONObject(response.body().string());
+                    String status = jsonObject.getString("status");
+                    Log.e("status_remove", "" + status);
+                    if (status.equalsIgnoreCase("Success")) {
+                        cart_item_grand_total = jsonObject.getString("grand_total");
+                        Log.e("cart_item_count", "" + cart_item_grand_total);
                         Cart.tv_maintotal.setText(cart_item_grand_total);
 
-                        Cart.cart_items_count=jsonObject.getString("items_count");
-                        Log.e("cart_item_count",""+Cart.cart_items_count);
+                        Cart.cart_items_count = jsonObject.getString("items_count");
+                        Log.e("cart_item_count", "" + Cart.cart_items_count);
 
-                        Login_preference.setCart_item_count(context,Cart.cart_items_count);
+                        Login_preference.setCart_item_count(context, Cart.cart_items_count);
 
-
-                        Toast.makeText(context, ""+status, Toast.LENGTH_SHORT).show();
-                          //  Cart.prepare_Cart();
-                    }else if (status.equalsIgnoreCase("error")){
-                       // Toast.makeText(context, ""+meassg, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "" + status, Toast.LENGTH_SHORT).show();
+                        //  Cart.prepare_Cart();
+                    } else if (status.equalsIgnoreCase("error")) {
+                        // Toast.makeText(context, ""+meassg, Toast.LENGTH_SHORT).show();
                     }
-                }catch (Exception e){
-                    Log.e("exception",""+e);
+                } catch (Exception e) {
+                    Log.e("exception", "" + e);
                 }
             }
+
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 Toast.makeText(context, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
@@ -197,10 +255,11 @@ public class Cart_List_Adapter extends RecyclerView.Adapter<Cart_List_Adapter.My
         // notify item added by position
         notifyItemInserted(position);
     }
+
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView tv_cart_product_title, tv_cart_product_description, tv_product_price_total, tv_cart_quantity_total;
         public ImageView iv_cart_product_image, iv_cart_quantity_decrease, iv_cart_quantity_increase;
-        public RelativeLayout  viewForeground;
+        public RelativeLayout viewForeground;
 
         public MyViewHolder(View view) {
             super(view);
@@ -211,9 +270,7 @@ public class Cart_List_Adapter extends RecyclerView.Adapter<Cart_List_Adapter.My
             iv_cart_product_image = (ImageView) view.findViewById(R.id.iv_cart_product_image);
             iv_cart_quantity_decrease = (ImageView) view.findViewById(R.id.iv_cart_quantity_decrease);
             iv_cart_quantity_increase = (ImageView) view.findViewById(R.id.iv_cart_quantity_increase);
-
             viewForeground = (RelativeLayout) view.findViewById(R.id.view_foreground);
-
         }
     }
 }

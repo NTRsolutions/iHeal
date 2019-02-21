@@ -78,9 +78,9 @@ public class Cart extends Fragment  {
     public static  String cart_items_count;
     public static Call<ResponseBody> cartlistt=null;
     String loginflag;
+    public static String qt,qoute_id_cart;
 
      Dialog fullscreenDialog;
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -253,7 +253,6 @@ public class Cart extends Fragment  {
 
                         Toast.makeText(getActivity(), "Login succcessfull", Toast.LENGTH_SHORT).show();
 
-
                         getActivity().finish();
                         getActivity().overridePendingTransition( 0, 0);
                         startActivity(getActivity().getIntent());
@@ -338,7 +337,6 @@ public class Cart extends Fragment  {
                         icon = BitmapFactory.decodeResource(getResources(), R.drawable.ic_create_black_18dp);
                         RectF icon_dest = new RectF((float) itemView.getLeft() + width ,(float) itemView.getTop() + width,(float) itemView.getLeft()+ 2*width,(float)itemView.getBottom() - width);
                         c.drawBitmap(icon,null,icon_dest,p);
-
                     } else {
                         p.setColor(Color.parseColor("#f45d64"));
                         RectF background = new RectF((float) itemView.getRight() + dX, (float) itemView.getTop(),(float) itemView.getRight(), (float) itemView.getBottom());
@@ -384,9 +382,9 @@ public class Cart extends Fragment  {
         }else{
             Log.e("without_login","");
             String quote_id=Login_preference.getquote_id(context);
+            Log.e("quoteidd",""+quote_id);
             ApiInterface api = ApiClient.getClient().create(ApiInterface.class);
             cartlistt = api.getlistcart(quote_id);
-
         }
         cartlistt.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -402,6 +400,10 @@ public class Cart extends Fragment  {
                     if (status.equalsIgnoreCase("success")){
                         String grand_total=jsonObject.getString("grand_total");
                         tv_maintotal.setText(grand_total);
+
+                        qoute_id_cart = jsonObject.getString("quote_id");
+                        Log.e("qoute_id_cart",""+qoute_id_cart);
+
                         cart_items_count=jsonObject.getString("items_count");
 
                         Login_preference.setCart_item_count(context,cart_items_count);
@@ -413,15 +415,18 @@ public class Cart extends Fragment  {
                                 cartList.add(new Cart_Model(vac_object.getString("product_name"),
                                         vac_object.getString("product_price"),
                                         vac_object.getString("product_image"),
-                                        vac_object.getString("product_sku"),vac_object.getString("product_id")
-                                        ,vac_object.getString("row_total"),
-                                        vac_object.getString("product_qty")));
+                                        vac_object.getString("product_sku"),
+                                        vac_object.getString("product_id"),
+                                        vac_object.getString("row_total"),
+                                        vac_object.getString("product_qty"),
+                                        vac_object.getString("itemid")));
+                                qt = vac_object.getString("product_qty");
+                                Log.e("qtttttttt",""+qt);
                             }catch (Exception e) {
                                 Log.e("Exception", "" + e);
                             }
                             finally {
                                 cart_adapter.notifyItemChanged(i);
-
                             }
                         }
                     }else if (status.equalsIgnoreCase("error")){

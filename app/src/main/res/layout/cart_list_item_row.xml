@@ -9,8 +9,7 @@
         android:id="@+id/view_foreground"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/cart_white_ripple"
-        >
+        android:background="@drawable/cart_white_ripple">
 
         <LinearLayout
             android:layout_width="match_parent"
