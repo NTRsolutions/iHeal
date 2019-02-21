@@ -8,6 +8,7 @@ import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.support.annotation.VisibleForTesting;
 import android.support.design.internal.NavigationMenuView;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
@@ -202,25 +203,21 @@ public class Navigation_drawer_activity extends AppCompatActivity
                     break;
                 }
             case R.id.bottom_nav_cart:
-                pushFragment(new Cart(),null);
+                pushFragment(new Cart(),"Cart");
                 viewPager.setCurrentItem(3);
                 break;
             case R.id.bottom_nav_account:
                 if (loginflagmain.equalsIgnoreCase("1") || loginflagmain == "1") {
-
-                    FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                    fragmentTransaction.replace(R.id.rootLayout, new AccountTabs());
-                    fragmentTransaction.commit();
+                    pushFragment(new AccountTabs(),"My Account");
+                    viewPager.setCurrentItem(4);
+                    break;
 
                 } else {
-
-                    FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                    fragmentTransaction.replace(R.id.rootLayout, new Account());
-                    fragmentTransaction.commit();
-
+                    pushFragment(new Account(),"Login_myaccount");
+                    viewPager.setCurrentItem(4);
+                    break;
                 }
-                viewPager.setCurrentItem(4);
-                break;
+
         }
     }
     private void pushFragment(Fragment fragment,String add_to_backstack) {
@@ -287,7 +284,6 @@ public class Navigation_drawer_activity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-
     private void disableNavigationViewScrollbars(NavigationView navigationView) {
         if (navigationView != null) {
             NavigationMenuView navigationMenuView = (NavigationMenuView) navigationView.getChildAt(0);
@@ -296,7 +292,6 @@ public class Navigation_drawer_activity extends AppCompatActivity
             }
         }
     }
-
     private void AllocateMemory() {
         //set bydefault itemcount
         Login_preference.setCart_item_count(Navigation_drawer_activity.this,"0");
@@ -388,10 +383,11 @@ public class Navigation_drawer_activity extends AppCompatActivity
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         int count = fragmentManager.getBackStackEntryCount();
+        //String name=fragmentManager.get
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         }
-
+        Log.e("countt_vinod",""+count);
          if (count == 1) {
              if (doubleBackToExitPressedOnce) {
                  super.onBackPressed();

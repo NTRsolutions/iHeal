@@ -39,6 +39,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="center"
+                            android:textStyle="bold"
+                            android:textSize="16dp"
                             android:text="@string/paymentmethod"
                             android:textColor="#4a4a4a" />
                     </LinearLayout>
@@ -48,15 +50,33 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
                         android:gravity="center"
+                        android:weightSum="3"
                         android:orientation="horizontal">
-
-                        <android.support.v7.widget.RecyclerView
-                            android:id="@+id/payment_method_recyclerview"
+                        <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_marginRight="30dp"
-                            android:layout_marginLeft="50dp"
-                            android:scrollbars="none" />
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1.4">
+
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:layout_weight="0.2">
+                            <android.support.v7.widget.RecyclerView
+                                android:id="@+id/payment_method_recyclerview"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center"
+                                android:scrollbars="none" />
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1.4">
+
+                        </LinearLayout>
+
 
                     </LinearLayout>
 

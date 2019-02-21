@@ -18,19 +18,17 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 import com.sismatix.iheal.Adapter.Cart_Delivery_Adapter;
 import com.sismatix.iheal.Adapter.Cart_List_Adapter;
 import com.sismatix.iheal.Model.Cart_Delivery_Model;
 import com.sismatix.iheal.Model.Cart_Model;
-import com.sismatix.iheal.Model.Product_Category_model;
 import com.sismatix.iheal.Preference.Login_preference;
 import com.sismatix.iheal.R;
 import com.sismatix.iheal.Retrofit.ApiClient;
@@ -56,16 +54,18 @@ public class Shipping_fragment extends Fragment {
     View v;
     RecyclerView recyclerview_item_delivery;
     Cart_Delivery_Adapter cart_delivery_adapter;
-    private List<Cart_Delivery_Model> cart_delivery_models = new ArrayList<Cart_Delivery_Model>();
+    private List<Cart_Delivery_Model>cart_delivery_models = new ArrayList<Cart_Delivery_Model>();
     ImageView iv_continue_payment;
     EditText et_shippingfirstname, et_shippinglastname, et_shippingphonenumber, et_shippingcompany, et_shippingaddress, et_street, et_fax,
             et_shippingzipcode, et_shippingcity, et_shippingregion;
     LinearLayout lv_continue_payment;
-    String loginflag;
+    String loginflag,setdefault;
     Spinner spinner_country_Name;
+    CheckBox ck_default;
     ArrayList<String> country_name_code = new ArrayList<String>();
     ArrayList<String> country_name = new ArrayList<String>();
     String customer_id, firstName, lastName, countryid, postcode, city, region, telephone, fax, company, street;
+
 
     public Shipping_fragment() {
         // Required empty public constructor
@@ -75,14 +75,14 @@ public class Shipping_fragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        v = inflater.inflate(R.layout.fragment_shipping, container, false);
+        v= inflater.inflate(R.layout.fragment_shipping, container, false);
         loginflag = Login_preference.getLogin_flag(getActivity());
 
         AllocateMEmory(v);
         CALL_CART_DELIVERY();
         Countrylist();
 
-        et_shippingfirstname = (EditText) v.findViewById(R.id.et_shippingfirstname);
+        et_shippingfirstname=(EditText)v.findViewById(R.id.et_shippingfirstname);
         Checkout_fragment.lv_payment_selected.setVisibility(View.INVISIBLE);
         Checkout_fragment.iv_shipping_done.setVisibility(View.INVISIBLE);
         Checkout_fragment.iv_payment_done.setVisibility(View.INVISIBLE);
@@ -117,9 +117,9 @@ public class Shipping_fragment extends Fragment {
 
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            Checkout_fragment.tv_confirmation.setTextColor(getActivity().getColor(R.color.colorPrimary));
-            Checkout_fragment.tv_payment.setTextColor(getActivity().getColor(R.color.colorPrimary));
-            Checkout_fragment.tv_shipping.setTextColor(getActivity().getColor(R.color.white));
+           Checkout_fragment.tv_confirmation.setTextColor(getActivity().getColor(R.color.colorPrimary));
+           Checkout_fragment.tv_payment.setTextColor(getActivity().getColor(R.color.colorPrimary));
+           Checkout_fragment.tv_shipping.setTextColor(getActivity().getColor(R.color.white));
         }
 
         lv_continue_payment.setOnClickListener(new View.OnClickListener() {
@@ -130,6 +130,11 @@ public class Shipping_fragment extends Fragment {
                 handler.postDelayed(new Runnable() {
                     public void run() {
                         if (loginflag.equalsIgnoreCase("1") || loginflag == "1") {
+                            if(ck_default.isChecked()){
+                                setdefault="1";
+                            }else{
+                                setdefault="0";
+                            }
                             validateShippingData();
                             /*loadFragment(new Payment_fragment());*/
                         } else {
@@ -138,7 +143,7 @@ public class Shipping_fragment extends Fragment {
                     }
                 }, 1000);
 
-            }
+                }
         });
 
 
@@ -178,6 +183,18 @@ public class Shipping_fragment extends Fragment {
         } else if (et_shippingregion.getText().length() == 0) {
             et_shippingregion.setError("Please enter your Region");
         }
+        Bundle bundle=new Bundle();
+        bundle.putString("Firstname",""+et_shippingfirstname.getText().toString());
+        bundle.putString("Lastname",""+et_shippinglastname.getText().toString());
+        bundle.putString("Zipcode",""+et_shippingzipcode.getText().toString());
+        bundle.putString("City",""+et_shippingcity.getText().toString());
+        bundle.putString("Phonenumber",""+et_shippingphonenumber.getText().toString());
+        bundle.putString("Fax",""+et_fax.getText().toString());
+        bundle.putString("Company",""+et_shippingcompany.getText().toString());
+        bundle.putString("Street",""+et_street.getText().toString());
+        bundle.putString("Region",""+et_shippingregion.getText().toString());
+        bundle.putString("Address",""+et_shippingaddress.getText().toString());
+        bundle.putString("Countryid",""+countryid);
 
         callAppCreateAddressApi(customer_id, firstName, lastName, countryid, postcode, city, telephone, fax, company, street);
 
@@ -276,6 +293,15 @@ public class Shipping_fragment extends Fragment {
         });
     }
 
+
+    private void loadFragment(Fragment fragment) {
+        Log.e("clickone", "");
+        android.support.v4.app.FragmentManager manager = getFragmentManager();
+        android.support.v4.app.FragmentTransaction transaction = manager.beginTransaction();
+        transaction.replace(R.id.frameLayout_checkout, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
     private void CALL_CART_DELIVERY() {
 
         ApiInterface api = ApiClient.getClient().create(ApiInterface.class);
@@ -285,7 +311,7 @@ public class Shipping_fragment extends Fragment {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 Log.e("response_shipping_methods", "" + response.body().toString());
-                //progressBar.setVisibility(View.GONE);
+//progressBar.setVisibility(View.GONE);
                 JSONObject jsonObject = null;
                 try {
                     jsonObject = new JSONObject(response.body().string());
@@ -328,16 +354,6 @@ public class Shipping_fragment extends Fragment {
             }
         });
     }
-
-    private void loadFragment(Fragment fragment) {
-        Log.e("clickone", "");
-        android.support.v4.app.FragmentManager manager = getFragmentManager();
-        android.support.v4.app.FragmentTransaction transaction = manager.beginTransaction();
-        transaction.replace(R.id.frameLayout_checkout, fragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
-    }
-
     private void AllocateMEmory(View v) {
         recyclerview_item_delivery = (RecyclerView) v.findViewById(R.id.recyclerview_item_delivery);
         iv_continue_payment = (ImageView) v.findViewById(R.id.iv_continue_payment);

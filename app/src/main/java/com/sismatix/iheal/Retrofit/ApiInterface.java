@@ -102,7 +102,6 @@ public interface ApiInterface {
     Call<ResponseBody> Wishlistactions(@Field("action") String action,
                                        @Field("productid") String productid,
                                        @Field("customerid") String customerid);
-
     //country list
     //https://ihealkuwait.com/customapi/AppGetCountryList.php
     @GET("AppGetCountryList.php")

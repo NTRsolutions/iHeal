@@ -59,7 +59,6 @@ public class Wishlist_fragment extends Fragment {
     static ProgressBar progressBar;
     static AppCompatActivity activity;
 
-
     public Wishlist_fragment() {
         // Required empty public constructor
     }
@@ -146,48 +145,6 @@ public class Wishlist_fragment extends Fragment {
             }
         });
 
-/*ApiInterface api = ApiClient.getClient().create(ApiInterface.class);
-Call<ResponseBody> addtocart=api.GetWishlist(Login_preference.getcustomer_id(getActivity()));
-Log.e("user_id_wishlist",""+Login_preference.getcustomer_id(getActivity()));
-addtocart.enqueue(new Callback<ResponseBody>() {
-@Override
-public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-Log.e("",""+response.body().toString());
-JSONObject jsonObject=null;
-try{
-jsonObject=new JSONObject(response.body().string());
-String status =jsonObject.getString("status");
-Log.e("wishlist_status",""+status);
-if (status.equalsIgnoreCase("success")){
-JSONArray jsonArray = jsonObject.getJSONArray("product");
-for (j = 0; j < jsonArray.length(); j++) ;
-{
-JSONObject wish_object = jsonArray.getJSONObject(j);
-Log.e("Name", "" + wish_object.getString("name"));
-wishlist_models.add(new Wishlist_Model(""+wish_object.getString("image"),
-""+wish_object.getString("name"),
-""+wish_object.getString("price"),
-""+wish_object.getString("category"),
-""+wish_object.getString("product_id")));
-//wishlist_adapter.notifyItemChanged(i);
-}
-//loadFragment(new Cart());
-
-}else if (status.equalsIgnoreCase("error")){
-Toast.makeText(getContext(), ""+status, Toast.LENGTH_SHORT).show();
-}
-}catch (Exception e){
-Log.e("exception",""+e);
-}
-}
-@Override
-public void onFailure(Call<ResponseBody> call, Throwable t) {
-Toast.makeText(getContext(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
-}
-});*/
-
-
-//wishlist_adapter.notifyDataSetChanged();
 
     }
 
@@ -215,10 +172,12 @@ Toast.makeText(getContext(), "Something went wrong...Please try later!", Toast.L
         } else {
             badge = new CountDrawable(getActivity());
         }
+        count=Login_preference.getCart_item_count(getActivity());
+        Log.e("countt",""+Login_preference.getCart_item_count(getActivity()));
+        Log.e("count_142",""+count);
         badge.setCount(count);
         icon.mutate();
         icon.setDrawableByLayerId(R.id.ic_group_count, badge);
-
         super.onCreateOptionsMenu(menu, inflater);
     }
 

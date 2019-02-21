@@ -27,13 +27,13 @@ public class Cart_Delivery_Adapter extends RecyclerView.Adapter<com.sismatix.ihe
     //int minteger = 1;
     int current_price = 30;
     int selectedPosition = -1;
+    public static String shippingmethod;
     //int product_total = current_price;
 
     public Cart_Delivery_Adapter(Context context, List<Cart_Delivery_Model> cartList) {
         this.context = context;
         this.model = cartList;
     }
-
     @Override
     public Cart_Delivery_Adapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
@@ -56,8 +56,9 @@ public class Cart_Delivery_Adapter extends RecyclerView.Adapter<com.sismatix.ihe
             @Override
             public void onClick(View view) {
                 selectedPosition = position;
+                shippingmethod=cart_delivery_model.getCode();
                 notifyDataSetChanged();
-                Toast.makeText(context, "lv_click", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "lv_click"+shippingmethod, Toast.LENGTH_SHORT).show();
             }
         });
 

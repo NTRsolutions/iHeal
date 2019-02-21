@@ -56,7 +56,6 @@ public class EmailLogin extends Fragment implements View.OnClickListener {
 
         AllocateMemory(v);
 
-
         btn_login.setOnClickListener(this);
         tv_forgotpassword.setOnClickListener(this);
 
@@ -153,7 +152,6 @@ public class EmailLogin extends Fragment implements View.OnClickListener {
                             startActivity(intent);
                             getActivity().finish();
                         }
-
 
                        /* Home nextFrag = new Home();
                         getActivity().getSupportFragmentManager().beginTransaction()
