@@ -91,10 +91,15 @@ public class Item_details extends Fragment implements View.OnClickListener, View
         getActivity().setTitle("Shopping Cart");
 
         Bundle bundle = this.getArguments();
-        proddd_id = bundle.getString("prod_id");
-        Log.e("prod_itemdetail_id", "" + proddd_id);
 
-        call_item_detail_api(proddd_id);
+        if (bundle != null){
+
+            proddd_id = bundle.getString("prod_id");
+            Log.e("prod_itemdetail_id", "" + proddd_id);
+
+            call_item_detail_api(proddd_id);
+
+        }
 
         lv_iteamdetails_click.setOnClickListener(this);
         mPager.addOnPageChangeListener(this);
@@ -403,10 +408,10 @@ public class Item_details extends Fragment implements View.OnClickListener, View
             }
         });
 
-
     }
 
     private void AddTocart() {
+
         String loginflag = Login_preference.getLogin_flag(getActivity());
         Log.e("customeriddd", "" + Login_preference.getcustomer_id(getActivity()));
         if (loginflag.equalsIgnoreCase("1") || loginflag == "1") {
@@ -430,6 +435,7 @@ public class Item_details extends Fragment implements View.OnClickListener, View
                 addtocart = api.withoutlogin_addtocart(proddd_id, Login_preference.getquote_id(getActivity()));
             }
         }
+
         addtocart.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {

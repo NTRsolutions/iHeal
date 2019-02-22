@@ -100,14 +100,19 @@ public class Hair_Cair_fregment extends Fragment {
         setHasOptionsMenu(true);
         Bundle bundle = this.getArguments();
 
-        cat_id = bundle.getString("cat_id");
-        mainname = bundle.getString("name");
-        Log.e("category_id_thcf", "" + cat_id);
+        if (bundle != null){
+
+            cat_id = bundle.getString("cat_id");
+            mainname = bundle.getString("name");
+            Log.e("category_id_thcf", "" + cat_id);
+
+            /// product_array =bundle.getString("products_array");
+
+            Log.e("products_arrayyyy", "" + product_array);
+
+        }
 
 
-        /// product_array =bundle.getString("products_array");
-
-        Log.e("products_arrayyyy", "" + product_array);
 
         viewPager = (ViewPager) view.findViewById(R.id.viewpager);
         tabLayout = (TabLayout) view.findViewById(R.id.tablayout);

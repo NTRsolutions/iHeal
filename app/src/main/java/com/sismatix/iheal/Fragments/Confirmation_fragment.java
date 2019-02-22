@@ -21,10 +21,12 @@ import android.widget.Toast;
 import com.sismatix.iheal.Adapter.Cart_List_Adapter;
 import com.sismatix.iheal.Adapter.Confirmation_cart_Adapter;
 import com.sismatix.iheal.Model.Cart_Model;
+import com.sismatix.iheal.Preference.Login_preference;
 import com.sismatix.iheal.R;
 import com.sismatix.iheal.Retrofit.ApiClient;
 import com.sismatix.iheal.Retrofit.ApiInterface;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -37,6 +39,13 @@ import retrofit2.Response;
 
 import static com.sismatix.iheal.Activity.Navigation_drawer_activity.bottom_navigation;
 import static com.sismatix.iheal.Adapter.Payment_Method_Adapter.paymentcode_ada;
+import static com.sismatix.iheal.Fragments.Cart.cart_adapter;
+import static com.sismatix.iheal.Fragments.Cart.cart_items_count;
+import static com.sismatix.iheal.Fragments.Cart.cartlistt;
+import static com.sismatix.iheal.Fragments.Cart.context;
+import static com.sismatix.iheal.Fragments.Cart.qoute_id_cart;
+import static com.sismatix.iheal.Fragments.Cart.qt;
+import static com.sismatix.iheal.Fragments.Cart.tv_maintotal;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -58,17 +67,18 @@ public class Confirmation_fragment extends Fragment {
         // Required empty public constructor
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
         v = inflater.inflate(R.layout.fragment_confirmation, container, false);
         Allocatememory(v);
+        prepareConfirmCart();
 
         Bundle bundle = this.getArguments();
 
-        if (bundle != null){
+        if (bundle != null) {
             paycode = bundle.getString("paymentcode_payment");
             fname_confirm = bundle.getString("Firstname_payment");
             lname_confirm = bundle.getString("Lastname_payment");
@@ -101,9 +111,10 @@ public class Confirmation_fragment extends Fragment {
             Log.e("confirm_qid", "" + quote_confirm);
             Log.e("confirm_code", "" + paymentcode_ada);
             Log.e("confirm_paycode_final", "" + paycode);
+
         }
 
-        confirm_add.setText(streetadd_confirm+" "+zipcode_confirm+" "+city_confirm+" "+countryid_confirm);
+        confirm_add.setText(streetadd_confirm + " " + zipcode_confirm + " " + city_confirm + " " + countryid_confirm);
 
         Checkout_fragment.lv_payment_selected.setVisibility(View.INVISIBLE);
         Checkout_fragment.lv_shipping_selected.setVisibility(View.INVISIBLE);
@@ -138,6 +149,80 @@ public class Confirmation_fragment extends Fragment {
         return v;
     }
 
+    private void prepareConfirmCart() {
+        cartList.clear();
+        String email = Login_preference.getemail(context);
+
+        String loginflag = Login_preference.getLogin_flag(context);
+        Log.e("customeriddd", "" + Login_preference.getcustomer_id(context));
+        if (loginflag.equalsIgnoreCase("1") || loginflag == "1") {
+            Log.e("with_login", "");
+            ApiInterface api = ApiClient.getClient().create(ApiInterface.class);
+            cartlistt = api.Cartlist(email);
+        } else {
+            Log.e("without_login", "");
+            String quote_id = Login_preference.getquote_id(context);//359
+            Log.e("quoteidd", "" + quote_id);
+            ApiInterface api = ApiClient.getClient().create(ApiInterface.class);
+            cartlistt = api.getlistcart(quote_id);
+        }
+        cartlistt.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                Log.e("responseeeeee_confirm", "" + response.body().toString());
+
+                JSONObject jsonObject = null;
+                try {
+                    jsonObject = new JSONObject(response.body().string());
+                    String status = jsonObject.getString("status");
+                    Log.e("status_confirm_cart", "" + status);
+                    if (status.equalsIgnoreCase("success")) {
+                        String grand_total = jsonObject.getString("grand_total");
+                        tv_maintotal.setText(grand_total);
+                        Login_preference.setquote_id(context, jsonObject.getString("quote_id"));
+                        qoute_id_cart = jsonObject.getString("quote_id");
+                        Log.e("qoute_id_confirm_cart", "" + qoute_id_cart);
+
+                        cart_items_count = jsonObject.getString("items_count");
+
+                        Login_preference.setCart_item_count(context, cart_items_count);
+                        JSONArray jsonArray = jsonObject.getJSONArray("products");
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            try {
+                                JSONObject vac_object = jsonArray.getJSONObject(i);
+                                Log.e("Name", "" + vac_object.getString("product_name"));
+                                cartList.add(new Cart_Model(vac_object.getString("product_name"),
+                                        vac_object.getString("product_price"),
+                                        vac_object.getString("product_image"),
+                                        vac_object.getString("product_sku"),
+                                        vac_object.getString("product_id"),
+                                        vac_object.getString("row_total"),
+                                        vac_object.getString("product_qty"),
+                                        vac_object.getString("itemid")));
+                                qt = vac_object.getString("product_qty");
+                                Log.e("qtttttttt", "" + qt);
+                            } catch (Exception e) {
+                                Log.e("Exception", "" + e);
+                            } finally {
+                                confirmation_cart_adapter.notifyItemChanged(i);
+                            }
+                        }
+                    } else if (status.equalsIgnoreCase("error")) {
+
+                    }
+
+                } catch (Exception e) {
+                    Log.e("", "" + e);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Toast.makeText(context, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
     private void loadFragment(Fragment fragment) {
         Log.e("clickone", "");
         android.support.v4.app.FragmentManager manager = getFragmentManager();
@@ -152,7 +237,7 @@ public class Confirmation_fragment extends Fragment {
         ApiInterface apii = ApiClient.getClient().create(ApiInterface.class);
         Call<ResponseBody> confirm = apii.AppCreateOrder(customerid_confirm, email_confirm, quote_confirm, fname_confirm,
                 lname_confirm, countryid_confirm, zipcode_confirm, city_confirm, phone_confirm, fax_confirm, company_confirm,
-                streetadd_confirm,shipping_confirm,paycode,saveaddress_confirm);
+                streetadd_confirm, shipping_confirm, paycode, saveaddress_confirm);
 
         confirm.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -161,14 +246,14 @@ public class Confirmation_fragment extends Fragment {
                 JSONObject jsonObject = null;
                 try {
                     jsonObject = new JSONObject(response.body().string());
-                    String status = jsonObject.getString("order_id");
-                    Log.e("status_confirmation", "" + status);
+                    String code = jsonObject.getString("code");
+                    Log.e("code_confirmation", "" + code);
                     String meassg = jsonObject.getString("message");
                     Log.e("message_confirmation", "" + meassg);
-                    if (status.equalsIgnoreCase("success")) {
+                    if (code.equalsIgnoreCase("200")) {
                         Toast.makeText(getContext(), "" + meassg, Toast.LENGTH_SHORT).show();
                         loadFragment(new Fianl_Order_Checkout_freg());
-                    } else if (status.equalsIgnoreCase("error")) {
+                    } else if (code.equalsIgnoreCase("error")) {
                         Toast.makeText(getContext(), "" + meassg, Toast.LENGTH_SHORT).show();
                     }
                 } catch (Exception e) {
@@ -187,13 +272,14 @@ public class Confirmation_fragment extends Fragment {
                     "", "", "", "", "", ""));
         }
         confirmation_cart_adapter.notifyDataSetChanged();*/
+
     }
 
     private void Allocatememory(View v) {
         recyclerview_confirmation = (RecyclerView) v.findViewById(R.id.recyclerview_confirmation);
         iv_confirm_pay = (ImageView) v.findViewById(R.id.iv_confirm_pay);
         lv_confirm_pay = (LinearLayout) v.findViewById(R.id.lv_confirm_pay);
-        confirm_add = (TextView)v.findViewById(R.id.confirm_add);
+        confirm_add = (TextView) v.findViewById(R.id.confirm_add);
 
         confirmation_cart_adapter = new Confirmation_cart_Adapter(getActivity(), cartList);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());

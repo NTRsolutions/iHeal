@@ -73,7 +73,15 @@ public class EmailLogin extends Fragment implements View.OnClickListener {
         final String username = login_email.getText().toString();
         final String password = login_password.getText().toString();
 
-
+          if (login_email.getText().length() == 0) {
+            /*signup_input_layout_email.setError("Please enter your Email id");*/
+            Toast.makeText(getContext(), "Please enter your Email id", Toast.LENGTH_SHORT).show();
+        } else if (login_password.getText().length() == 0) {
+            /*signup_input_layout_password.setError("Please enter your Password");*/
+            Toast.makeText(getContext(), "Please enter your Password", Toast.LENGTH_SHORT).show();
+        } else {
+            loginUser(username, password);
+        }
 
         //checking if username is empty
         /*if (TextUtils.isEmpty(username)) {
@@ -94,7 +102,6 @@ public class EmailLogin extends Fragment implements View.OnClickListener {
             return;
         }*/
         //Login User if everything is fine
-        loginUser(username, password);
     }
 
     private void loginUser(String username, String password) {

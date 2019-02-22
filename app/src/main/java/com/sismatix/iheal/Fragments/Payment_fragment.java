@@ -70,36 +70,38 @@ public class Payment_fragment extends Fragment {
 
         Bundle bundle = this.getArguments();
 
-        fname_shipping = bundle.getString("Firstname_shipping");
-        lname_shipping = bundle.getString("Lastname_shipping");
-        zipcode_shipping = bundle.getString("Zipcode_shipping");
-        city_shipping = bundle.getString("City_shipping");
-        phone_shipping = bundle.getString("Phonenumber_shipping");
-        fax_shipping = bundle.getString("Fax_shipping");
-        company_shipping = bundle.getString("Company_shipping");
-        streetadd_shipping = bundle.getString("streetadd_shipping");
-        countryid_shipping = bundle.getString("Countryid_shipping");
-        customerid_shipping = bundle.getString("customer_id_shipping");
-        saveaddress_shipping = bundle.getString("saveadd_shipping");
-        shipping_method = bundle.getString("shippingmethod");
-        email_shipping = bundle.getString("email_id_shipping");
-        quote_shipping = bundle.getString("quote_id_shipping");
+        if (bundle != null){
+            fname_shipping = bundle.getString("Firstname_shipping");
+            lname_shipping = bundle.getString("Lastname_shipping");
+            zipcode_shipping = bundle.getString("Zipcode_shipping");
+            city_shipping = bundle.getString("City_shipping");
+            phone_shipping = bundle.getString("Phonenumber_shipping");
+            fax_shipping = bundle.getString("Fax_shipping");
+            company_shipping = bundle.getString("Company_shipping");
+            streetadd_shipping = bundle.getString("streetadd_shipping");
+            countryid_shipping = bundle.getString("Countryid_shipping");
+            customerid_shipping = bundle.getString("customer_id_shipping");
+            saveaddress_shipping = bundle.getString("saveadd_shipping");
+            shipping_method = bundle.getString("shippingmethod");
+            email_shipping = bundle.getString("email_id_shipping");
+            quote_shipping = bundle.getString("quote_id_shipping");
 
-        Log.e("payment_fname",""+fname_shipping);
-        Log.e("payment_lname",""+lname_shipping);
-        Log.e("payment_zip",""+zipcode_shipping);
-        Log.e("payment_city",""+city_shipping);
-        Log.e("payment_phone",""+phone_shipping);
-        Log.e("payment_fax",""+fax_shipping);
-        Log.e("payment_comp",""+company_shipping);
-        Log.e("payment_streetadd",""+streetadd_shipping);
-        Log.e("payment_countrtyid",""+countryid_shipping);
-        Log.e("payment_customerid",""+customerid_shipping);
-        Log.e("payment_saveadd",""+saveaddress_shipping);
-        Log.e("payment_shipmethod",""+shipping_method);
-        Log.e("payment_emailid",""+email_shipping);
-        Log.e("payment_qid",""+quote_shipping);
-        Log.e("payment_code",""+paymentcode_ada);
+            Log.e("payment_fname",""+fname_shipping);
+            Log.e("payment_lname",""+lname_shipping);
+            Log.e("payment_zip",""+zipcode_shipping);
+            Log.e("payment_city",""+city_shipping);
+            Log.e("payment_phone",""+phone_shipping);
+            Log.e("payment_fax",""+fax_shipping);
+            Log.e("payment_comp",""+company_shipping);
+            Log.e("payment_streetadd",""+streetadd_shipping);
+            Log.e("payment_countrtyid",""+countryid_shipping);
+            Log.e("payment_customerid",""+customerid_shipping);
+            Log.e("payment_saveadd",""+saveaddress_shipping);
+            Log.e("payment_shipmethod",""+shipping_method);
+            Log.e("payment_emailid",""+email_shipping);
+            Log.e("payment_qid",""+quote_shipping);
+            Log.e("payment_code",""+paymentcode_ada);
+        }
 
         Checkout_fragment.iv_shipping_done.setVisibility(View.VISIBLE);
         Checkout_fragment.iv_payment_done.setVisibility(View.INVISIBLE);
@@ -124,25 +126,30 @@ public class Payment_fragment extends Fragment {
                     public void run() {
                         if (loginflag.equalsIgnoreCase("1") || loginflag == "1") {
 
-                            Bundle bundle1 = new Bundle();
-                            bundle1.putString("Firstname_payment", "" + fname_shipping);
-                            bundle1.putString("Lastname_payment", "" + lname_shipping);
-                            bundle1.putString("Zipcode_payment", "" + zipcode_shipping);
-                            bundle1.putString("City_payment", "" + city_shipping);
-                            bundle1.putString("Phonenumber_payment", "" + phone_shipping);
-                            bundle1.putString("Fax_payment", "" + fax_shipping);
-                            bundle1.putString("Company_payment", "" + company_shipping);
-                            bundle1.putString("streetadd_payment", "" + streetadd_shipping);
-                            bundle1.putString("Countryid_payment", "" + countryid_shipping);
-                            bundle1.putString("customer_id_payment", "" + customerid_shipping);
-                            bundle1.putString("saveadd_payment",""+saveaddress_shipping);
-                            bundle1.putString("shippingmethod_payment",""+shippingmethod);
-                            bundle1.putString("email_id_payment",""+email_shipping);
-                            bundle1.putString("quote_id_payment",""+quote_shipping);
-                            bundle1.putString("paymentcode_payment",""+paymentcode_ada);
-                            Fragment myFragment = new Confirmation_fragment();
-                            myFragment.setArguments(bundle1);
-                            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout_checkout, myFragment).addToBackStack(null).commit();
+                            if (paymentcode_ada == null){
+                                Toast.makeText(getActivity(), "Please Select atleast one payment Method", Toast.LENGTH_SHORT).show();
+                            }else {
+
+                                Bundle bundle1 = new Bundle();
+                                bundle1.putString("Firstname_payment", "" + fname_shipping);
+                                bundle1.putString("Lastname_payment", "" + lname_shipping);
+                                bundle1.putString("Zipcode_payment", "" + zipcode_shipping);
+                                bundle1.putString("City_payment", "" + city_shipping);
+                                bundle1.putString("Phonenumber_payment", "" + phone_shipping);
+                                bundle1.putString("Fax_payment", "" + fax_shipping);
+                                bundle1.putString("Company_payment", "" + company_shipping);
+                                bundle1.putString("streetadd_payment", "" + streetadd_shipping);
+                                bundle1.putString("Countryid_payment", "" + countryid_shipping);
+                                bundle1.putString("customer_id_payment", "" + customerid_shipping);
+                                bundle1.putString("saveadd_payment", "" + saveaddress_shipping);
+                                bundle1.putString("shippingmethod_payment", "" + shippingmethod);
+                                bundle1.putString("email_id_payment", "" + email_shipping);
+                                bundle1.putString("quote_id_payment", "" + quote_shipping);
+                                bundle1.putString("paymentcode_payment", "" + paymentcode_ada);
+                                Fragment myFragment = new Confirmation_fragment();
+                                myFragment.setArguments(bundle1);
+                                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout_checkout, myFragment).addToBackStack(null).commit();
+                            }
 
                             /*Bundle bundle = new Bundle();
                             bundle.putString("paymentcode_payment",""+paymentcode_ada);
