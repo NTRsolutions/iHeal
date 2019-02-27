@@ -141,10 +141,6 @@ public interface ApiInterface {
                                      @Field("qty") String qty,
                                      @Field("item_id") String item_id);
 
-    //https://ihealkuwait.com/customapi/AppCreateOrder.php?customer_id=1&email=developertest2018@gmail.com&quote_id=223&
-    // FirstName=test2&LastName=dev&countryid=KW&postcode=13001&city=Safat&telephone=112&fax=111&company=test&
-    // street=AmericanEmbassy&shippingcode=flatrate_flatrate&paymentcode=checkmo&saveaddress=1
-
     @POST("AppCreateOrder.php")
     @FormUrlEncoded
     Call<ResponseBody> AppCreateOrder(@Field("customer_id") String customer_id,
@@ -177,5 +173,10 @@ public interface ApiInterface {
                                         @Field("countryid") String countryid,
                                         @Field("postcode") String postcode,
                                         @Field("city") String city);
+
+
+    @POST("AppOrderList.php")
+    @FormUrlEncoded
+    Call<ResponseBody> AppOrderList(@Field("customer_id") String customer_id);
 
 }

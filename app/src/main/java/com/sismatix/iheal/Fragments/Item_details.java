@@ -250,12 +250,16 @@ public class Item_details extends Fragment implements View.OnClickListener, View
     // cart menu
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+       menu.clear();
         inflater.inflate(R.menu.cart_wishlist, menu);
         MenuItem item = menu.findItem(R.id.cartt);
+/*
         MenuItem item_search = menu.findItem(R.id.search);
+        item_search.setVisible(false);
+*/
+
         fillwish = menu.findItem(R.id.fill_wish);
         wish = menu.findItem(R.id.wish);
-        item_search.setVisible(false);
 
 //        icon = (LayerDrawable) item.getIcon();
         icon = (LayerDrawable) item.getIcon();

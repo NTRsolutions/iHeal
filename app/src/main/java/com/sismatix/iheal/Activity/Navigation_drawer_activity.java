@@ -3,12 +3,9 @@ package com.sismatix.iheal.Activity;
 import android.animation.ArgbEvaluator;
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
-import android.support.annotation.VisibleForTesting;
 import android.support.design.internal.NavigationMenuView;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
@@ -41,7 +38,6 @@ import com.sismatix.iheal.Fragments.Account;
 import com.sismatix.iheal.Fragments.AccountTabs;
 import com.sismatix.iheal.Fragments.Cart;
 import com.sismatix.iheal.Fragments.EmailLogin;
-import com.sismatix.iheal.Fragments.Favourite;
 import com.sismatix.iheal.Fragments.Home;
 import com.sismatix.iheal.Fragments.MyOrder;
 import com.sismatix.iheal.Fragments.MyOrderDetails;
@@ -50,16 +46,6 @@ import com.sismatix.iheal.Fragments.Search;
 import com.sismatix.iheal.Fragments.Wishlist_fragment;
 import com.sismatix.iheal.Preference.Login_preference;
 import com.sismatix.iheal.R;
-import com.sismatix.iheal.Retrofit.ApiClient;
-import com.sismatix.iheal.Retrofit.ApiInterface;
-import com.sismatix.iheal.View.CountDrawable;
-
-import org.json.JSONObject;
-
-import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 
 public class Navigation_drawer_activity extends AppCompatActivity
@@ -252,21 +238,24 @@ public class Navigation_drawer_activity extends AppCompatActivity
 
         }
         else if (id == R.id.nav_my_order) {
+            if (loginflagmain.equalsIgnoreCase("1") || loginflagmain == "1") {
+
+                pushFragment(new MyOrder(),"My Order");
+            } else {
+
+                pushFragment(new Account(),"Login_myaccount");
+
+            }
 
         }
         else if (id == R.id.nav_my_account) {
 
             if (loginflagmain.equalsIgnoreCase("1") || loginflagmain == "1") {
 
-                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.rootLayout, new AccountTabs());
-                fragmentTransaction.commit();
-
+                pushFragment(new AccountTabs(),"My Account");
             } else {
 
-                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.rootLayout, new Account());
-                fragmentTransaction.commit();
+                pushFragment(new Account(),"Login_myaccount");
 
             }
 
@@ -328,6 +317,7 @@ public class Navigation_drawer_activity extends AppCompatActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        menu.clear();
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_search, menu);
      /*   MenuItem item = menu.findItem(R.id.cart);

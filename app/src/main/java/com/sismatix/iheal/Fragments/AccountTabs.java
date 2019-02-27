@@ -93,15 +93,6 @@ public class AccountTabs extends Fragment {
         return v;
     }
 
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-       // inflater.inflate(R.menu.cart, menu);
-        //MenuItem item = menu.findItem(R.id.cart);
-        MenuItem item_search = menu.findItem(R.id.search);
-        item_search.setVisible(false);
-       // item.setVisible(false);
-        super.onCreateOptionsMenu(menu, inflater);
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

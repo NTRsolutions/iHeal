@@ -33,7 +33,6 @@ public class Product_Category_adapter extends RecyclerView.Adapter<Product_Categ
         this.context = context;
         this.models = models;
     }
-
     @Override
     public Product_Category_adapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())

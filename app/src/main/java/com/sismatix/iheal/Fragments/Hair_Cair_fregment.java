@@ -100,7 +100,7 @@ public class Hair_Cair_fregment extends Fragment {
         setHasOptionsMenu(true);
         Bundle bundle = this.getArguments();
 
-        if (bundle != null){
+        if (bundle != null) {
 
             cat_id = bundle.getString("cat_id");
             mainname = bundle.getString("name");
@@ -111,7 +111,6 @@ public class Hair_Cair_fregment extends Fragment {
             Log.e("products_arrayyyy", "" + product_array);
 
         }
-
 
 
         viewPager = (ViewPager) view.findViewById(R.id.viewpager);
@@ -278,11 +277,12 @@ public class Hair_Cair_fregment extends Fragment {
     // cart menu
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.clear();
         inflater.inflate(R.menu.cart, menu);
         MenuItem item = menu.findItem(R.id.cart);
-        MenuItem item_search = menu.findItem(R.id.search);
+        /*MenuItem item_search = menu.findItem(R.id.search);
         item_search.setVisible(false);
-
+*/
 //        icon = (LayerDrawable) item.getIcon();
         icon = (LayerDrawable) item.getIcon();
 

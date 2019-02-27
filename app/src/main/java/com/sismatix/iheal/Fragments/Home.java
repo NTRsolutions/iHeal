@@ -100,15 +100,19 @@ public class Home extends Fragment implements View.OnClickListener {
 
         return v;
     }
-
-    private void loadFragment(Fragment fragment, String value) {
+    private void loadFragmentt(Fragment fragment) {
         Log.e("clickone", "");
-       /* android.support.v4.app.FragmentManager manager = getFragmentManager();
+        android.support.v4.app.FragmentManager manager = getFragmentManager();
         android.support.v4.app.FragmentTransaction transaction = manager.beginTransaction();
         transaction.replace(R.id.rootLayout, fragment);
         transaction.addToBackStack(null);
 
-        transaction.commit();*/
+        transaction.commit();
+    }
+
+
+    private void loadFragment(Fragment fragment, String value) {
+        Log.e("clickone", "");
 
         Bundle b = new Bundle();
         b.putString("cat_id", value);
@@ -153,7 +157,9 @@ public class Home extends Fragment implements View.OnClickListener {
                 Handler handler1 = new Handler();
                 handler1.postDelayed(new Runnable() {
                     public void run() {
-                        loadFragment(new EmailLogin(), value);
+
+                        loadFragmentt(new EmailLogin());
+
                     }
                 }, 1000);
 

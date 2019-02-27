@@ -25,7 +25,7 @@ import static com.sismatix.iheal.Activity.Navigation_drawer_activity.bottom_navi
 public class Checkout_fragment extends Fragment implements View.OnClickListener {
     LinearLayout lv_shipping,lv_confirmation,lv_payment;
     public static LinearLayout lv_shipping_selected,lv_payment_selected,lv_confirmation_selected;
-    public static ImageView iv_confirmation_done,iv_payment_done,iv_shipping_done;
+    public static ImageView iv_confirmation_done,iv_payment_done,iv_shipping_done,iv_close_checkout;
     public static TextView tv_shipping,tv_payment,tv_confirmation;
     String loginflag;
     View v;
@@ -48,6 +48,7 @@ public class Checkout_fragment extends Fragment implements View.OnClickListener 
         lv_shipping.setOnClickListener(this);
         lv_confirmation.setOnClickListener(this);
         lv_payment.setOnClickListener(this);
+        iv_close_checkout.setOnClickListener(this);
 
         lv_payment_selected.setVisibility(View.INVISIBLE);
         lv_confirmation_selected.setVisibility(View.INVISIBLE);
@@ -74,6 +75,7 @@ public class Checkout_fragment extends Fragment implements View.OnClickListener 
         iv_confirmation_done=(ImageView)v.findViewById(R.id.iv_confirmation_done);
         iv_payment_done=(ImageView)v.findViewById(R.id.iv_payment_done);
         iv_shipping_done=(ImageView)v.findViewById(R.id.iv_shipping_done);
+        iv_close_checkout=(ImageView)v.findViewById(R.id.iv_close_checkout);
         tv_shipping=(TextView)v.findViewById(R.id.tv_shipping);
         tv_payment=(TextView)v.findViewById(R.id.tv_payment);
         tv_confirmation=(TextView)v.findViewById(R.id.tv_confirmation);
@@ -84,6 +86,15 @@ public class Checkout_fragment extends Fragment implements View.OnClickListener 
         android.support.v4.app.FragmentManager manager = getFragmentManager();
         android.support.v4.app.FragmentTransaction transaction = manager.beginTransaction();
         transaction.replace(R.id.frameLayout_checkout, fragment);
+        transaction.addToBackStack(null);
+
+        transaction.commit();
+    }
+    private void loadFragmentmain(Fragment fragment) {
+        Log.e("clickone", "");
+        android.support.v4.app.FragmentManager manager = getFragmentManager();
+        android.support.v4.app.FragmentTransaction transaction = manager.beginTransaction();
+        transaction.replace(R.id.rootLayout, fragment);
         transaction.addToBackStack(null);
 
         transaction.commit();
@@ -121,10 +132,8 @@ public class Checkout_fragment extends Fragment implements View.OnClickListener 
 
                 loadFragment(new Confirmation_fragment());
             } else {
-                loadFragment(new EmailLogin());
+                loadFragmentmain(new EmailLogin());
             }
-
-
         }
         else if(view==lv_payment) {
 
@@ -140,9 +149,12 @@ public class Checkout_fragment extends Fragment implements View.OnClickListener 
 
                 loadFragment(new Payment_fragment());
             } else {
-                loadFragment(new EmailLogin());
+
             }
 
+        }else if (view==iv_close_checkout){
+            loadFragmentmain(new Cart());
         }
+
     }
 }

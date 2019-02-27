@@ -56,7 +56,7 @@ public class Confirmation_fragment extends Fragment {
     RecyclerView recyclerview_confirmation;
     private List<Cart_Model> cartList = new ArrayList<Cart_Model>();
     private Confirmation_cart_Adapter confirmation_cart_adapter;
-    String fname_confirm, lname_confirm, zipcode_confirm, city_confirm, phone_confirm, company_confirm, streetadd_confirm,
+    String fname_confirm, lname_confirm, zipcode_confirm, city_confirm, phone_confirm, fax_confirm, company_confirm, streetadd_confirm,
             countryid_confirm, customerid_confirm, saveaddress_confirm, shipping_confirm, email_confirm, quote_confirm;
     String paycode;
 
@@ -85,6 +85,7 @@ public class Confirmation_fragment extends Fragment {
             zipcode_confirm = bundle.getString("Zipcode_payment");
             city_confirm = bundle.getString("City_payment");
             phone_confirm = bundle.getString("Phonenumber_payment");
+            fax_confirm = bundle.getString("Fax_payment");
             company_confirm = bundle.getString("Company_payment");
             streetadd_confirm = bundle.getString("streetadd_payment");
             countryid_confirm = bundle.getString("Countryid_payment");
@@ -99,6 +100,7 @@ public class Confirmation_fragment extends Fragment {
             Log.e("confirm_zip", "" + zipcode_confirm);
             Log.e("confirm_city", "" + city_confirm);
             Log.e("confirm_phone", "" + phone_confirm);
+            Log.e("confirm_fax", "" + fax_confirm);
             Log.e("confirm_comp", "" + company_confirm);
             Log.e("confirm_streetadd", "" + streetadd_confirm);
             Log.e("confirm_countrtyid", "" + countryid_confirm);

@@ -78,8 +78,9 @@ public class Cart extends Fragment  {
     public static  String cart_items_count;
     public static Call<ResponseBody> cartlistt=null;
     String loginflag;
-    public static String qt,qoute_id_cart;
-
+    public static String qt,qoute_id_cart,productslist;
+    public static LinearLayout lv_productnot;
+    ImageView iv_close;
      Dialog fullscreenDialog;
 
     @Override
@@ -101,9 +102,13 @@ public class Cart extends Fragment  {
         cart_recyclerview.setAdapter(cart_adapter);
 
         init_Swipe_recyclerview();//swiper recyclerview
-
-
-
+        iv_close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(getContext(),Navigation_drawer_activity.class);
+                startActivity(intent);
+            }
+        });
         lv_place_order.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -113,7 +118,11 @@ public class Cart extends Fragment  {
                     public void run() {
                         if (loginflag.equalsIgnoreCase("1") || loginflag == "1") {
 
-                            loadFragment(new Checkout_fragment(),"");
+                            if(productslist.equalsIgnoreCase("[]")||productslist.equalsIgnoreCase("")){
+                                Toast.makeText(getActivity(), "Product Not found in shopping cart.", Toast.LENGTH_SHORT).show();
+                            }else{
+                                loadFragment(new Checkout_fragment(),"");
+                            }
                         } else {
                             String screen_type="cart";
                             // fullscreen_login_dialog();
@@ -361,7 +370,9 @@ public class Cart extends Fragment  {
         cart_recyclerview = v.findViewById(R.id.cart_recyclerview);
         toolbar=(Toolbar)v.findViewById(R.id.toolbar_cart);
         iv_place_order=(ImageView) v.findViewById(R.id.iv_place_order);
+        iv_close=(ImageView) v.findViewById(R.id.iv_close);
         lv_place_order=(LinearLayout) v.findViewById(R.id.lv_place_order);
+        lv_productnot=(LinearLayout) v.findViewById(R.id.lv_productnotavelable);
         tv_maintotal=(TextView) v.findViewById(R.id.tv_maintotal);
         progressBar_cart=(ProgressBar) v.findViewById(R.id.progressBar_cart);
     }
@@ -400,36 +411,41 @@ public class Cart extends Fragment  {
                     jsonObject = new JSONObject(response.body().string());
                     String status = jsonObject.getString("status");
                     Log.e("status_prepare_cart",""+status);
+
                     if (status.equalsIgnoreCase("success")){
+
                         String grand_total=jsonObject.getString("grand_total");
                         tv_maintotal.setText(grand_total);
-                        Login_preference.setquote_id(context, jsonObject.getString("quote_id"));
+
                         qoute_id_cart = jsonObject.getString("quote_id");
                         Log.e("qoute_id_cart",""+qoute_id_cart);
-
                         cart_items_count=jsonObject.getString("items_count");
-
-                        Login_preference.setCart_item_count(context,cart_items_count);
-                        JSONArray jsonArray=jsonObject.getJSONArray("products");
-                        for (int i = 0; i < jsonArray.length(); i++) {
-                            try {
-                                JSONObject vac_object = jsonArray.getJSONObject(i);
-                                Log.e("Name",""+vac_object.getString("product_name"));
-                                cartList.add(new Cart_Model(vac_object.getString("product_name"),
-                                        vac_object.getString("product_price"),
-                                        vac_object.getString("product_image"),
-                                        vac_object.getString("product_sku"),
-                                        vac_object.getString("product_id"),
-                                        vac_object.getString("row_total"),
-                                        vac_object.getString("product_qty"),
-                                        vac_object.getString("itemid")));
-                                qt = vac_object.getString("product_qty");
-                                Log.e("qtttttttt",""+qt);
-                            }catch (Exception e) {
-                                Log.e("Exception", "" + e);
-                            }
-                            finally {
-                                cart_adapter.notifyItemChanged(i);
+                        productslist=jsonObject.getString("products");
+                        if(productslist.equalsIgnoreCase("[]")||productslist.equalsIgnoreCase("")){
+                            lv_productnot.setVisibility(View.VISIBLE);
+                        }else {
+                            lv_productnot.setVisibility(View.GONE);
+                            Login_preference.setCart_item_count(context, cart_items_count);
+                            JSONArray jsonArray = jsonObject.getJSONArray("products");
+                            for (int i = 0; i < jsonArray.length(); i++) {
+                                try {
+                                    JSONObject vac_object = jsonArray.getJSONObject(i);
+                                    Log.e("Name", "" + vac_object.getString("product_name"));
+                                    cartList.add(new Cart_Model(vac_object.getString("product_name"),
+                                            vac_object.getString("product_price"),
+                                            vac_object.getString("product_image"),
+                                            vac_object.getString("product_sku"),
+                                            vac_object.getString("product_id"),
+                                            vac_object.getString("row_total"),
+                                            vac_object.getString("product_qty"),
+                                            vac_object.getString("itemid")));
+                                    qt = vac_object.getString("product_qty");
+                                    Log.e("qtttttttt", "" + qt);
+                                } catch (Exception e) {
+                                    Log.e("Exception", "" + e);
+                                } finally {
+                                    cart_adapter.notifyItemChanged(i);
+                                }
                             }
                         }
                     }else if (status.equalsIgnoreCase("error")){
