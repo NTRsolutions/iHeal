@@ -153,7 +153,6 @@ public class Home extends Fragment implements View.OnClickListener {
                 Handler handler1 = new Handler();
                 handler1.postDelayed(new Runnable() {
                     public void run() {
-
                         loadFragment(new EmailLogin(), value);
                     }
                 }, 1000);

@@ -102,6 +102,7 @@ public interface ApiInterface {
     Call<ResponseBody> Wishlistactions(@Field("action") String action,
                                        @Field("productid") String productid,
                                        @Field("customerid") String customerid);
+
     //country list
     //https://ihealkuwait.com/customapi/AppGetCountryList.php
     @GET("AppGetCountryList.php")
@@ -147,19 +148,34 @@ public interface ApiInterface {
     @POST("AppCreateOrder.php")
     @FormUrlEncoded
     Call<ResponseBody> AppCreateOrder(@Field("customer_id") String customer_id,
-                                        @Field("email") String email,
-                                        @Field("quote_id") String quote_id,
+                                      @Field("email") String email,
+                                      @Field("quote_id") String quote_id,
+                                      @Field("FirstName") String FirstName,
+                                      @Field("LastName") String LastName,
+                                      @Field("countryid") String countryid,
+                                      @Field("postcode") String postcode,
+                                      @Field("city") String city,
+                                      @Field("telephone") String telephone,
+                                      @Field("company") String company,
+                                      @Field("street") String street,
+                                      @Field("shippingcode") String shippingcode,
+                                      @Field("paymentcode") String paymentcode,
+                                      @Field("saveaddress") String saveaddress);
+
+    //https://ihealkuwait.com/customapi/AppUpdateAddress.php?
+    // address_id=137&customer_id=1&firstname=uaua&middlename=mama&city=yryr&postcode=888888&telephone=2222222222&company=dreamdcm
+
+    @POST("AppUpdateAddress.php")
+    @FormUrlEncoded
+    Call<ResponseBody> AppUpdateAddress(@Field("address_id") String address_id,
+                                        @Field("customer_id") String customer_id,
                                         @Field("FirstName") String FirstName,
                                         @Field("LastName") String LastName,
+                                        @Field("telephone") String telephone,
+                                        @Field("company") String company,
+                                        @Field("street") String street,
                                         @Field("countryid") String countryid,
                                         @Field("postcode") String postcode,
-                                        @Field("city") String city,
-                                        @Field("telephone") String telephone,
-                                        @Field("fax") String fax,
-                                        @Field("company") String company,
-                                        @Field("street")String street,
-                                        @Field("shippingcode")String shippingcode,
-                                        @Field("paymentcode")String paymentcode,
-                                        @Field("saveaddress")String saveaddress);
+                                        @Field("city") String city);
 
 }

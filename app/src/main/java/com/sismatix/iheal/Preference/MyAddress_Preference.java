@@ -125,6 +125,43 @@ public class MyAddress_Preference {
         return mPrefs.getString("region", "");
     }
 
+    public static void setAddressId(Context context, String value)
+    {
+        mPrefs = PreferenceManager.getDefaultSharedPreferences(context);
+        prefsEditor = mPrefs.edit();
+        prefsEditor.putString("AddressId", value);
+        prefsEditor.commit();
+    }
+    public static String getAddressId(Context context)
+    {
+        mPrefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return mPrefs.getString("AddressId", "");
+    }
 
+    public static void setCountryId(Context context, String value)
+    {
+        mPrefs = PreferenceManager.getDefaultSharedPreferences(context);
+        prefsEditor = mPrefs.edit();
+        prefsEditor.putString("CountryId", value);
+        prefsEditor.commit();
+    }
+    public static String getCountryId(Context context)
+    {
+        mPrefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return mPrefs.getString("CountryId", "");
+    }
+
+    public static void setCountryPosition(Context context, String value)
+    {
+        mPrefs = PreferenceManager.getDefaultSharedPreferences(context);
+        prefsEditor = mPrefs.edit();
+        prefsEditor.putString("CountryPosition", value);
+        prefsEditor.commit();
+    }
+    public static String getCountryPosition(Context context)
+    {
+        mPrefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return mPrefs.getString("CountryPosition", "");
+    }
 
 }

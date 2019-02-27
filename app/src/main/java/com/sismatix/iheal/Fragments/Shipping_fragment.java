@@ -57,11 +57,11 @@ public class Shipping_fragment extends Fragment {
             et_shippingzipcode, et_shippingcity, et_shippingregion;
     LinearLayout lv_continue_payment;
     String loginflag, setdefault;
-    public static Spinner spinner_country_Name;
+    public  Spinner spinner_country_Name;
     CheckBox ck_default;
-    ArrayList<String> country_name_code = new ArrayList<String>();
-    ArrayList<String> country_name = new ArrayList<String>();
-    String qidd, email_id, customer_id, firstName, lastName, countryid, postcode, city, region, telephone, fax, company, street;
+   public static ArrayList<String> country_name_code = new ArrayList<String>();
+    public  static ArrayList<String> country_name = new ArrayList<String>();
+    String qidd, email_id, customer_id, firstName, lastName, countryid, postcode, city, region, telephone, company, street;
 
     public Shipping_fragment() {
         // Required empty public constructor
@@ -75,9 +75,10 @@ public class Shipping_fragment extends Fragment {
         loginflag = Login_preference.getLogin_flag(getActivity());
 
         AllocateMEmory(v);
+        Countrylist();
+
         setValuesToeEditText();
         CALL_CART_DELIVERY();
-        Countrylist();
 
         qidd = Login_preference.getquote_id(getActivity());
         Log.e("quoteidd_shippingfrag", "" + qidd);
@@ -96,10 +97,9 @@ public class Shipping_fragment extends Fragment {
             public void onItemSelected(AdapterView<?> adapterView, View view,
                                        int position, long id) {
 
-                spinner_country_Name.setSelection(116);
-
                 int selected_item_position = spinner_country_Name.getSelectedItemPosition();
                 countryid = country_name_code.get(selected_item_position);
+               // MyAddress_Preference.setCountryId(getActivity(), String.valueOf(selected_item_position));
                 Log.e("countryid", "" + countryid);
                 String selected_country = String.valueOf(spinner_country_Name.getSelectedItem());
 
@@ -163,13 +163,14 @@ public class Shipping_fragment extends Fragment {
     }
 
     private void setValuesToeEditText() {
+
+
         et_shippingfirstname.setText(MyAddress_Preference.getFirstname(getActivity()));
         Log.e("fnameeee", "" + et_shippingfirstname.getText().toString());
         et_shippinglastname.setText(MyAddress_Preference.getLastname(getActivity()));
         et_shippingphonenumber.setText(MyAddress_Preference.getPhoneNumber(getActivity()));
         et_shippingcompany.setText(MyAddress_Preference.getCompanyName(getActivity()));
         et_streetadd.setText(MyAddress_Preference.getStreetAddress(getActivity()));
-        et_fax.setText(MyAddress_Preference.getFax(getActivity()));
         et_shippingzipcode.setText(MyAddress_Preference.getZipcode(getActivity()));
         et_shippingcity.setText(MyAddress_Preference.getCity(getActivity()));
         et_shippingregion.setText(MyAddress_Preference.getRegion(getActivity()));
@@ -185,7 +186,6 @@ public class Shipping_fragment extends Fragment {
         telephone = et_shippingphonenumber.getText().toString();
         company = et_shippingcompany.getText().toString();
         street = et_streetadd.getText().toString();
-        fax = et_fax.getText().toString();
         postcode = et_shippingzipcode.getText().toString();
         city = et_shippingcity.getText().toString();
         region = et_shippingregion.getText().toString();
@@ -202,8 +202,6 @@ public class Shipping_fragment extends Fragment {
             et_shippingcompany.setError("Please enter your Company Name");
         } else if (et_streetadd.getText().length() == 0) {
             et_streetadd.setError("Please enter your Street Address");
-        } else if (et_fax.getText().length() == 0) {
-            et_fax.setError("Please enter your Fax");
         } else if (et_shippingzipcode.getText().length() == 0) {
             et_shippingzipcode.setError("Please enter your Zipcode");
         } else if (et_shippingcity.getText().length() == 0) {
@@ -226,7 +224,6 @@ public class Shipping_fragment extends Fragment {
         Log.e("zipcode_shipping", "" + et_shippingzipcode.getText().toString());
         Log.e("city_shipping", "" + et_shippingcity.getText().toString());
         Log.e("phonenumber_shipping", "" + et_shippingphonenumber.getText().toString());
-        Log.e("fax_shipping", "" + et_fax.getText().toString());
         Log.e("company_shipping", "" + et_shippingcompany.getText().toString());
         Log.e("streetadd_shipping", "" + et_streetadd.getText().toString());
         Log.e("countryid_shipping", "" + countryid);
@@ -250,7 +247,6 @@ public class Shipping_fragment extends Fragment {
         bundle.putString("Zipcode_shipping", "" + et_shippingzipcode.getText().toString());
         bundle.putString("City_shipping", "" + et_shippingcity.getText().toString());
         bundle.putString("Phonenumber_shipping", "" + et_shippingphonenumber.getText().toString());
-        bundle.putString("Fax_shipping", "" + et_fax.getText().toString());
         bundle.putString("Company_shipping", "" + et_shippingcompany.getText().toString());
         bundle.putString("streetadd_shipping", "" + et_streetadd.getText().toString());
         bundle.putString("Countryid_shipping", "" + countryid);
@@ -342,7 +338,14 @@ public class Shipping_fragment extends Fragment {
                             } finally {
                             }
                         }
+
+
                         spinner_country_Name.setAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, country_name));
+
+                        Log.e("shipping_167",""+MyAddress_Preference.getCountryId(getActivity()));
+                        int selected_spinner_pos=country_name_code.indexOf(MyAddress_Preference.getCountryId(getActivity()));
+                        Log.e("pos_344",""+selected_spinner_pos);
+                        spinner_country_Name.setSelection(selected_spinner_pos,true);
 
 
                     }
@@ -433,7 +436,6 @@ public class Shipping_fragment extends Fragment {
         et_shippingcompany = (EditText) v.findViewById(R.id.et_shippingcompany);
         /*et_shippingaddress = (EditText) v.findViewById(R.id.et_shippingaddress);*/
         et_streetadd = (EditText) v.findViewById(R.id.et_street);
-        et_fax = (EditText) v.findViewById(R.id.et_fax);
         et_shippingzipcode = (EditText) v.findViewById(R.id.et_shippingzipcode);
         et_shippingcity = (EditText) v.findViewById(R.id.et_shippingcity);
         et_shippingregion = (EditText) v.findViewById(R.id.et_shippingregion);

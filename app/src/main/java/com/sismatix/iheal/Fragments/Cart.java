@@ -365,9 +365,11 @@ public class Cart extends Fragment  {
         tv_maintotal=(TextView) v.findViewById(R.id.tv_maintotal);
         progressBar_cart=(ProgressBar) v.findViewById(R.id.progressBar_cart);
     }
+
     /**
      * method make volley network call and parses json
      */
+
     public static void prepare_Cart() {
         progressBar_cart.setVisibility(View.VISIBLE);
         cartList.clear();
@@ -386,6 +388,7 @@ public class Cart extends Fragment  {
             ApiInterface api = ApiClient.getClient().create(ApiInterface.class);
             cartlistt = api.getlistcart(quote_id);
         }
+
         cartlistt.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {

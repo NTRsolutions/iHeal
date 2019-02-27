@@ -53,7 +53,7 @@ public class Payment_fragment extends Fragment {
     LinearLayout lv_confirm_order;
     String loginflag;
     View v;
-    String fname_shipping, lname_shipping, zipcode_shipping, city_shipping, phone_shipping, fax_shipping, company_shipping, streetadd_shipping,
+    String fname_shipping, lname_shipping, zipcode_shipping, city_shipping, phone_shipping, company_shipping, streetadd_shipping,
             countryid_shipping, customerid_shipping, saveaddress_shipping, shipping_method, email_shipping, quote_shipping;
 
     public Payment_fragment() {
@@ -76,7 +76,6 @@ public class Payment_fragment extends Fragment {
             zipcode_shipping = bundle.getString("Zipcode_shipping");
             city_shipping = bundle.getString("City_shipping");
             phone_shipping = bundle.getString("Phonenumber_shipping");
-            fax_shipping = bundle.getString("Fax_shipping");
             company_shipping = bundle.getString("Company_shipping");
             streetadd_shipping = bundle.getString("streetadd_shipping");
             countryid_shipping = bundle.getString("Countryid_shipping");
@@ -91,7 +90,6 @@ public class Payment_fragment extends Fragment {
             Log.e("payment_zip",""+zipcode_shipping);
             Log.e("payment_city",""+city_shipping);
             Log.e("payment_phone",""+phone_shipping);
-            Log.e("payment_fax",""+fax_shipping);
             Log.e("payment_comp",""+company_shipping);
             Log.e("payment_streetadd",""+streetadd_shipping);
             Log.e("payment_countrtyid",""+countryid_shipping);
@@ -136,7 +134,6 @@ public class Payment_fragment extends Fragment {
                                 bundle1.putString("Zipcode_payment", "" + zipcode_shipping);
                                 bundle1.putString("City_payment", "" + city_shipping);
                                 bundle1.putString("Phonenumber_payment", "" + phone_shipping);
-                                bundle1.putString("Fax_payment", "" + fax_shipping);
                                 bundle1.putString("Company_payment", "" + company_shipping);
                                 bundle1.putString("streetadd_payment", "" + streetadd_shipping);
                                 bundle1.putString("Countryid_payment", "" + countryid_shipping);
