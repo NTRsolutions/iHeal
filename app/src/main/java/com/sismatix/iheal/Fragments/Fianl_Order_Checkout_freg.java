@@ -3,6 +3,8 @@ package com.sismatix.iheal.Fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +34,14 @@ public class Fianl_Order_Checkout_freg extends Fragment {
 
         lv_track_order=(LinearLayout)v.findViewById(R.id.lv_track_order);
 
+        lv_track_order.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AppCompatActivity activity = (AppCompatActivity) v.getContext();
+                Fragment myFragment = new Home();
+                activity.getSupportFragmentManager().beginTransaction().replace(R.id.rootLayout, myFragment).addToBackStack(null).commit();
+            }
+        });
 
         return v;
     }

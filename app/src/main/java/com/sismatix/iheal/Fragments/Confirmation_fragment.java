@@ -15,13 +15,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.sismatix.iheal.Adapter.Cart_List_Adapter;
 import com.sismatix.iheal.Adapter.Confirmation_cart_Adapter;
 import com.sismatix.iheal.Model.Cart_Model;
+import com.sismatix.iheal.Preference.CheckNetwork;
 import com.sismatix.iheal.Preference.Login_preference;
+import com.sismatix.iheal.Preference.MyAddress_Preference;
 import com.sismatix.iheal.R;
 import com.sismatix.iheal.Retrofit.ApiClient;
 import com.sismatix.iheal.Retrofit.ApiInterface;
@@ -38,6 +41,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static com.sismatix.iheal.Activity.Navigation_drawer_activity.bottom_navigation;
+import static com.sismatix.iheal.Adapter.Cart_Delivery_Adapter.shippingmethod;
 import static com.sismatix.iheal.Adapter.Payment_Method_Adapter.paymentcode_ada;
 import static com.sismatix.iheal.Fragments.Cart.cart_adapter;
 import static com.sismatix.iheal.Fragments.Cart.cart_items_count;
@@ -51,16 +55,16 @@ import static com.sismatix.iheal.Fragments.Cart.tv_maintotal;
  * A simple {@link Fragment} subclass.
  */
 public class Confirmation_fragment extends Fragment {
-    ImageView iv_confirm_pay;
-    TextView confirm_add;
+    LinearLayout iv_confirm_pay,lv_goback_confirmation;
+    TextView confirm_add,tv_totalconform,tv_add_edit_confirm,tv_cart_edit_confirm,tv_shipping_tit,tv_conf_order,tv_conf_totamt;
     RecyclerView recyclerview_confirmation;
     private List<Cart_Model> cartList = new ArrayList<Cart_Model>();
     private Confirmation_cart_Adapter confirmation_cart_adapter;
     String fname_confirm, lname_confirm, zipcode_confirm, city_confirm, phone_confirm, fax_confirm, company_confirm, streetadd_confirm,
-            countryid_confirm, customerid_confirm, saveaddress_confirm, shipping_confirm, email_confirm, quote_confirm;
+            countryid_confirm, customerid_confirm, saveaddress_confirm, shipping_confirm, email_confirm, quote_confirm,reg_confirm;
     String paycode;
-
     LinearLayout lv_confirm_pay;
+    ProgressBar progressBar;
     View v;
 
     public Confirmation_fragment() {
@@ -74,26 +78,48 @@ public class Confirmation_fragment extends Fragment {
 
         v = inflater.inflate(R.layout.fragment_confirmation, container, false);
         Allocatememory(v);
-        prepareConfirmCart();
+        settypeface();
+
+        if (CheckNetwork.isNetworkAvailable(getActivity())) {
+            prepareConfirmCart();
+        } else {
+            Toast.makeText(getContext(), "Please Check your Internet Connection", Toast.LENGTH_SHORT).show();
+        }
 
         Bundle bundle = this.getArguments();
 
         if (bundle != null) {
+
+            fname_confirm = bundle.getString("Firstname_shipping");
+            MyAddress_Preference.setFirstname(getContext(),fname_confirm);
+            lname_confirm = bundle.getString("Lastname_shipping");
+            MyAddress_Preference.setLastname(getContext(),lname_confirm);
+            zipcode_confirm = bundle.getString("Zipcode_shipping");
+            MyAddress_Preference.setZipcode(getContext(),zipcode_confirm);
+            city_confirm = bundle.getString("City_shipping");
+            MyAddress_Preference.setCity(getContext(),city_confirm);
+            phone_confirm = bundle.getString("Phonenumber_shipping");
+            MyAddress_Preference.setPhoneNumber(getContext(),phone_confirm);
+            company_confirm = bundle.getString("Company_shipping");
+            MyAddress_Preference.setCompanyName(getContext(),company_confirm);
+            streetadd_confirm = bundle.getString("streetadd_shipping");
+            MyAddress_Preference.setStreetAddress(getContext(),streetadd_confirm);
+            countryid_confirm = bundle.getString("Countryid_shipping");
+            MyAddress_Preference.setCountryId(getContext(),countryid_confirm);
+            customerid_confirm = bundle.getString("customer_id_shipping");
+            /*MyAddress_Preference.setFirstname(getContext(),fname_confirm);*/
+            saveaddress_confirm = bundle.getString("saveadd_shipping");
+            MyAddress_Preference.setsaveAddress(getContext(),saveaddress_confirm);
+            shipping_confirm = bundle.getString("shippingmethod");
+            /*MyAddress_Preference.setFirstname(getContext(),fname_confirm);*/
+            email_confirm = bundle.getString("email_id_shipping");
+            /*MyAddress_Preference.setFirstname(getContext(),fname_confirm);*/
+            quote_confirm = bundle.getString("quote_id_shipping");
+            /*MyAddress_Preference.setFirstname(getContext(),fname_confirm);*/
+            reg_confirm = bundle.getString("region_shipping");
+            MyAddress_Preference.setRegion(getContext(),reg_confirm);
             paycode = bundle.getString("paymentcode_payment");
-            fname_confirm = bundle.getString("Firstname_payment");
-            lname_confirm = bundle.getString("Lastname_payment");
-            zipcode_confirm = bundle.getString("Zipcode_payment");
-            city_confirm = bundle.getString("City_payment");
-            phone_confirm = bundle.getString("Phonenumber_payment");
-            fax_confirm = bundle.getString("Fax_payment");
-            company_confirm = bundle.getString("Company_payment");
-            streetadd_confirm = bundle.getString("streetadd_payment");
-            countryid_confirm = bundle.getString("Countryid_payment");
-            customerid_confirm = bundle.getString("customer_id_payment");
-            saveaddress_confirm = bundle.getString("saveadd_payment");
-            shipping_confirm = bundle.getString("shippingmethod_payment");
-            email_confirm = bundle.getString("email_id_payment");
-            quote_confirm = bundle.getString("quote_id_payment");
+            /*MyAddress_Preference.setFirstname(getContext(),fname_confirm);*/
 
             Log.e("confirm_fname", "" + fname_confirm);
             Log.e("confirm_lname", "" + lname_confirm);
@@ -146,7 +172,89 @@ public class Confirmation_fragment extends Fragment {
 
             }
         });
+
+        lv_goback_confirmation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    public void run() {
+
+                        Bundle bundle1 = new Bundle();
+
+                        bundle1.putString("Firstname_shipping", "" + fname_confirm);
+                        bundle1.putString("Lastname_shipping", "" + lname_confirm);
+                        bundle1.putString("Zipcode_shipping", "" + zipcode_confirm);
+                        bundle1.putString("City_shipping", "" + city_confirm);
+                        bundle1.putString("Phonenumber_shipping", "" + phone_confirm);
+                        bundle1.putString("Company_shipping", "" + company_confirm);
+                        bundle1.putString("streetadd_shipping", "" + streetadd_confirm);
+                        bundle1.putString("Countryid_shipping", "" + countryid_confirm);
+                        bundle1.putString("customer_id_shipping", "" + customerid_confirm);
+                        bundle1.putString("saveadd_shipping", "" + saveaddress_confirm);
+                        bundle1.putString("shippingmethod", "" + shippingmethod);
+                        bundle1.putString("email_id_shipping", "" + email_confirm);
+                        bundle1.putString("quote_id_shipping", "" + quote_confirm);
+                        bundle1.putString("paymentcode_payment", "" + paymentcode_ada);// aa ek nave param 6
+                        bundle1.putString("region_shipping", "" + reg_confirm);
+
+                        Fragment myFragment = new Payment_fragment();
+                        myFragment.setArguments(bundle1);
+                        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout_checkout, myFragment).addToBackStack(null).commit();
+
+                    }
+                }, 1000);
+
+            }
+        });
+
+        tv_add_edit_confirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle2 = new Bundle();
+
+                bundle2.putString("Firstname_shipping", "" + fname_confirm);
+                bundle2.putString("Lastname_shipping", "" + lname_confirm);
+                bundle2.putString("Zipcode_shipping", "" + zipcode_confirm);
+                bundle2.putString("City_shipping", "" + city_confirm);
+                bundle2.putString("Phonenumber_shipping", "" + phone_confirm);
+                bundle2.putString("Company_shipping", "" + company_confirm);
+                bundle2.putString("streetadd_shipping", "" + streetadd_confirm);
+                bundle2.putString("Countryid_shipping", "" + countryid_confirm);
+                bundle2.putString("customer_id_shipping", "" + customerid_confirm);
+                bundle2.putString("saveadd_shipping", "" + saveaddress_confirm);
+                bundle2.putString("shippingmethod", "" + shippingmethod);
+                bundle2.putString("email_id_shipping", "" + email_confirm);
+                bundle2.putString("quote_id_shipping", "" + quote_confirm);
+                bundle2.putString("paymentcode_payment", "" + paymentcode_ada);// aa ek nave param 6
+                bundle2.putString("region_shipping", "" + reg_confirm);
+
+                Fragment myFragment = new Shipping_fragment();
+                myFragment.setArguments(bundle2);
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout_checkout, myFragment).addToBackStack(null).commit();
+            }
+        });
+
+        tv_cart_edit_confirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment myFragment = new Cart();
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.rootLayout, myFragment).addToBackStack(null).commit();
+            }
+        });
+
         return v;
+    }
+
+    private void settypeface() {
+        confirm_add.setTypeface(Home.roboto_bold);
+        tv_totalconform.setTypeface(Home.roboto_bold);
+        tv_add_edit_confirm.setTypeface(Home.roboto_bold);
+        tv_cart_edit_confirm.setTypeface(Home.roboto_bold);
+        tv_shipping_tit.setTypeface(Home.roboto_bold);
+        tv_conf_order.setTypeface(Home.roboto_bold);
+        tv_conf_totamt.setTypeface(Home.roboto_bold);
     }
 
     private void prepareConfirmCart() {
@@ -166,6 +274,7 @@ public class Confirmation_fragment extends Fragment {
             ApiInterface api = ApiClient.getClient().create(ApiInterface.class);
             cartlistt = api.getlistcart(quote_id);
         }
+
         cartlistt.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -178,7 +287,7 @@ public class Confirmation_fragment extends Fragment {
                     Log.e("status_confirm_cart", "" + status);
                     if (status.equalsIgnoreCase("success")) {
                         String grand_total = jsonObject.getString("grand_total");
-                        tv_maintotal.setText(grand_total);
+                        tv_totalconform.setText(grand_total);
                         Login_preference.setquote_id(context, jsonObject.getString("quote_id"));
                         qoute_id_cart = jsonObject.getString("quote_id");
                         Log.e("qoute_id_confirm_cart", "" + qoute_id_cart);
@@ -233,16 +342,17 @@ public class Confirmation_fragment extends Fragment {
     }
 
     private void CONFIRMATION_CART() {
-
+        progressBar.setVisibility(View.VISIBLE);
         ApiInterface apii = ApiClient.getClient().create(ApiInterface.class);
         Call<ResponseBody> confirm = apii.AppCreateOrder(customerid_confirm, email_confirm, quote_confirm, fname_confirm,
                 lname_confirm, countryid_confirm, zipcode_confirm, city_confirm, phone_confirm, company_confirm,
-                streetadd_confirm, shipping_confirm, paycode, saveaddress_confirm);
+                streetadd_confirm, shipping_confirm, paycode, saveaddress_confirm,reg_confirm);
 
         confirm.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 Log.e("response", "" + response.body().toString());
+                progressBar.setVisibility(View.GONE);
                 JSONObject jsonObject = null;
                 try {
                     jsonObject = new JSONObject(response.body().string());
@@ -277,9 +387,17 @@ public class Confirmation_fragment extends Fragment {
 
     private void Allocatememory(View v) {
         recyclerview_confirmation = (RecyclerView) v.findViewById(R.id.recyclerview_confirmation);
-        iv_confirm_pay = (ImageView) v.findViewById(R.id.iv_confirm_pay);
+        iv_confirm_pay = (LinearLayout) v.findViewById(R.id.lv_confirm_pay);
+        lv_goback_confirmation = (LinearLayout)v.findViewById(R.id.lv_goback_confirmation);
         lv_confirm_pay = (LinearLayout) v.findViewById(R.id.lv_confirm_pay);
         confirm_add = (TextView) v.findViewById(R.id.confirm_add);
+        progressBar = (ProgressBar)v.findViewById(R.id.confirmation_progressBar);
+        tv_totalconform = (TextView)v.findViewById(R.id.tv_totalconform);
+        tv_add_edit_confirm = (TextView)v.findViewById(R.id.tv_add_edit_confirm);
+        tv_cart_edit_confirm = (TextView)v.findViewById(R.id.tv_cart_edit_confirm);
+        tv_shipping_tit = (TextView)v.findViewById(R.id.tv_shipping_tit);
+        tv_conf_order = (TextView)v.findViewById(R.id.tv_conf_order);
+        tv_conf_totamt = (TextView)v.findViewById(R.id.tv_conf_totamt);
 
         confirmation_cart_adapter = new Confirmation_cart_Adapter(getActivity(), cartList);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());

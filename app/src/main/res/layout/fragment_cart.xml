@@ -64,7 +64,6 @@
                     </LinearLayout>
                 </LinearLayout>
             </android.support.v7.widget.Toolbar>
-
         </android.support.design.widget.AppBarLayout>
     </LinearLayout>
 
@@ -163,7 +162,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:gravity="center"
-                    android:text="90 KD"
+                    android:text="KWD0.00"
                     android:textColor="@color/white"
                     android:textSize="16sp" />
             </LinearLayout>

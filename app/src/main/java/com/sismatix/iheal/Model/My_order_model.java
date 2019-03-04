@@ -5,12 +5,16 @@ public class My_order_model {
     String created_at;
     String name;
     String grand_total;
+    String payment_method;
+    String order_id;
 
-    public My_order_model(String increment_id, String created_at, String name, String grand_total) {
+    public My_order_model(String increment_id, String created_at, String name, String grand_total,String payment_method,String order_id) {
         this.increment_id = increment_id;
         this.created_at = created_at;
         this.name = name;
         this.grand_total = grand_total;
+        this.payment_method = payment_method;
+        this.order_id = order_id;
     }
     public String getIncrement_id() {
         return increment_id;
@@ -43,4 +47,19 @@ public class My_order_model {
         this.grand_total = grand_total;
     }
 
+    public String getPayment_method() {
+        return payment_method;
+    }
+
+    public void setPayment_method(String payment_method) {
+        this.payment_method = payment_method;
+    }
+
+    public String getOrder_id() {
+        return order_id;
+    }
+
+    public void setOrder_id(String order_id) {
+        this.order_id = order_id;
+    }
 }

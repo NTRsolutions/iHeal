@@ -38,13 +38,13 @@ public interface ApiInterface {
 
     @POST("AppProductView.php")
     @FormUrlEncoded
-    Call<ResponseBody> appprodview(@Field("product_id") String product_id);
-
+    Call<ResponseBody> appprodview(@Field("product_id") String product_id,
+                                   @Field("customer_id") String customer_id);
 
     @POST("AppAddToCart.php")
     @FormUrlEncoded
     Call<ResponseBody> addtocart(@Field("product_id") String product_id,
-                                 @Field("customer_id") String password);
+                                 @Field("customer_id") String customer_id);
 
     @POST("AppAddToCart.php")
     @FormUrlEncoded
@@ -61,7 +61,7 @@ public interface ApiInterface {
 
     @POST("AppCartList.php")
     @FormUrlEncoded
-    Call<ResponseBody> getlistcart(@Field("quote_id") String email);
+    Call<ResponseBody> getlistcart(@Field("quote_id") String quote_id);
 
     //wishlist api
     //https://ihealkuwait.com/customapi/AppAddWishlist.php?productid=50&customerid=1
@@ -80,10 +80,8 @@ public interface ApiInterface {
     Call<ResponseBody> remove_from_wishlist(@Field("productid") String product_id,
                                             @Field("customerid") String customerid);
 
-
     //remove from cartlist
     //https://ihealkuwait.com/customapi/AppRemoveFromCart.php?product_id=4&email=developertest2018@gmail.com
-
 
     @POST("AppRemoveFromCart.php")
     @FormUrlEncoded
@@ -156,7 +154,8 @@ public interface ApiInterface {
                                       @Field("street") String street,
                                       @Field("shippingcode") String shippingcode,
                                       @Field("paymentcode") String paymentcode,
-                                      @Field("saveaddress") String saveaddress);
+                                      @Field("saveaddress") String saveaddress,
+                                      @Field("region") String region);
 
     //https://ihealkuwait.com/customapi/AppUpdateAddress.php?
     // address_id=137&customer_id=1&firstname=uaua&middlename=mama&city=yryr&postcode=888888&telephone=2222222222&company=dreamdcm
@@ -174,9 +173,13 @@ public interface ApiInterface {
                                         @Field("postcode") String postcode,
                                         @Field("city") String city);
 
-
     @POST("AppOrderList.php")
     @FormUrlEncoded
     Call<ResponseBody> AppOrderList(@Field("customer_id") String customer_id);
+
+    @POST("AppReorder.php")
+    @FormUrlEncoded
+    Call<ResponseBody> AppReorder(@Field("customer_id") String customer_id,
+                                    @Field("order_id")String order_id);
 
 }

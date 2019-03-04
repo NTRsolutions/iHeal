@@ -23,11 +23,11 @@ import static com.sismatix.iheal.Activity.Navigation_drawer_activity.bottom_navi
  */
 
 public class Checkout_fragment extends Fragment implements View.OnClickListener {
-    LinearLayout lv_shipping,lv_confirmation,lv_payment;
-    public static LinearLayout lv_shipping_selected,lv_payment_selected,lv_confirmation_selected;
-    public static ImageView iv_confirmation_done,iv_payment_done,iv_shipping_done,iv_close_checkout;
-    public static TextView tv_shipping,tv_payment,tv_confirmation;
-    String loginflag;
+    LinearLayout lv_shipping, lv_confirmation, lv_payment;
+    public static LinearLayout lv_shipping_selected, lv_payment_selected, lv_confirmation_selected;
+    public static ImageView iv_confirmation_done, iv_payment_done, iv_shipping_done, iv_close_checkout;
+    public static TextView tv_shipping, tv_payment, tv_confirmation, checkout_total,tv_checkout_title;
+    String loginflag, tot_cart;
     View v;
 
     public Checkout_fragment() {
@@ -38,12 +38,28 @@ public class Checkout_fragment extends Fragment implements View.OnClickListener 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        v=inflater.inflate(R.layout.fragment_checkout_fragment, container, false);
+        v = inflater.inflate(R.layout.fragment_checkout_fragment, container, false);
         bottom_navigation.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
 
         loginflag = Login_preference.getLogin_flag(getActivity());
 
         AllocateMemory(v);
+
+        tv_checkout_title.setTypeface(Home.roboto_bold);
+        tv_shipping.setTypeface(Home.roboto_regular);
+        tv_payment.setTypeface(Home.roboto_regular);
+        tv_confirmation.setTypeface(Home.roboto_regular);
+
+        Bundle bundle = this.getArguments();
+
+        if (bundle != null) {
+
+            tot_cart = bundle.getString("grand_tot_cart");
+            Log.e("checkout_tot", "" + tot_cart);
+
+        }
+
+        checkout_total.setText(tot_cart);
 
         lv_shipping.setOnClickListener(this);
         lv_confirmation.setOnClickListener(this);
@@ -65,20 +81,23 @@ public class Checkout_fragment extends Fragment implements View.OnClickListener 
     }
 
     private void AllocateMemory(View v) {
-        lv_shipping=(LinearLayout)v.findViewById(R.id.lv_shipping);
-        lv_confirmation=(LinearLayout)v.findViewById(R.id.lv_confirmation);
-        lv_payment=(LinearLayout)v.findViewById(R.id.lv_payment);
-        lv_shipping_selected=(LinearLayout)v.findViewById(R.id.lv_shipping_selected);
-        lv_payment_selected=(LinearLayout)v.findViewById(R.id.lv_payment_selected);
-        lv_confirmation_selected=(LinearLayout)v.findViewById(R.id.lv_confirmation_selected);
 
-        iv_confirmation_done=(ImageView)v.findViewById(R.id.iv_confirmation_done);
-        iv_payment_done=(ImageView)v.findViewById(R.id.iv_payment_done);
-        iv_shipping_done=(ImageView)v.findViewById(R.id.iv_shipping_done);
-        iv_close_checkout=(ImageView)v.findViewById(R.id.iv_close_checkout);
-        tv_shipping=(TextView)v.findViewById(R.id.tv_shipping);
-        tv_payment=(TextView)v.findViewById(R.id.tv_payment);
-        tv_confirmation=(TextView)v.findViewById(R.id.tv_confirmation);
+        lv_shipping = (LinearLayout) v.findViewById(R.id.lv_shipping);
+        lv_confirmation = (LinearLayout) v.findViewById(R.id.lv_confirmation);
+        lv_payment = (LinearLayout) v.findViewById(R.id.lv_payment);
+        lv_shipping_selected = (LinearLayout) v.findViewById(R.id.lv_shipping_selected);
+        lv_payment_selected = (LinearLayout) v.findViewById(R.id.lv_payment_selected);
+        lv_confirmation_selected = (LinearLayout) v.findViewById(R.id.lv_confirmation_selected);
+
+        iv_confirmation_done = (ImageView) v.findViewById(R.id.iv_confirmation_done);
+        iv_payment_done = (ImageView) v.findViewById(R.id.iv_payment_done);
+        iv_shipping_done = (ImageView) v.findViewById(R.id.iv_shipping_done);
+        iv_close_checkout = (ImageView) v.findViewById(R.id.iv_close_checkout);
+        tv_shipping = (TextView) v.findViewById(R.id.tv_shipping);
+        tv_payment = (TextView) v.findViewById(R.id.tv_payment);
+        tv_confirmation = (TextView) v.findViewById(R.id.tv_confirmation);
+        tv_checkout_title = (TextView) v.findViewById(R.id.tv_checkout_title);
+        checkout_total = (TextView) v.findViewById(R.id.checkout_total);
     }
 
     private void loadFragment(Fragment fragment) {
@@ -90,6 +109,7 @@ public class Checkout_fragment extends Fragment implements View.OnClickListener 
 
         transaction.commit();
     }
+
     private void loadFragmentmain(Fragment fragment) {
         Log.e("clickone", "");
         android.support.v4.app.FragmentManager manager = getFragmentManager();
@@ -102,7 +122,7 @@ public class Checkout_fragment extends Fragment implements View.OnClickListener 
 
     @Override
     public void onClick(View view) {
-        if(view==lv_shipping)
+       /* if(view==lv_shipping)
         {
             lv_payment_selected.setVisibility(View.INVISIBLE);
             lv_confirmation_selected.setVisibility(View.INVISIBLE);
@@ -114,8 +134,11 @@ public class Checkout_fragment extends Fragment implements View.OnClickListener 
             if (loginflag.equalsIgnoreCase("1") || loginflag == "1") {
 
                 loadFragment(new Shipping_fragment());
+
             } else {
+
                 loadFragment(new EmailLogin());
+
             }
 
         }else if(view==lv_confirmation)
@@ -131,7 +154,9 @@ public class Checkout_fragment extends Fragment implements View.OnClickListener 
             if (loginflag.equalsIgnoreCase("1") || loginflag == "1") {
 
                 loadFragment(new Confirmation_fragment());
+
             } else {
+
                 loadFragmentmain(new EmailLogin());
             }
         }
@@ -144,15 +169,18 @@ public class Checkout_fragment extends Fragment implements View.OnClickListener 
             lv_confirmation_selected.setVisibility(View.INVISIBLE);
             lv_shipping_selected.setVisibility(View.INVISIBLE);
 
-
             if (loginflag.equalsIgnoreCase("1") || loginflag == "1") {
 
                 loadFragment(new Payment_fragment());
+
             } else {
+
+                loadFragmentmain(new EmailLogin());
 
             }
 
-        }else if (view==iv_close_checkout){
+        }*/
+        if (view == iv_close_checkout) {
             loadFragmentmain(new Cart());
         }
 

@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.sismatix.iheal.Fragments.Cart;
 import com.sismatix.iheal.Fragments.Hair_Cair_fregment;
+import com.sismatix.iheal.Fragments.Home;
 import com.sismatix.iheal.Fragments.Item_details;
 import com.sismatix.iheal.Model.Cart_Model;
 import com.sismatix.iheal.Preference.Login_preference;
@@ -70,8 +71,13 @@ public class Cart_List_Adapter extends RecyclerView.Adapter<Cart_List_Adapter.My
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
         final Cart_Model cart_model = cartList.get(position);
+        holder.tv_cart_product_title.setTypeface(Home.roboto_bold);
+        holder.tv_cart_product_description.setTypeface(Home.roboto_light);
+        holder.tv_product_price_total.setTypeface(Home.roboto_black);
+
         holder.tv_cart_product_title.setText(cart_model.getProduct_name());
         Glide.with(context).load(cart_model.getProduct_image()).into(holder.iv_cart_product_image);
+        Log.e("total_price",""+cart_model.getProduct_price());
         holder.tv_product_price_total.setText(cart_model.getProduct_price());
         holder.tv_cart_product_description.setText(cart_model.getProduct_description());
         holder.tv_cart_quantity_total.setText(cart_model.getProduct_qty());

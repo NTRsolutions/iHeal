@@ -164,4 +164,19 @@ public class MyAddress_Preference {
         return mPrefs.getString("CountryPosition", "");
     }
 
+    public static void setsaveAddress(Context context, String value)
+    {
+        mPrefs = PreferenceManager.getDefaultSharedPreferences(context);
+        prefsEditor = mPrefs.edit();
+        prefsEditor.putString("SaveAdress", value);
+        prefsEditor.commit();
+    }
+    public static String getsaveAddress(Context context)
+    {
+        mPrefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return mPrefs.getString("SaveAdress", "");
+    }
+
+
+
 }

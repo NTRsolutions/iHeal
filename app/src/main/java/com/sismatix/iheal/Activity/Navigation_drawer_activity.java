@@ -3,6 +3,7 @@ package com.sismatix.iheal.Activity;
 import android.animation.ArgbEvaluator;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -14,9 +15,11 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
+import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.TextAppearanceSpan;
 import android.util.Log;
+import android.view.SubMenu;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -46,21 +49,23 @@ import com.sismatix.iheal.Fragments.Search;
 import com.sismatix.iheal.Fragments.Wishlist_fragment;
 import com.sismatix.iheal.Preference.Login_preference;
 import com.sismatix.iheal.R;
+import com.sismatix.iheal.View.CustomTypefaceSpan;
 
 
 public class Navigation_drawer_activity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-  public static DrawerLayout drawer;
+    public static DrawerLayout drawer;
     NavigationView navigationView;
     Toolbar toolbar;
     MenuItem title_account_tools, title_shop_tools;
     SpannableString shop, account;
-    public static LinearLayout lv_withlogin_header, login_navigation,lv_logout;
+    public static LinearLayout lv_withlogin_header, login_navigation, lv_logout;
     public static String loginflagmain;
-    public  static TextView tv_navidrawer,item_count;
+    public static TextView tv_navidrawer, item_count, tv_logout;
 
     //bottom navigation
+
     private ViewPager viewPager;
     public static BottomNavigationView bottom_navigation;
     private List<View> viewList;
@@ -73,17 +78,19 @@ public class Navigation_drawer_activity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navigation_drawer);
         loginflagmain = Login_preference.getLogin_flag(Navigation_drawer_activity.this);
-        Log.e("logingflag",""+loginflagmain);
+        Log.e("logingflag", "" + loginflagmain);
+
         AllocateMemory();
 
         login_navigation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getSupportFragmentManager().beginTransaction().replace(R.id.rootLayout, new EmailLogin()
-                ).addToBackStack("Login").commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.rootLayout, new EmailLogin())
+                        .addToBackStack("Login").commit();
                 drawer.closeDrawer(GravityCompat.START);
             }
         });
+
         setSupportActionBar(toolbar);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -93,6 +100,22 @@ public class Navigation_drawer_activity extends AppCompatActivity
         //  toggle.syncState();
 
         Menu menu = navigationView.getMenu();
+
+        for (int i = 0; i < menu.size(); i++) {
+            MenuItem mi = menu.getItem(i);
+
+            //for aapplying a font to subMenu ...
+            SubMenu subMenu = mi.getSubMenu();
+            if (subMenu != null && subMenu.size() > 0) {
+                for (int j = 0; j < subMenu.size(); j++) {
+                    MenuItem subMenuItem = subMenu.getItem(j);
+                    applyFontToMenuItem(subMenuItem);
+                }
+            }
+
+            //the method we have create in activity
+            applyFontToMenuItem(mi);
+        }
 
         title_account_tools = menu.findItem(R.id.title_account_tools);
         title_shop_tools = menu.findItem(R.id.title_shop_tools);
@@ -120,7 +143,6 @@ public class Navigation_drawer_activity extends AppCompatActivity
             }
         });
 
-
         getSupportFragmentManager().addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
             @Override
             public void onBackStackChanged() {
@@ -132,17 +154,25 @@ public class Navigation_drawer_activity extends AppCompatActivity
             }
         });
 
-
+        tv_logout.setTypeface(Home.roboto_regular);
         lv_logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Login_preference.setLogin_flag(Navigation_drawer_activity.this,"0");
-                Intent intent=new Intent(Navigation_drawer_activity.this,Navigation_drawer_activity.class);
+                Login_preference.setLogin_flag(Navigation_drawer_activity.this, "0");
+                Intent intent = new Intent(Navigation_drawer_activity.this, Navigation_drawer_activity.class);
                 startActivity(intent);
-                }
+            }
         });
         Bootom_Navigation_view();
     }
+
+    private void applyFontToMenuItem(MenuItem mi) {
+        Typeface font = Typeface.createFromAsset(getAssets(), "Roboto-Medium.ttf");
+        SpannableString mNewTitle = new SpannableString(mi.getTitle());
+        mNewTitle.setSpan(new CustomTypefaceSpan("", font), 0, mNewTitle.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+        mi.setTitle(mNewTitle);
+    }
+
     public DrawerLayout getmDrawerLayout() {
         return drawer;
     }
@@ -172,16 +202,16 @@ public class Navigation_drawer_activity extends AppCompatActivity
         switch (item.getItemId()) {
             case R.id.bottom_nav_home:
                 // Action to perform when Home Menu item is selected.
-                pushFragment(new Home(),"Home");//Search
+                pushFragment(new Home(), "Home");//Search
                 viewPager.setCurrentItem(0);
                 break;
             case R.id.bottom_nav_search:
-                pushFragment(new Search(),"Search_fragment");//Search
+                pushFragment(new Search(), "Search_fragment");//Search
                 viewPager.setCurrentItem(1);
                 break;
             case R.id.bottom_nav_Wishlist:
                 if (loginflagmain.equalsIgnoreCase("1") || loginflagmain == "1") {
-                    pushFragment(new Wishlist_fragment(),"Wishlist_fragment");
+                    pushFragment(new Wishlist_fragment(), "Wishlist_fragment");
                     viewPager.setCurrentItem(2);
                     break;
                 } else {
@@ -189,24 +219,24 @@ public class Navigation_drawer_activity extends AppCompatActivity
                     break;
                 }
             case R.id.bottom_nav_cart:
-                pushFragment(new Cart(),"Cart");
+                pushFragment(new Cart(), "Cart");
                 viewPager.setCurrentItem(3);
                 break;
             case R.id.bottom_nav_account:
                 if (loginflagmain.equalsIgnoreCase("1") || loginflagmain == "1") {
-                    pushFragment(new AccountTabs(),"My Account");
+                    pushFragment(new AccountTabs(), "My Account");
                     viewPager.setCurrentItem(4);
                     break;
 
                 } else {
-                    pushFragment(new Account(),"Login_myaccount");
+                    pushFragment(new Account(), "Login_myaccount");
                     viewPager.setCurrentItem(4);
                     break;
                 }
-
         }
     }
-    private void pushFragment(Fragment fragment,String add_to_backstack) {
+
+    private void pushFragment(Fragment fragment, String add_to_backstack) {
         if (fragment == null)
             return;
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -219,6 +249,7 @@ public class Navigation_drawer_activity extends AppCompatActivity
             }
         }
     }
+
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
@@ -226,7 +257,7 @@ public class Navigation_drawer_activity extends AppCompatActivity
 
         if (id == R.id.nav_product_categories) {
             // Handle the camera action
-            pushFragment(new Nature_Category_freg(),"Nature_category");
+            pushFragment(new Nature_Category_freg(), "Nature_category");
 
         }/* else if (id == R.id.nav_health_topic) {
 
@@ -234,45 +265,45 @@ public class Navigation_drawer_activity extends AppCompatActivity
 
         } else if (id == R.id.nav_reviews) {
 
-        }*/ else if (id == R.id.nav_recipes) {
+        }*/ /*else if (id == R.id.nav_recipes) {
 
-        }
-        else if (id == R.id.nav_my_order) {
+        }*/ else if (id == R.id.nav_my_order) {
             if (loginflagmain.equalsIgnoreCase("1") || loginflagmain == "1") {
 
-                pushFragment(new MyOrder(),"My Order");
+                pushFragment(new MyOrder(), "My Order");
             } else {
 
-                pushFragment(new Account(),"Login_myaccount");
+                pushFragment(new Account(), "Login_myaccount");
 
             }
 
-        }
-        else if (id == R.id.nav_my_account) {
+        } else if (id == R.id.nav_my_account) {
 
             if (loginflagmain.equalsIgnoreCase("1") || loginflagmain == "1") {
 
-                pushFragment(new AccountTabs(),"My Account");
+                pushFragment(new AccountTabs(), "My Account");
             } else {
 
-                pushFragment(new Account(),"Login_myaccount");
+                pushFragment(new Account(), "Login_myaccount");
 
             }
 
         } else if (id == R.id.nav_wishlist) {
             if (loginflagmain.equalsIgnoreCase("1") || loginflagmain == "1") {
-                pushFragment(new Wishlist_fragment(),"wishlist");
+                pushFragment(new Wishlist_fragment(), "wishlist");
             } else {
                 Toast.makeText(this, "Please try to login.", Toast.LENGTH_SHORT).show();
             }
         } else if (id == R.id.nav_messages) {
 
-            pushFragment(new MyOrderDetails(),"MyOrder_details");
-        } else if (id == R.id.nav_notification) { }
+            pushFragment(new MyOrderDetails(), "MyOrder_details");
+        } else if (id == R.id.nav_notification) {
+        }
 
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
     private void disableNavigationViewScrollbars(NavigationView navigationView) {
         if (navigationView != null) {
             NavigationMenuView navigationMenuView = (NavigationMenuView) navigationView.getChildAt(0);
@@ -281,19 +312,21 @@ public class Navigation_drawer_activity extends AppCompatActivity
             }
         }
     }
+
     private void AllocateMemory() {
         //set bydefault itemcount
-        Login_preference.setCart_item_count(Navigation_drawer_activity.this,"0");
+        Login_preference.setCart_item_count(Navigation_drawer_activity.this, "0");
 
-       toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         View header = navigationView.getHeaderView(0);
         login_navigation = (LinearLayout) findViewById(R.id.login_navigation);
         lv_logout = (LinearLayout) findViewById(R.id.lv_logout);
-        tv_navidrawer=(TextView)header.findViewById(R.id.tv_navidraweremail);
-        item_count=(TextView)header.findViewById(R.id.item_count);
+        tv_navidrawer = (TextView) header.findViewById(R.id.tv_navidraweremail);
+        item_count = (TextView) header.findViewById(R.id.item_count);
         lv_withlogin_header = (LinearLayout) header.findViewById(R.id.lv_withlogin_header);
+        tv_logout = (TextView) findViewById(R.id.tv_logout);
 
         ///menu in login&logout opetionshow
         if (loginflagmain.equalsIgnoreCase("1") || loginflagmain == "1") {
@@ -301,6 +334,7 @@ public class Navigation_drawer_activity extends AppCompatActivity
             login_navigation.setVisibility(View.GONE);
             lv_logout.setVisibility(View.VISIBLE);
         } else {
+            tv_navidrawer.setTypeface(Home.roboto_bold);
             tv_navidrawer.setText(Login_preference.getemail(Navigation_drawer_activity.this));
             lv_withlogin_header.setVisibility(View.GONE);
             login_navigation.setVisibility(View.VISIBLE);
@@ -364,7 +398,7 @@ public class Navigation_drawer_activity extends AppCompatActivity
             super.onBackPressed();
         }
 
-        if (getSupportFragmentManager().getBackStackEntryCount() > 0 ){
+        if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
             getFragmentManager().popBackStack();
         } else {
             super.onBackPressed();
@@ -377,39 +411,42 @@ public class Navigation_drawer_activity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         }
-        Log.e("countt_vinod",""+count);
-         if (count == 1) {
-             if (doubleBackToExitPressedOnce) {
-                 super.onBackPressed();
-                 super.finish();
-                 return;
-             }
-             this.doubleBackToExitPressedOnce = true;
-             Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
-             new Handler().postDelayed(new Runnable() {
-                 @Override
-                 public void run() {
-                     doubleBackToExitPressedOnce = false;
-                 }
-             }, 2000);
+        Log.e("countt_vinod", "" + count);
+        if (count == 1) {
+            if (doubleBackToExitPressedOnce) {
+                super.onBackPressed();
+                super.finish();
+                return;
+            }
+            this.doubleBackToExitPressedOnce = true;
+            Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    doubleBackToExitPressedOnce = false;
+                }
+            }, 2000);
         } else {
             String title = fragmentManager.getBackStackEntryAt(count - 2).getName();
             super.onBackPressed();
             Log.e("onBackPressetitle", "" + title);
-           // tv_title.setText(title);
+            // tv_title.setText(title);
         }
         //doExitApp();
     }
+
     @Override
     protected void onResume() {
         super.onResume();
         bottom_navigation.getMenu().getItem(0).setChecked(true);
     }
+
     public static void setHomeItem(Activity activity) {
         bottom_navigation.setSelectedItemId(R.id.home);
     }
 
     private long exitTime = 0;
+
     public void doExitApp() {
         if ((System.currentTimeMillis() - exitTime) > 2000) {
             Toast.makeText(Navigation_drawer_activity.this,
@@ -420,6 +457,7 @@ public class Navigation_drawer_activity extends AppCompatActivity
             finish();
         }
     }
+
     private PagerAdapter pagerAdapter = new PagerAdapter() {
         @Override
         public int getCount() {
@@ -458,6 +496,7 @@ public class Navigation_drawer_activity extends AppCompatActivity
             }*/
             // ((View) viewPager.getParent()).setBackgroundColor(evaluate);
         }
+
         @Override
         public void onPageSelected(int position) {
             switch (position) {
@@ -479,6 +518,7 @@ public class Navigation_drawer_activity extends AppCompatActivity
                     break;
             }
         }
+
         @Override
         public void onPageScrollStateChanged(int state) {
         }

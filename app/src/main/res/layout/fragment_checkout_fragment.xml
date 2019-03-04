@@ -59,6 +59,7 @@
                         android:orientation="vertical">
 
                         <TextView
+                            android:id="@+id/tv_checkout_title"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/checkout"
@@ -75,6 +76,7 @@
                         android:gravity="center">
 
                         <TextView
+                            android:id="@+id/checkout_total"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"

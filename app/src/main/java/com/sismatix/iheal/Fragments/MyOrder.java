@@ -17,6 +17,7 @@ import com.sismatix.iheal.Adapter.My_orderlist_Adapter;
 import com.sismatix.iheal.Adapter.Wishlist_Adapter;
 import com.sismatix.iheal.Model.My_order_model;
 import com.sismatix.iheal.Model.Wishlist_Model;
+import com.sismatix.iheal.Preference.CheckNetwork;
 import com.sismatix.iheal.Preference.Login_preference;
 import com.sismatix.iheal.R;
 import com.sismatix.iheal.Retrofit.ApiClient;
@@ -44,9 +45,11 @@ public class MyOrder extends Fragment {
     private static List<My_order_model> my_order_models = new ArrayList<My_order_model>();
     private static My_orderlist_Adapter my_orderlist_adapter;
     ProgressBar progressBar;
+
     public MyOrder() {
         // Required empty public constructor
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -59,7 +62,11 @@ public class MyOrder extends Fragment {
         recycler_orderlist.setAdapter(my_orderlist_adapter);
         // snapHelper.attachToRecyclerView(recycler_wishlist);
 
-        CALL_Orderlist_API();
+        if (CheckNetwork.isNetworkAvailable(getActivity())) {
+            CALL_Orderlist_API();
+        } else {
+            Toast.makeText(getContext(), "Please Check your Internet Connection", Toast.LENGTH_SHORT).show();
+        }
 
         return v;
     }
@@ -89,7 +96,9 @@ public class MyOrder extends Fragment {
                                 my_order_models.add(new My_order_model("" + wish_object.getString("increment_id"),
                                         "" + wish_object.getString("created_at"),
                                         "" + wish_object.getString("name"),
-                                        "" + wish_object.getString("grand_total")));
+                                        "" + wish_object.getString("grand_total"),
+                                        ""+wish_object.getString("Paymentmethod"),
+                                        ""+wish_object.getString("order_id")));
                             } catch (Exception e) {
                                 Log.e("Exception", "" + e);
                             } finally {

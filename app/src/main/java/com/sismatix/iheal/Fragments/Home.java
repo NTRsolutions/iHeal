@@ -2,6 +2,8 @@ package com.sismatix.iheal.Fragments;
 
 
 import android.content.Context;
+import android.content.res.AssetManager;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -19,6 +21,8 @@ import com.sismatix.iheal.Activity.Navigation_drawer_activity;
 import com.sismatix.iheal.Preference.Login_preference;
 import com.sismatix.iheal.R;
 
+import java.util.Locale;
+
 import static com.sismatix.iheal.Activity.Navigation_drawer_activity.bottom_navigation;
 
 
@@ -32,7 +36,10 @@ public class Home extends Fragment implements View.OnClickListener {
     LinearLayout lv_withoutlogin, lv_withlogin, lv_creatnewaccount, lv_loginaccount;
     Button btn_contact;
     String loginflag;
-    TextView tv_hometitlename;
+    TextView tv_hometitlename, tv_home_createacc, tv_home_loginacc, tv_home_howcanihelpyou;
+
+    public static AssetManager am;
+    public static Typeface roboto_black, roboto_bold, roboto_light, roboto_medium, roboto_regular, roboto_thin;
 
     String value;
 
@@ -47,41 +54,10 @@ public class Home extends Fragment implements View.OnClickListener {
         View v = inflater.inflate(R.layout.fragment_home, container, false);
         bottom_navigation.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
         loginflag = Login_preference.getLogin_flag(getActivity());
-        iv_lung = (ImageView) v.findViewById(R.id.iv_lung);
-        iv_hair_care = (ImageView) v.findViewById(R.id.iv_hair_care);
-        lv_withoutlogin = (LinearLayout) v.findViewById(R.id.lv_withoutlogin);
-        lv_withlogin = (LinearLayout) v.findViewById(R.id.lv_withlogin);
-        lv_creatnewaccount = (LinearLayout) v.findViewById(R.id.lv_creatnewaccount);
-        lv_loginaccount = (LinearLayout) v.findViewById(R.id.lv_loginaccount);
-        btn_contact = (Button) v.findViewById(R.id.btn_contact);
-        tv_hometitlename = (TextView) v.findViewById(R.id.tv_hometitlename);
 
-        iv_brain = (ImageView) v.findViewById(R.id.iv_brain);
-        iv_eye = (ImageView) v.findViewById(R.id.iv_eye);
-        iv_nose = (ImageView) v.findViewById(R.id.iv_nose);
-        iv_mouth = (ImageView) v.findViewById(R.id.iv_mouth);
-        iv_teeth = (ImageView) v.findViewById(R.id.iv_teeth);
-        iv_bones = (ImageView) v.findViewById(R.id.iv_bones);
-        iv_stomach = (ImageView) v.findViewById(R.id.iv_stomach);
-        iv_liver = (ImageView) v.findViewById(R.id.iv_liver);
-        iv_kidney = (ImageView) v.findViewById(R.id.iv_kidney);
-        iv_UT = (ImageView) v.findViewById(R.id.iv_UT);
-
-        iv_lung.setOnClickListener(this);
-        iv_hair_care.setOnClickListener(this);
-        lv_creatnewaccount.setOnClickListener(this);
-        lv_loginaccount.setOnClickListener(this);
-
-        iv_brain.setOnClickListener(this);
-        iv_eye.setOnClickListener(this);
-        iv_nose.setOnClickListener(this);
-        iv_mouth.setOnClickListener(this);
-        iv_teeth.setOnClickListener(this);
-        iv_bones.setOnClickListener(this);
-        iv_stomach.setOnClickListener(this);
-        iv_liver.setOnClickListener(this);
-        iv_kidney.setOnClickListener(this);
-        iv_UT.setOnClickListener(this);
+        Allocatememory(v);
+        setonclicklistners();
+        setFontStyle();
 
         Navigation_drawer_activity.item_count.setText(Login_preference.getCart_item_count(getActivity()));
 
@@ -97,9 +73,75 @@ public class Home extends Fragment implements View.OnClickListener {
             btn_contact.setVisibility(View.GONE);
         }
 
+        tv_hometitlename.setTypeface(Home.roboto_light);
 
         return v;
     }
+
+    private void Allocatememory(View v) {
+        iv_lung = (ImageView) v.findViewById(R.id.iv_lung);
+        iv_hair_care = (ImageView) v.findViewById(R.id.iv_hair_care);
+        lv_withoutlogin = (LinearLayout) v.findViewById(R.id.lv_withoutlogin);
+        lv_withlogin = (LinearLayout) v.findViewById(R.id.lv_withlogin);
+        lv_creatnewaccount = (LinearLayout) v.findViewById(R.id.lv_creatnewaccount);
+        lv_loginaccount = (LinearLayout) v.findViewById(R.id.lv_loginaccount);
+        btn_contact = (Button) v.findViewById(R.id.btn_contact);
+
+        tv_hometitlename = (TextView) v.findViewById(R.id.tv_hometitlename);
+        tv_home_createacc = (TextView) v.findViewById(R.id.tv_home_createacc);
+        tv_home_loginacc = (TextView) v.findViewById(R.id.tv_home_loginacc);
+        tv_home_howcanihelpyou = (TextView) v.findViewById(R.id.tv_home_howcanihelpyou);
+
+        iv_brain = (ImageView) v.findViewById(R.id.iv_brain);
+        iv_eye = (ImageView) v.findViewById(R.id.iv_eye);
+        iv_nose = (ImageView) v.findViewById(R.id.iv_nose);
+        iv_mouth = (ImageView) v.findViewById(R.id.iv_mouth);
+        iv_teeth = (ImageView) v.findViewById(R.id.iv_teeth);
+        iv_bones = (ImageView) v.findViewById(R.id.iv_bones);
+        iv_stomach = (ImageView) v.findViewById(R.id.iv_stomach);
+        iv_liver = (ImageView) v.findViewById(R.id.iv_liver);
+        iv_kidney = (ImageView) v.findViewById(R.id.iv_kidney);
+        iv_UT = (ImageView) v.findViewById(R.id.iv_UT);
+    }
+
+    private void setonclicklistners() {
+        iv_lung.setOnClickListener(this);
+        iv_hair_care.setOnClickListener(this);
+        lv_creatnewaccount.setOnClickListener(this);
+        lv_loginaccount.setOnClickListener(this);
+        iv_brain.setOnClickListener(this);
+        iv_eye.setOnClickListener(this);
+        iv_nose.setOnClickListener(this);
+        iv_mouth.setOnClickListener(this);
+        iv_teeth.setOnClickListener(this);
+        iv_bones.setOnClickListener(this);
+        iv_stomach.setOnClickListener(this);
+        iv_liver.setOnClickListener(this);
+        iv_kidney.setOnClickListener(this);
+        iv_UT.setOnClickListener(this);
+    }
+
+    private void setFontStyle() {
+
+        //holder.txt_pack_title.setTypeface(Home.typeface);
+        //holder.txt_pack_title.setText(package_model.getPackage_title());
+
+        am = getActivity().getAssets();
+        roboto_black = Typeface.createFromAsset(am,
+                String.format(Locale.getDefault(), "Roboto-Black.ttf"));
+        roboto_bold = Typeface.createFromAsset(am,
+                String.format(Locale.getDefault(), "Roboto-Bold.ttf"));
+        roboto_light = Typeface.createFromAsset(am,
+                String.format(Locale.getDefault(), "Roboto-Light.ttf"));
+        roboto_medium = Typeface.createFromAsset(am,
+                String.format(Locale.getDefault(), "Roboto-Medium.ttf"));
+        roboto_regular = Typeface.createFromAsset(am,
+                String.format(Locale.getDefault(), "Roboto-Regular.ttf"));
+        roboto_thin = Typeface.createFromAsset(am,
+                String.format(Locale.getDefault(), "Roboto-Thin.ttf"));
+
+    }
+
     private void loadFragmentt(Fragment fragment) {
         Log.e("clickone", "");
         android.support.v4.app.FragmentManager manager = getFragmentManager();
@@ -273,32 +315,4 @@ public class Home extends Fragment implements View.OnClickListener {
         }
 
     }
-    /*public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.iv_lung:
-                if(loginflag.equalsIgnoreCase("1") || loginflag == "1"){
-
-                    loadFragment(new TransParant_Hair_care_freg());
-                }else{
-                    loadFragment(new Account());
-                }
-                break;
-            case R.id.iv_hair_care:
-                if(loginflag.equalsIgnoreCase("1") || loginflag == "1"){
-                    loadFragment(new TransParant_Hair_care_freg());
-                }else{
-                    loadFragment(new Account());
-                }
-                break;
-            case R.id.lv_creatnewaccount:
-                loadFragment(new Account());
-                break;
-            case R.id.lv_loginaccount:
-                loadFragment(new EmailLogin());
-                break;
-            default:
-                break;
-        }
-
-    }*/
 }

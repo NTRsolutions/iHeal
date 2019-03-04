@@ -5,6 +5,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -13,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.sismatix.iheal.Adapter.Cart_Delivery_Adapter;
@@ -21,7 +23,9 @@ import com.sismatix.iheal.Model.Cart_Delivery_Model;
 import com.sismatix.iheal.Model.Payment_Method_Model;
 import com.sismatix.iheal.Model.Product_Category_model;
 import com.sismatix.iheal.Model.Product_Grid_Model;
+import com.sismatix.iheal.Preference.CheckNetwork;
 import com.sismatix.iheal.Preference.Login_preference;
+import com.sismatix.iheal.Preference.MyAddress_Preference;
 import com.sismatix.iheal.R;
 import com.sismatix.iheal.Retrofit.ApiClient;
 import com.sismatix.iheal.Retrofit.ApiInterface;
@@ -50,11 +54,13 @@ public class Payment_fragment extends Fragment {
     Payment_Method_Adapter payment_method_adapter;
     private List<Payment_Method_Model> payment_method_models = new ArrayList<Payment_Method_Model>();
     ImageView iv_confirm_order;
-    LinearLayout lv_confirm_order;
+    LinearLayout lv_confirm_order,lv_goback_payment;
     String loginflag;
     View v;
     String fname_shipping, lname_shipping, zipcode_shipping, city_shipping, phone_shipping, company_shipping, streetadd_shipping,
-            countryid_shipping, customerid_shipping, saveaddress_shipping, shipping_method, email_shipping, quote_shipping;
+            countryid_shipping, customerid_shipping,reg_shipping, saveaddress_shipping, shipping_method, email_shipping,
+            quote_shipping;
+    TextView tv_payment_title,tv_payconf;
 
     public Payment_fragment() {
         // Required empty public constructor
@@ -65,12 +71,25 @@ public class Payment_fragment extends Fragment {
                              Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.fragment_payment, container, false);
         AllocateMEmory(v);
-        CALL_PAYMENT_API();
-        loginflag = Login_preference.getLogin_flag(getActivity());
 
+        tv_payment_title.setTypeface(Home.roboto_bold);
+        tv_payconf.setTypeface(Home.roboto_bold);
+
+        if (CheckNetwork.isNetworkAvailable(getActivity())) {
+            CALL_PAYMENT_API();
+        } else {
+            Toast.makeText(getContext(), "Please Check your Internet Connection", Toast.LENGTH_SHORT).show();
+        }
+
+        loginflag = Login_preference.getLogin_flag(getActivity());
         Bundle bundle = this.getArguments();
 
+        if (paymentcode_ada == null) {
+            Toast.makeText(getActivity(), "Please Select atleast one Payment Method", Toast.LENGTH_SHORT).show();
+        }
+
         if (bundle != null){
+
             fname_shipping = bundle.getString("Firstname_shipping");
             lname_shipping = bundle.getString("Lastname_shipping");
             zipcode_shipping = bundle.getString("Zipcode_shipping");
@@ -80,6 +99,7 @@ public class Payment_fragment extends Fragment {
             streetadd_shipping = bundle.getString("streetadd_shipping");
             countryid_shipping = bundle.getString("Countryid_shipping");
             customerid_shipping = bundle.getString("customer_id_shipping");
+            reg_shipping = bundle.getString("region_shipping");
             saveaddress_shipping = bundle.getString("saveadd_shipping");
             shipping_method = bundle.getString("shippingmethod");
             email_shipping = bundle.getString("email_id_shipping");
@@ -99,6 +119,8 @@ public class Payment_fragment extends Fragment {
             Log.e("payment_emailid",""+email_shipping);
             Log.e("payment_qid",""+quote_shipping);
             Log.e("payment_code",""+paymentcode_ada);
+            Log.e("regg_code",""+reg_shipping);
+
         }
 
         Checkout_fragment.iv_shipping_done.setVisibility(View.VISIBLE);
@@ -127,22 +149,22 @@ public class Payment_fragment extends Fragment {
                             if (paymentcode_ada == null){
                                 Toast.makeText(getActivity(), "Please Select atleast one payment Method", Toast.LENGTH_SHORT).show();
                             }else {
-
                                 Bundle bundle1 = new Bundle();
-                                bundle1.putString("Firstname_payment", "" + fname_shipping);
-                                bundle1.putString("Lastname_payment", "" + lname_shipping);
-                                bundle1.putString("Zipcode_payment", "" + zipcode_shipping);
-                                bundle1.putString("City_payment", "" + city_shipping);
-                                bundle1.putString("Phonenumber_payment", "" + phone_shipping);
-                                bundle1.putString("Company_payment", "" + company_shipping);
-                                bundle1.putString("streetadd_payment", "" + streetadd_shipping);
-                                bundle1.putString("Countryid_payment", "" + countryid_shipping);
-                                bundle1.putString("customer_id_payment", "" + customerid_shipping);
-                                bundle1.putString("saveadd_payment", "" + saveaddress_shipping);
-                                bundle1.putString("shippingmethod_payment", "" + shippingmethod);
-                                bundle1.putString("email_id_payment", "" + email_shipping);
-                                bundle1.putString("quote_id_payment", "" + quote_shipping);
-                                bundle1.putString("paymentcode_payment", "" + paymentcode_ada);
+                                bundle1.putString("Firstname_shipping", "" + fname_shipping);
+                                bundle1.putString("Lastname_shipping", "" + lname_shipping);
+                                bundle1.putString("Zipcode_shipping", "" + zipcode_shipping);
+                                bundle1.putString("City_shipping", "" + city_shipping);
+                                bundle1.putString("Phonenumber_shipping", "" + phone_shipping);
+                                bundle1.putString("Company_shipping", "" + company_shipping);
+                                bundle1.putString("streetadd_shipping", "" + streetadd_shipping);
+                                bundle1.putString("Countryid_shipping", "" + countryid_shipping);
+                                bundle1.putString("customer_id_shipping", "" + customerid_shipping);
+                                bundle1.putString("saveadd_shipping", "" + saveaddress_shipping);
+                                bundle1.putString("shippingmethod", "" + shippingmethod);
+                                bundle1.putString("email_id_shipping", "" + email_shipping);
+                                bundle1.putString("quote_id_shipping", "" + quote_shipping);
+                                bundle1.putString("paymentcode_payment", "" + paymentcode_ada);// aa ek nave param 6
+                                bundle1.putString("region_shipping", "" + reg_shipping);
                                 Fragment myFragment = new Confirmation_fragment();
                                 myFragment.setArguments(bundle1);
                                 getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout_checkout, myFragment).addToBackStack(null).commit();
@@ -163,6 +185,40 @@ public class Payment_fragment extends Fragment {
                 }, 1000);
             }
         });
+
+        lv_goback_payment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    public void run() {
+
+                        Bundle bundle1 = new Bundle();
+                        bundle1.putString("Firstname_shipping", "" + fname_shipping);
+                        bundle1.putString("Lastname_shipping", "" + lname_shipping);
+                        bundle1.putString("Zipcode_shipping", "" + zipcode_shipping);
+                        bundle1.putString("City_shipping", "" + city_shipping);
+                        bundle1.putString("Phonenumber_shipping", "" + phone_shipping);
+                        bundle1.putString("Company_shipping", "" + company_shipping);
+                        bundle1.putString("streetadd_shipping", "" + streetadd_shipping);
+                        bundle1.putString("Countryid_shipping", "" + countryid_shipping);
+                        bundle1.putString("customer_id_shipping", "" + customerid_shipping);
+                        bundle1.putString("saveadd_shipping", "" + saveaddress_shipping);
+                        bundle1.putString("shippingmethod", "" + shippingmethod);
+                        bundle1.putString("email_id_shipping", "" + email_shipping);
+                        bundle1.putString("quote_id_shipping", "" + quote_shipping);
+                        bundle1.putString("region_shipping", "" + reg_shipping);
+                        Fragment myFragment = new Shipping_fragment();
+                        myFragment.setArguments(bundle1);
+                        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout_checkout, myFragment).addToBackStack(null).commit();
+
+                    }
+                }, 1000);
+
+            }
+        });
+
         return v;
     }
 
@@ -230,12 +286,16 @@ public class Payment_fragment extends Fragment {
         payment_method_recyclerview = (RecyclerView) v.findViewById(R.id.payment_method_recyclerview);
         iv_confirm_order = (ImageView) v.findViewById(R.id.iv_confirm_order);
         lv_confirm_order = (LinearLayout) v.findViewById(R.id.lv_confirm_order);
+        lv_goback_payment = (LinearLayout) v.findViewById(R.id.lv_goback_payment);
 
         payment_method_adapter = new Payment_Method_Adapter(getActivity(), payment_method_models);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         layoutManager.setReverseLayout(false);
         payment_method_recyclerview.setLayoutManager(layoutManager);
         payment_method_recyclerview.setAdapter(payment_method_adapter);
+
+        tv_payment_title = (TextView)v.findViewById(R.id.tv_payment_title);
+        tv_payconf = (TextView)v.findViewById(R.id.tv_payconf);
 
     }
 

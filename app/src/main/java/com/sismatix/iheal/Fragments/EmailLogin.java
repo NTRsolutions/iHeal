@@ -2,10 +2,12 @@ package com.sismatix.iheal.Fragments;
 
 
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,7 +40,7 @@ public class EmailLogin extends Fragment implements View.OnClickListener {
 
     EditText login_email, login_password;
     Button btn_login;
-    TextView tv_forgotpassword;
+    TextView tv_forgotpassword,tv_email_title;
     String screen,loginflag;
     Bundle bundle;
 
@@ -56,6 +58,14 @@ public class EmailLogin extends Fragment implements View.OnClickListener {
 
         AllocateMemory(v);
 
+        tv_email_title.setTypeface(Home.roboto_medium);
+        login_email.setTypeface(Home.roboto_regular);
+        login_password.setTypeface(Home.roboto_regular);
+        btn_login.setTypeface(Home.roboto_medium);
+        tv_forgotpassword.setTypeface(Home.roboto_medium);
+        tv_forgotpassword.setPaintFlags(tv_forgotpassword.getPaintFlags() |   Paint.UNDERLINE_TEXT_FLAG);
+
+
         btn_login.setOnClickListener(this);
         tv_forgotpassword.setOnClickListener(this);
 
@@ -67,6 +77,7 @@ public class EmailLogin extends Fragment implements View.OnClickListener {
         login_password = (EditText) v.findViewById(R.id.login_password);
         btn_login = (Button) v.findViewById(R.id.btn_login);
         tv_forgotpassword = (TextView) v.findViewById(R.id.tv_forgotpassword);
+        tv_email_title = (TextView)v.findViewById(R.id.tv_email_title);
     }
 
     private void validateUserData() {
@@ -200,5 +211,28 @@ public class EmailLogin extends Fragment implements View.OnClickListener {
                     .addToBackStack(null)
                     .commit();
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        getView().setFocusableInTouchMode(true);
+        getView().requestFocus();
+        getView().setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+
+                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
+
+                    loadFragment(new Home());
+
+                    return true;
+
+                }
+
+                return false;
+            }
+        });
     }
 }

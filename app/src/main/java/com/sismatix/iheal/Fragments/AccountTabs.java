@@ -58,7 +58,7 @@ public class AccountTabs extends Fragment {
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         final ViewPager viewPager = (ViewPager) v.findViewById(R.id.pager_tabs);
-        final AccountTabAdapter adapter = new AccountTabAdapter(getFragmentManager(), tabLayout.getTabCount());
+        final AccountTabAdapter adapter = new AccountTabAdapter(getChildFragmentManager(), tabLayout.getTabCount());//getFragmentManager
         viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
@@ -93,6 +93,16 @@ public class AccountTabs extends Fragment {
         return v;
     }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.clear();
+       // inflater.inflate(R.menu.cart, menu);
+        //MenuItem item = menu.findItem(R.id.cart);
+        /*MenuItem item_search = menu.findItem(R.id.search);
+        item_search.setVisible(false);*/
+       // item.setVisible(false);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
