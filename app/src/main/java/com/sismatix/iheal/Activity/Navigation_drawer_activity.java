@@ -91,6 +91,11 @@ public class Navigation_drawer_activity extends AppCompatActivity
                 drawer.closeDrawer(GravityCompat.START);
             }
         });
+<<<<<<< HEAD
+=======
+
+        setSupportActionBar(toolbar);
+>>>>>>> 0b32fbacedccec4c56b22e1f37edefc5d3ba93ab
 
         setSupportActionBar(toolbar);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -290,7 +295,11 @@ public class Navigation_drawer_activity extends AppCompatActivity
             }
 
         } else if (id == R.id.nav_wishlist) {
+<<<<<<< HEAD
             /*if (loginflagmain.equalsIgnoreCase("1") || loginflagmain == "1") {
+=======
+            if (loginflagmain.equalsIgnoreCase("1") || loginflagmain == "1") {
+>>>>>>> 0b32fbacedccec4c56b22e1f37edefc5d3ba93ab
                 pushFragment(new Wishlist_fragment(), "wishlist");
             } else {
                 Toast.makeText(this, "Please try to login.", Toast.LENGTH_SHORT).show();

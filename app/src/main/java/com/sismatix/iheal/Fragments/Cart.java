@@ -402,7 +402,11 @@ public class Cart extends Fragment {
                     Log.e("status_prepare_cart", "" + status);
 
                     if (status.equalsIgnoreCase("success")) {
+<<<<<<< HEAD
                         lv_productnot.setVisibility(View.VISIBLE);
+=======
+
+>>>>>>> 0b32fbacedccec4c56b22e1f37edefc5d3ba93ab
                         grand_total = jsonObject.getString("grand_total");
                         Log.e("gtot",""+grand_total);
                         tv_maintotal.setText(grand_total);

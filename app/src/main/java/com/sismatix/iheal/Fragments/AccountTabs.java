@@ -93,16 +93,28 @@ public class AccountTabs extends Fragment {
         return v;
     }
 
+<<<<<<< HEAD
     /*@Override
+=======
+    @Override
+>>>>>>> 0b32fbacedccec4c56b22e1f37edefc5d3ba93ab
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         menu.clear();
        // inflater.inflate(R.menu.cart, menu);
         //MenuItem item = menu.findItem(R.id.cart);
+<<<<<<< HEAD
         *//*MenuItem item_search = menu.findItem(R.id.search);
         item_search.setVisible(false);*//*
        // item.setVisible(false);
         super.onCreateOptionsMenu(menu, inflater);
     }*/
+=======
+        /*MenuItem item_search = menu.findItem(R.id.search);
+        item_search.setVisible(false);*/
+       // item.setVisible(false);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+>>>>>>> 0b32fbacedccec4c56b22e1f37edefc5d3ba93ab
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

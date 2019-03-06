@@ -2,7 +2,10 @@ package com.sismatix.iheal.Fragments;
 
 
 import android.content.Context;
+<<<<<<< HEAD
 import android.content.Intent;
+=======
+>>>>>>> 0b32fbacedccec4c56b22e1f37edefc5d3ba93ab
 import android.content.res.AssetManager;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -111,7 +114,9 @@ public class Home extends Fragment implements View.OnClickListener {
         iv_liver = (ImageView) v.findViewById(R.id.iv_liver);
         iv_kidney = (ImageView) v.findViewById(R.id.iv_kidney);
         iv_UT = (ImageView) v.findViewById(R.id.iv_UT);
+    }
 
+<<<<<<< HEAD
         v.getRootView().requestFocus();
         v.getRootView().setOnKeyListener(new View.OnKeyListener() {
             @Override
@@ -128,6 +133,8 @@ public class Home extends Fragment implements View.OnClickListener {
 
     }
 
+=======
+>>>>>>> 0b32fbacedccec4c56b22e1f37edefc5d3ba93ab
     private void setonclicklistners() {
         iv_lung.setOnClickListener(this);
         iv_hair_care.setOnClickListener(this);

@@ -2,7 +2,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
+<<<<<<< HEAD
 
+=======
+>>>>>>> 0b32fbacedccec4c56b22e1f37edefc5d3ba93ab
     <!--
         <group android:checkableBehavior="single">
             <item

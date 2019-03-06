@@ -5,7 +5,10 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+<<<<<<< HEAD
 import android.view.KeyEvent;
+=======
+>>>>>>> 0b32fbacedccec4c56b22e1f37edefc5d3ba93ab
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
