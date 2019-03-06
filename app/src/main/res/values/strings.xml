@@ -16,7 +16,7 @@
     <!--account screen-->
     <string name="signupfb">SIGN UP WITH FACEBOOK</string>
     <string name="or">OR</string>
-    <string name="signupeithemail">Sing Up With Email</string>
+    <string name="signupeithemail">SIGN UP WITH EMAIL</string>
     <string name="login">LOGIN</string>
     <string name="signup">SIGN UP</string>
     <!--signup & Login screen -->
@@ -29,6 +29,7 @@
     <string name="submit">Submit</string>
     <string name="street">Street Address</string>
     <string name="region">Region</string>
+    <string name="createacc">CREATE ACCOUNT</string>
 
     <!--shipping &payment &conform screen-->
     <string name="firstname">FIRST NAME</string>
@@ -39,7 +40,7 @@
     <string name="city">City</string>
     <string name="savefuture">SAVE FOR FUTURE PURCHASE</string>
     <string name="continuepayment">CONTINUE TO PAYMENT</string>
-    <string name="shippingto">SHIPPING TOT</string>
+    <string name="shippingto">SHIPPING TO</string>
     <string name="edit">EDIT</string>
     <string name="yourorder">YOUR ORDER</string>
     <string name="totalamount">TOTAL AMOUNT</string>

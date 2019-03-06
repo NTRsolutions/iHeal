@@ -24,8 +24,9 @@ import static com.sismatix.iheal.Activity.Navigation_drawer_activity.bottom_navi
 public class Account extends Fragment {
 
     LinearLayout lv_email_singup;
-    TextView tv_login;
+    TextView tv_login,tv_account_suwe,tv_account_ahaa;
     View v;
+
     public Account() {
         // Required empty public constructor
     }
@@ -34,16 +35,21 @@ public class Account extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-       v =  inflater.inflate(R.layout.fragment_account, container, false);
+        v = inflater.inflate(R.layout.fragment_account, container, false);
         bottom_navigation.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
-        lv_email_singup = (LinearLayout)v.findViewById(R.id.lv_email_singup);
-        tv_login = (TextView)v.findViewById(R.id.tv_login);
+        lv_email_singup = (LinearLayout) v.findViewById(R.id.lv_email_singup);
+        tv_login = (TextView) v.findViewById(R.id.tv_login);
+        tv_account_suwe = (TextView)v.findViewById(R.id.tv_account_suwe);
+        tv_account_ahaa = (TextView)v.findViewById(R.id.tv_account_ahaa);
+
+        tv_account_suwe.setTypeface(Home.roboto_medium);
+        tv_account_ahaa.setTypeface(Home.roboto_regular);
 
         lv_email_singup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                Signup nextFrag= new Signup();
+                Signup nextFrag = new Signup();
                 getActivity().getSupportFragmentManager().beginTransaction()
                         .replace(R.id.rootLayout, nextFrag, "findThisFragment")
                         .addToBackStack(null)
@@ -51,6 +57,7 @@ public class Account extends Fragment {
 
             }
         });
+
         tv_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -58,7 +65,7 @@ public class Account extends Fragment {
                 Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {
                     public void run() {
-                        EmailLogin nextFrag= new EmailLogin();
+                        EmailLogin nextFrag = new EmailLogin();
                         getActivity().getSupportFragmentManager().beginTransaction()
                                 .replace(R.id.rootLayout, nextFrag, "findThisFragment")
                                 .addToBackStack(null)
@@ -68,14 +75,13 @@ public class Account extends Fragment {
 
             }
         });
-
-      ///  BACK_EVENT();
+        ///  BACK_EVENT();
         return v;
 
     }
 
     private void BACK_EVENT() {
-       v.setFocusableInTouchMode(true);
+        v.setFocusableInTouchMode(true);
         v.requestFocus();
         v.setOnKeyListener(new View.OnKeyListener() {
 
@@ -85,24 +91,25 @@ public class Account extends Fragment {
                 if (event.getAction() == KeyEvent.ACTION_UP
                         && keyCode == KeyEvent.KEYCODE_BACK) {
 
-                  /*  Utils.switchContent(R.id.frag_container,
+                  /*Utils.switchContent(R.id.frag_container,
                             Utils.HOME_FRAGMENT,
                             ((ECartHomeActivity) (getContext())),
                             AnimationType.SLIDE_DOWN);*/
-                  loadFragment(new Home(),"Home_fragment");
+
+                    loadFragment(new Home(), "Home_fragment");
                 }
                 return true;
             }
         });
 
     }
-    public void loadFragment(Fragment fragment,String s) {
+
+    public void loadFragment(Fragment fragment, String s) {
         Log.e("clickone", "");
         android.support.v4.app.FragmentManager manager = getFragmentManager();
         android.support.v4.app.FragmentTransaction transaction = manager.beginTransaction();
         transaction.replace(R.id.rootLayout, fragment);
         transaction.addToBackStack(s);
-
         transaction.commit();
     }
 

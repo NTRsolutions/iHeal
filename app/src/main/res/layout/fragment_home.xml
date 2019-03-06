@@ -43,6 +43,7 @@
                     android:layout_marginRight="8dp"
                     android:layout_weight="1">
                     <TextView
+                        android:id="@+id/tv_home_createacc"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/home_create"
@@ -60,6 +61,7 @@
                     android:gravity="center"
                     android:layout_weight="1">
                     <TextView
+                        android:id="@+id/tv_home_loginacc"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/login_titlr"
@@ -82,11 +84,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="Welcome back,Nehal"
+                    android:text="Welcome back,user"
                     android:textSize="18sp"
                     android:textColor="@color/main"/>
 
                 <TextView
+                    android:id="@+id/tv_home_howcanihelpyou"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"

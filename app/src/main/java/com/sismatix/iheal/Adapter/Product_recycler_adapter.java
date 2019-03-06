@@ -16,6 +16,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.sismatix.iheal.Fragments.Home;
 import com.sismatix.iheal.Fragments.Item_details;
 import com.sismatix.iheal.Model.Product_Grid_Model;
 import com.sismatix.iheal.R;
@@ -39,6 +40,7 @@ public class Product_recycler_adapter extends RecyclerView.Adapter<Product_recyc
                 .inflate(R.layout.product_grid_row, parent, false);
 
         return new Product_recycler_adapter.MyViewHolder(itemView);
+
     }
 
     @Override
@@ -64,6 +66,9 @@ public class Product_recycler_adapter extends RecyclerView.Adapter<Product_recyc
                 }, 1000);
             }
         });
+
+        holder.tv_product_name.setTypeface(Home.roboto_bold);
+        holder.tv_product_price.setTypeface(Home.roboto_bold);
 
         holder.tv_product_name.setText(product_model.getProducr_title());
         Log.e("titleeeee",""+product_model.getProducr_title());

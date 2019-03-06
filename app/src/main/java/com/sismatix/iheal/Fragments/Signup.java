@@ -41,7 +41,7 @@ public class Signup extends Fragment implements View.OnClickListener {
     TextInputLayout signup_input_layout_fullname, signup_input_layout_email, signup_input_layout_password;
     EditText signup_fullname, signup_email, signup_password;
     Button btn_signup;
-    TextView tv_login;
+    TextView tv_login,tv_signup_title,tv_signup_alreadyacc;
     String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
     String pattern = "/^[a-zA-Z0-9#_~!$&'()*+,;=:.\"(),:;<>@\\[\\]\\\\]+@[a-zA-Z0-9-]+(\\.[a-zA-Z0-9-]+)*$/\n";
 
@@ -67,6 +67,16 @@ public class Signup extends Fragment implements View.OnClickListener {
         signup_email = (EditText) v.findViewById(R.id.signup_input_email);
         signup_password = (EditText) v.findViewById(R.id.signup_input_password);
         tv_login = (TextView) v.findViewById(R.id.tv_login);
+        tv_signup_title = (TextView) v.findViewById(R.id.tv_signup_title);
+        tv_signup_alreadyacc = (TextView) v.findViewById(R.id.tv_signup_alreadyacc);
+
+        tv_signup_title.setTypeface(Home.roboto_medium);
+        signup_fullname.setTypeface(Home.roboto_regular);
+        signup_email.setTypeface(Home.roboto_regular);
+        signup_password.setTypeface(Home.roboto_regular);
+//        btn_signup.setTypeface(Home.roboto_medium);
+        tv_signup_alreadyacc.setTypeface(Home.roboto_regular);
+
 
         btn_signup = (Button) v.findViewById(R.id.btn_signup);
 

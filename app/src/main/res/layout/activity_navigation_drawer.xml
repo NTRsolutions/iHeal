@@ -5,8 +5,8 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
     android:background="@color/white"
+    android:fitsSystemWindows="true"
     tools:openDrawer="start">
 
     <RelativeLayout
@@ -19,9 +19,9 @@
             android:id="@+id/view_pager_bottom_navigation"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="gone"
+            android:layout_marginTop="?attr/actionBarSize"
             android:layout_marginBottom="?attr/actionBarSize"
-            android:layout_marginTop="?attr/actionBarSize"/>
+            android:visibility="gone" />
 
         <FrameLayout
             android:id="@+id/rootLayout"
@@ -29,19 +29,19 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-        <android.support.design.widget.BottomNavigationView
-            android:id="@+id/bottom_navigation"
-            android:layout_width="wrap_content"
-            android:layout_marginEnd="0dp"
-            android:layout_marginStart="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:layout_alignParentBottom="true"
-            android:background="@color/colorPrimaryDark"
-            app:itemTextColor="@color/white"
-            app:itemIconTint="@color/white"
-            app:labelVisibilityMode="labeled"
-            app:menu="@menu/bottom_navigation"/>
+            <android.support.design.widget.BottomNavigationView
+                android:id="@+id/bottom_navigation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_gravity="bottom"
+                android:layout_marginStart="0dp"
+                android:layout_marginEnd="0dp"
+                android:background="@color/colorPrimaryDark"
+                app:itemIconTint="@color/white"
+                app:itemTextColor="@color/white"
+                app:labelVisibilityMode="labeled"
+                app:menu="@menu/bottom_navigation" />
 
         </FrameLayout>
     </RelativeLayout>
@@ -54,6 +54,7 @@
         android:background="@color/colorPrimaryDark"
         android:fitsSystemWindows="false"
         android:scrollbars="none"
+        android:theme="@style/NavigationTheme"
         app:headerLayout="@layout/nav_header_navigation_drawer_activity"
         app:itemIconTint="@drawable/item_change"
         app:itemTextColor="@drawable/item_change"
@@ -74,23 +75,26 @@
                 android:layout_height="match_parent"
                 android:visibility="gone"
                 android:weightSum="2">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_weight="1.6"
                     android:gravity="center"
-                    android:padding="12dp"
-                    android:layout_weight="1.6">
+                    android:padding="12dp">
+
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/ic_lock_outline_white_36dp"/>
-
+                        android:src="@drawable/ic_lock_outline_white_36dp" />
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:gravity="left"
-                    android:layout_weight="0.4">
+                    android:layout_weight="0.4"
+                    android:gravity="left">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -103,19 +107,22 @@
                 </LinearLayout>
 
             </LinearLayout>
+
             <LinearLayout
                 android:id="@+id/lv_logout"
                 android:layout_width="match_parent"
-                android:visibility="gone"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:visibility="gone">
+
                 <TextView
+                    android:id="@+id/tv_logout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center|start"
                     android:layout_marginLeft="20dp"
                     android:gravity="start|center"
-                    android:padding="10dp"
-                    android:text="Log Out"
+                    android:padding="12sp"
+                    android:text="LOG OUT"
                     android:textColor="@color/white"
                     android:textSize="14sp"
                     android:textStyle="bold" />

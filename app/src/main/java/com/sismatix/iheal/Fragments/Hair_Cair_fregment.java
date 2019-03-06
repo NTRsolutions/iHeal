@@ -39,6 +39,7 @@ import com.sismatix.iheal.Activity.Navigation_drawer_activity;
 import com.sismatix.iheal.Adapter.Product_recycler_adapter;
 import com.sismatix.iheal.Adapter.TabPageAdapter;
 import com.sismatix.iheal.Model.Product_Grid_Model;
+import com.sismatix.iheal.Preference.CheckNetwork;
 import com.sismatix.iheal.Preference.Login_preference;
 import com.sismatix.iheal.R;
 import com.sismatix.iheal.Retrofit.ApiClient;
@@ -68,7 +69,6 @@ public class Hair_Cair_fregment extends Fragment {
     private CollapsingToolbarLayout collapsingToolbar;
 
     private ViewPager viewPager;
-
     private TabLayout tabLayout;
     LinearLayout fragment_container;
 
@@ -100,6 +100,9 @@ public class Hair_Cair_fregment extends Fragment {
         setHasOptionsMenu(true);
         Bundle bundle = this.getArguments();
 
+/*        collapsingToolbar.setCollapsedTitleTypeface(Home.roboto_medium);
+        collapsingToolbar.setExpandedTitleTypeface(Home.roboto_medium);*/
+
         if (bundle != null) {
 
             cat_id = bundle.getString("cat_id");
@@ -111,8 +114,6 @@ public class Hair_Cair_fregment extends Fragment {
             Log.e("products_arrayyyy", "" + product_array);
 
         }
-
-
         viewPager = (ViewPager) view.findViewById(R.id.viewpager);
         tabLayout = (TabLayout) view.findViewById(R.id.tablayout);
         lv_productnotfound = (LinearLayout) view.findViewById(R.id.lv_productnotfound);
@@ -135,7 +136,12 @@ public class Hair_Cair_fregment extends Fragment {
         recycler_product.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         recycler_product.setItemAnimator(new DefaultItemAnimator());
         recycler_product.setAdapter(product_adapter);
-        CALL_PRODUCT_API(cat_id);
+
+        if (CheckNetwork.isNetworkAvailable(getActivity())) {
+            CALL_PRODUCT_API(cat_id);
+        } else {
+            Toast.makeText(getContext(), "Please Check your Internet Connection", Toast.LENGTH_SHORT).show();
+        }
 
         // SetTablayout();
 
@@ -161,7 +167,7 @@ public class Hair_Cair_fregment extends Fragment {
                     collapsingToolbar.setTitle(title);
                     String categoryimage = jsonObject.getString("categoryimage");
                     Log.e("categoryimage", "" + categoryimage);
-                    //Glide.with(getContext()).load(categoryimage).into(header);
+                    Glide.with(getContext()).load(categoryimage).into(header);
 
                     if (status.equalsIgnoreCase("success")) {
                         String products = jsonObject.getString("products");
@@ -205,85 +211,13 @@ public class Hair_Cair_fregment extends Fragment {
         });
 
 
-       /* JSONObject jsonObject = null;
-        try {
-            // JSONArray jsonArray=jsonObject.getJSONArray(product_array);
-
-            JSONArray jsonArray = new JSONArray(product_array);
-
-            Log.e("arrprod", "" + jsonArray);
-            for (int i = 0; i < jsonArray.length(); i++) {
-
-                try {
-                    progressBar.setVisibility(View.GONE);
-
-                    JSONObject vac_object = jsonArray.getJSONObject(i);
-                    Log.e("prod_name", "" + vac_object.getString("product_name"));
-                    product_model.add(new Product_Grid_Model(vac_object.getString("product_image"),
-                            vac_object.getString("product_price"), vac_object.getString("product_name"),
-                            vac_object.getString("type"), vac_object.getString("product_id"), "product_specialprice"));
-
-                } catch (Exception e) {
-                    Log.e("Exception", "" + e);
-                } finally {
-                    product_adapter.notifyItemChanged(i);
-                }
-
-            }
-
-        } catch (Exception e) {
-        }
-*/
     }
 
-    //tablayout
-    private void SetTablayout() {
-
-        //   setupViewPager(viewPager);
-        // tabLayout.setupWithViewPager(viewPager);
-
-        tabLayout.addTab(tabLayout.newTab().setText("VIEW-ALL"));
-        tabLayout.addTab(tabLayout.newTab().setText("ANTI-SULFAT"));
-        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
-        final TabPageAdapter adapter = new TabPageAdapter(getChildFragmentManager(), tabLayout.getTabCount());
-        viewPager.setAdapter(adapter);
-        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-
-        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-
-                viewPager.setCurrentItem(tab.getPosition());
-                switch (tab.getPosition()) {
-                    case 0:
-                        //  header.setImageResource(R.drawable.header_1);
-                        break;
-                    case 1:
-                        //  header.setImageResource(R.drawable.header2);
-                        break;
-                }
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-            }
-        });
-    }
-
-    // cart menu
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         menu.clear();
         inflater.inflate(R.menu.cart, menu);
         MenuItem item = menu.findItem(R.id.cart);
-        /*MenuItem item_search = menu.findItem(R.id.search);
-        item_search.setVisible(false);
-*/
-//        icon = (LayerDrawable) item.getIcon();
         icon = (LayerDrawable) item.getIcon();
 
         CountDrawable badge;
@@ -308,7 +242,9 @@ public class Hair_Cair_fregment extends Fragment {
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.cart:
-                Toast.makeText(getActivity(), "cart Icon Click", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity(), "cart Icon Click", Toast.LENGTH_SHORT).show();
+                Fragment myFragment = new Cart();
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.rootLayout, myFragment).addToBackStack(null).commit();
                 return true;
 
             case android.R.id.home:

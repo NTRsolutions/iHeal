@@ -110,6 +110,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingLeft="10dp"
+                        android:background="@drawable/green_round"
                         android:paddingTop="8dp"
                         android:paddingRight="10dp"
                         android:paddingBottom="8dp"

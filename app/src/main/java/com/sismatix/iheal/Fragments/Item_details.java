@@ -60,10 +60,10 @@ public class Item_details extends Fragment implements View.OnClickListener, View
     ImageView iv_wishlist, iv_itemdetail_cart, iv_back;
     LinearLayout lv_iteamdetails_click;
 
-    TextView tv_product_name, tv_product_price, tv_short_description, tv_long_descriptionn, tv_main_title;
+    TextView tv_product_name, tv_product_price, tv_short_description, tv_long_descriptionn, tv_main_title,tv_descriptiontitle,tv_id_addtocart;
     ImageView iv_item_desc, iv_show_more;
 
-    String proddd_id, loginflag;
+    String proddd_id, loginflag, iswhishlisted;
     public static LayerDrawable icon;
     public String count = "1";
     public static CountDrawable badge;
@@ -83,20 +83,26 @@ public class Item_details extends Fragment implements View.OnClickListener, View
         setHasOptionsMenu(true);
         AllocateMemory(v);
         loginflag = Login_preference.getLogin_flag(getActivity());
-
         //set back icon by defult
         ((Navigation_drawer_activity) getActivity()).setSupportActionBar(toolbar);
         ((Navigation_drawer_activity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ((Navigation_drawer_activity) getActivity()).getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_keyboard_arrow_left_white_36dp);
         getActivity().setTitle("Shopping Cart");
 
+        tv_main_title.setTypeface(Home.roboto_thin);
+        tv_product_name.setTypeface(Home.roboto_bold);
+        tv_product_price.setTypeface(Home.roboto_light);
+        tv_descriptiontitle.setTypeface(Home.roboto_bold);
+        tv_short_description.setTypeface(Home.roboto_regular);
+        tv_long_descriptionn.setTypeface(Home.roboto_regular);
+        tv_id_addtocart.setTypeface(Home.roboto_bold);
+
         Bundle bundle = this.getArguments();
 
-        if (bundle != null){
+        if (bundle != null) {
 
             proddd_id = bundle.getString("prod_id");
             Log.e("prod_itemdetail_id", "" + proddd_id);
-
             call_item_detail_api(proddd_id);
 
         }
@@ -118,7 +124,6 @@ public class Item_details extends Fragment implements View.OnClickListener, View
     private void AllocateMemory(View v) {
         toolbar = (Toolbar) v.findViewById(R.id.toolbar_item_detail);
 
-
         mPager = (ViewPager) v.findViewById(R.id.pager);
         progressBar_item = (ProgressBar) v.findViewById(R.id.progressBar_item);
         indicator = (CircleIndicator) v.findViewById(R.id.indicator);
@@ -130,6 +135,8 @@ public class Item_details extends Fragment implements View.OnClickListener, View
         tv_long_descriptionn = (TextView) v.findViewById(R.id.tv_long_descriptionn);
 
         tv_main_title = (TextView) v.findViewById(R.id.tv_main_title);
+        tv_descriptiontitle = (TextView) v.findViewById(R.id.tv_descriptiontitle);
+        tv_id_addtocart = (TextView) v.findViewById(R.id.tv_id_addtocart);
 
         iv_item_desc = (ImageView) v.findViewById(R.id.iv_item_desc);
         iv_show_more = (ImageView) v.findViewById(R.id.iv_show_more);
@@ -139,7 +146,8 @@ public class Item_details extends Fragment implements View.OnClickListener, View
     private void call_item_detail_api(String proddd_id) {
         progressBar_item.setVisibility(View.VISIBLE);
         ApiInterface api = ApiClient.getClient().create(ApiInterface.class);
-        Call<ResponseBody> addcategory = api.appprodview(proddd_id);
+        Log.e("ciddd_item", "" + Login_preference.getcustomer_id(getActivity()));
+        Call<ResponseBody> addcategory = api.appprodview(proddd_id, Login_preference.getcustomer_id(getActivity()));
         sliderimage_models.clear();
         addcategory.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -155,6 +163,17 @@ public class Item_details extends Fragment implements View.OnClickListener, View
 
                     String main_title = jsonObject.getString("product_name");
                     tv_main_title.setText(main_title);
+
+                    iswhishlisted = jsonObject.getString("wishlist");
+                    Log.e("ishwishlistedornot", "" + iswhishlisted);
+
+                    if (iswhishlisted.equals("yes")) {
+                        wish.setVisible(false);
+                        fillwish.setVisible(true);
+                    } else {
+                        wish.setVisible(true);
+                        fillwish.setVisible(false);
+                    }
 
                     String proname = jsonObject.getString("product_sku");
                     tv_product_name.setText(proname);
@@ -201,27 +220,6 @@ public class Item_details extends Fragment implements View.OnClickListener, View
                     mPager.setAdapter(new SlideingImageAdapter(getActivity(), sliderimage_models));
                     indicator.setViewPager(mPager);
 
-                   /* String title = jsonObject.getString("title");
-                    String count = jsonObject.getString("count");
-                    String categoryimage = jsonObject.getString("categoryimage");*/
-
-                    // products = jsonObject.getString("products");
-                    //Log.e("prods",""+products);
-
-                  /*  Log.e("title",""+title);
-                    Log.e("count",""+count);
-                    Log.e("categoryimage",""+categoryimage);*/
-
-                  /*  if (status.equalsIgnoreCase("success")){
-                        // Toast.makeText(getContext(),""+meassg, Toast.LENGTH_SHORT).show();
-
-                     *//*   tv_hair.setText(title);
-                        tv_item_count.setText(count+" "+getString(R.string.item));*//*
-
-
-                    }else if (status.equalsIgnoreCase("error")){
-                        // Toast.makeText(getContext(), ""+meassg, Toast.LENGTH_SHORT).show();
-                    }*/
 
                 } catch (Exception e) {
                     Log.e("", "" + e);
@@ -250,7 +248,7 @@ public class Item_details extends Fragment implements View.OnClickListener, View
     // cart menu
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-       menu.clear();
+        menu.clear();
         inflater.inflate(R.menu.cart_wishlist, menu);
         MenuItem item = menu.findItem(R.id.cartt);
 /*
@@ -297,10 +295,7 @@ public class Item_details extends Fragment implements View.OnClickListener, View
                     // Remove_FROM_WISHLIST_API();
                     String action = "add";
                     ADD_TO_WISHLIST_API(action);
-
-
                 } else {
-
                     loadFragment(new EmailLogin());
                 }
 
@@ -309,10 +304,8 @@ public class Item_details extends Fragment implements View.OnClickListener, View
             case R.id.fill_wish:
                 //remove from wishlist
                 if (loginflag.equalsIgnoreCase("1") || loginflag == "1") {
-
                     String action = "remove";
                     Remove_FROM_WISHLIST_API(proddd_id, Login_preference.getcustomer_id(getActivity()), action);
-
                 } else {
                     loadFragment(new EmailLogin());
                 }
@@ -374,7 +367,6 @@ public class Item_details extends Fragment implements View.OnClickListener, View
     }
 
     private void ADD_TO_WISHLIST_API(String action) {
-
 
         ApiInterface api = ApiClient.getClient().create(ApiInterface.class);
         Call<ResponseBody> add_to_wishlist = api.add_to_wishlist(proddd_id, Login_preference.getcustomer_id(getActivity()), action);

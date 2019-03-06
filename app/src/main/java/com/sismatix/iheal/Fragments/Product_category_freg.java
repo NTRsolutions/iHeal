@@ -18,6 +18,7 @@ import com.sismatix.iheal.Adapter.Product_Category_adapter;
 import com.sismatix.iheal.Adapter.Product_recycler_adapter;
 import com.sismatix.iheal.Model.Product_Category_model;
 import com.sismatix.iheal.Model.Product_Grid_Model;
+import com.sismatix.iheal.Preference.CheckNetwork;
 import com.sismatix.iheal.Preference.Login_preference;
 import com.sismatix.iheal.R;
 import com.sismatix.iheal.Retrofit.ApiClient;
@@ -59,7 +60,12 @@ public class Product_category_freg extends Fragment {
         recycler_product_category = (RecyclerView) view.findViewById(R.id.recycler_product_category);
         progressBar = view.findViewById(R.id.progressBar);
 
-        CALL_PRODUCT_CATEGORY_API();
+        if (CheckNetwork.isNetworkAvailable(getActivity())) {
+            CALL_PRODUCT_CATEGORY_API();
+        } else {
+            Toast.makeText(getContext(), "Please Check your Internet Connection", Toast.LENGTH_SHORT).show();
+        }
+
         product_category_adapter = new Product_Category_adapter(getActivity(), product_model);
         recycler_product_category.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         recycler_product_category.setItemAnimator(new DefaultItemAnimator());

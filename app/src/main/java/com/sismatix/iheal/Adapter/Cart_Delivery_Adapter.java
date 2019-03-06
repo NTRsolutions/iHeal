@@ -2,6 +2,7 @@ package com.sismatix.iheal.Adapter;
 
 import android.content.Context;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
@@ -26,7 +27,7 @@ public class Cart_Delivery_Adapter extends RecyclerView.Adapter<com.sismatix.ihe
     private List<Cart_Delivery_Model> model;
     //int minteger = 1;
     int current_price = 30;
-    int selectedPosition = -1;
+  public static   int selectedPosition = -1;
     public static String shippingmethod;
     //int product_total = current_price;
 
@@ -34,6 +35,7 @@ public class Cart_Delivery_Adapter extends RecyclerView.Adapter<com.sismatix.ihe
         this.context = context;
         this.model = cartList;
     }
+
     @Override
     public Cart_Delivery_Adapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
@@ -63,6 +65,7 @@ public class Cart_Delivery_Adapter extends RecyclerView.Adapter<com.sismatix.ihe
         });
 
         if (selectedPosition == position) {
+            Log.e("selectedpo_76",""+selectedPosition);
             holder.itemView.setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.round_boder_green));
             holder.tv_delivery_price.setTextColor(context.getColor(R.color.colorPrimary));
             holder.tv_product_delivery_type.setTextColor(context.getColor(R.color.colorPrimary));

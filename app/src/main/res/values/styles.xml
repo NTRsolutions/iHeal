@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
@@ -72,10 +72,15 @@
 
 
     //dialog fullscreen dialog
-    <style name="DialogFullscreen" parent="@android:style/Theme.Material.Light.DialogWhenLarge">
+    <style name="DialogFullscreen" parent="@android:style/Theme.Material.Light.DialogWhenLarge" tools:targetApi="lollipop">
         <item name="android:windowNoTitle">true</item>
         <item name="android:statusBarColor">@color/colorPrimaryDark</item>
         <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
+    </style>
+
+    <style name="NavigationTheme">nav_text_size
+        <item name="android:textSize">14sp</item>
+        <item  name="android:textStyle">normal</item>
     </style>
 
 </resources>

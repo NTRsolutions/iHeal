@@ -30,6 +30,7 @@ import com.sismatix.iheal.Adapter.Nature_TabPager_Adapter;
 import com.sismatix.iheal.Adapter.Product_Category_adapter;
 import com.sismatix.iheal.Adapter.TabPageAdapter;
 import com.sismatix.iheal.Model.Product_Category_model;
+import com.sismatix.iheal.Preference.CheckNetwork;
 import com.sismatix.iheal.Preference.Login_preference;
 import com.sismatix.iheal.R;
 import com.sismatix.iheal.Retrofit.ApiClient;
@@ -60,7 +61,7 @@ public class Nature_Category_freg extends Fragment {
 
     private TabLayout tablayout_nature;
     public static LayerDrawable icon;
-    public String count = "1";
+    public String count = "0";//1 hatu
     public static CountDrawable badge;
     RecyclerView recycler_product_category;
     private List<Product_Category_model> product_model = new ArrayList<Product_Category_model>();
@@ -71,7 +72,6 @@ public class Nature_Category_freg extends Fragment {
     public Nature_Category_freg() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -91,7 +91,6 @@ public class Nature_Category_freg extends Fragment {
 
         final Toolbar toolbar_nature = (Toolbar) view.findViewById(R.id.toolbar_nature);
 
-
         ((Navigation_drawer_activity) getActivity()).setSupportActionBar(toolbar_nature);
         ((Navigation_drawer_activity) getActivity()).getSupportActionBar()
                 .setDisplayHomeAsUpEnabled(true);
@@ -99,11 +98,18 @@ public class Nature_Category_freg extends Fragment {
         ((Navigation_drawer_activity) getActivity()).getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_keyboard_arrow_left_white_36dp);
 
         collapsing_toolbar_nature.setTitle("Product's Categories");
+        collapsing_toolbar_nature.setCollapsedTitleTypeface(Home.roboto_medium);
+        collapsing_toolbar_nature.setExpandedTitleTypeface(Home.roboto_medium);
 
         recycler_product_category = (RecyclerView) view.findViewById(R.id.recycler_product_category);
         progressBar = (ProgressBar)view.findViewById(R.id.nature_progressBar);
 
-        CALL_PRODUCT_CATEGORY_API();
+        if (CheckNetwork.isNetworkAvailable(getActivity())) {
+            CALL_PRODUCT_CATEGORY_API();
+        } else {
+            Toast.makeText(getContext(), "Please Check your Internet Connection", Toast.LENGTH_SHORT).show();
+        }
+
         product_category_adapter = new Product_Category_adapter(getActivity(), product_model);
         recycler_product_category.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         recycler_product_category.setItemAnimator(new DefaultItemAnimator());
@@ -117,7 +123,7 @@ public class Nature_Category_freg extends Fragment {
 
     private void CALL_PRODUCT_CATEGORY_API() {
         progressBar.setVisibility(View.VISIBLE);
-
+        product_model.clear();
         ApiInterface api = ApiClient.getClient().create(ApiInterface.class);
         Call<ResponseBody> categorylist = api.categorylist("all");
 
@@ -126,6 +132,7 @@ public class Nature_Category_freg extends Fragment {
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 Log.e("response", "" + response.body().toString());
                 progressBar.setVisibility(View.GONE);
+                product_model.clear();
                 JSONObject jsonObject = null;
                 try {
                     jsonObject = new JSONObject(response.body().string());
@@ -229,7 +236,6 @@ public class Nature_Category_freg extends Fragment {
         icon.mutate();
         icon.setDrawableByLayerId(R.id.ic_group_count, badge);
 
-
         super.onCreateOptionsMenu(menu, inflater);
     }
 
@@ -238,7 +244,9 @@ public class Nature_Category_freg extends Fragment {
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.cart:
-                Toast.makeText(getActivity(), "cart Icon Click", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity(), "cart Icon Click", Toast.LENGTH_SHORT).show();
+                Fragment myFragment = new Cart();
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.rootLayout, myFragment).addToBackStack(null).commit();
                 return true;
             case android.R.id.home:
                 // this takes the user 'back', as if they pressed the left-facing triangle icon on the main android toolbar.

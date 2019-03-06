@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.sismatix.iheal.Activity.Navigation_drawer_activity;
@@ -24,6 +25,7 @@ import com.sismatix.iheal.Adapter.Cart_List_Adapter;
 import com.sismatix.iheal.Adapter.Wishlist_Adapter;
 import com.sismatix.iheal.Model.Cart_Model;
 import com.sismatix.iheal.Model.Wishlist_Model;
+import com.sismatix.iheal.Preference.CheckNetwork;
 import com.sismatix.iheal.Preference.Login_preference;
 import com.sismatix.iheal.R;
 import com.sismatix.iheal.Retrofit.ApiClient;
@@ -58,6 +60,7 @@ public class Wishlist_fragment extends Fragment {
     public static CountDrawable badge;
     static ProgressBar progressBar;
     static AppCompatActivity activity;
+    TextView tv_wishlist_title;
 
     public Wishlist_fragment() {
         // Required empty public constructor
@@ -74,23 +77,28 @@ public class Wishlist_fragment extends Fragment {
 
         //option manu
         setHasOptionsMenu(true);
+        tv_wishlist_title.setTypeface(Home.roboto_bold);
         toolbar_mywishlist = (Toolbar) v.findViewById(R.id.toolbar_mywishlist);
-       // toolbar_mywishlist.setTitle("My Wishlist");
+        // toolbar_mywishlist.setTitle("My Wishlist");
 
         ((Navigation_drawer_activity) getActivity()).setSupportActionBar(toolbar_mywishlist);
         ((Navigation_drawer_activity) getActivity()).getSupportActionBar()
                 .setDisplayHomeAsUpEnabled(true);
         ((Navigation_drawer_activity) getActivity()).getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_keyboard_arrow_left_white_36dp);
 
-
         wishlist_adapter = new Wishlist_Adapter(getContext(), wishlist_models);
         recycler_wishlist.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         recycler_wishlist.setAdapter(wishlist_adapter);
         // snapHelper.attachToRecyclerView(recycler_wishlist);
 
-        CALL_WISHLIST_API();
+        if (CheckNetwork.isNetworkAvailable(getActivity())) {
+            CALL_WISHLIST_API();
+        } else {
+            Toast.makeText(getContext(), "Please Check your Internet Connection", Toast.LENGTH_SHORT).show();
+        }
 
         return v;
+
     }
 
     public static void CALL_WISHLIST_API() {
@@ -100,7 +108,7 @@ public class Wishlist_fragment extends Fragment {
 
         ApiInterface api = ApiClient.getClient().create(ApiInterface.class);
         final Call<ResponseBody> wishlist = api.GetWishlist(Login_preference.getcustomer_id(activity));
-//cartList.clear();
+        //cartList.clear();
         wishlist.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -149,8 +157,9 @@ public class Wishlist_fragment extends Fragment {
 
     private void AllocateMemory(View v) {
         recycler_wishlist = (RecyclerView) v.findViewById(R.id.recycler_wishlist);
-        activity = (AppCompatActivity)getContext();
-        progressBar = (ProgressBar)v.findViewById(R.id.progressBar);
+        tv_wishlist_title = (TextView)v.findViewById(R.id.tv_wishlist_title);
+        activity = (AppCompatActivity) getContext();
+        progressBar = (ProgressBar) v.findViewById(R.id.progressBar);
     }
 
     @Override
@@ -158,9 +167,9 @@ public class Wishlist_fragment extends Fragment {
         menu.clear();
         inflater.inflate(R.menu.cart, menu);
         MenuItem item = menu.findItem(R.id.cart);
-       /* MenuItem item_search = menu.findItem(R.id.search);
-        item_search.setVisible(false);
-*/
+        /*MenuItem item_search = menu.findItem(R.id.search);
+        item_search.setVisible(false);*/
+
 //        icon = (LayerDrawable) item.getIcon();
         icon = (LayerDrawable) item.getIcon();
 
@@ -172,9 +181,9 @@ public class Wishlist_fragment extends Fragment {
         } else {
             badge = new CountDrawable(getActivity());
         }
-        count=Login_preference.getCart_item_count(getActivity());
-        Log.e("countt",""+Login_preference.getCart_item_count(getActivity()));
-        Log.e("count_142",""+count);
+        count = Login_preference.getCart_item_count(getActivity());
+        Log.e("countt", "" + Login_preference.getCart_item_count(getActivity()));
+        Log.e("count_142", "" + count);
         badge.setCount(count);
         icon.mutate();
         icon.setDrawableByLayerId(R.id.ic_group_count, badge);
